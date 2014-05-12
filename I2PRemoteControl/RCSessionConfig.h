@@ -1,5 +1,5 @@
 //
-//  RCRouterConfiguration.h
+//  RCSessionConfig.h
 //  I2PRemoteControl
 //
 //  Created by Maksim Bauer on 12/05/14.
@@ -9,8 +9,16 @@
 #import <Foundation/Foundation.h>
 
 //=========================================================================
-@interface RCRouterConfiguration : NSObject
+@interface RCSessionConfig : NSObject
 //=========================================================================
+
+@property (nonatomic, copy) NSString *host;
+@property (nonatomic, assign) NSUInteger port;
+
+/**
+    Returns configuration with "localhost" host and port 7650
+ */
++ (instancetype)defaultConfig;
 
 //=========================================================================
 @end

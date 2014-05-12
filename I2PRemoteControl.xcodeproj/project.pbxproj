@@ -20,7 +20,8 @@
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
 		81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E21920FB22005A82A4 /* RCRouter.m */; };
 		81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E51920FB2F005A82A4 /* RCRouterManager.m */; };
-		81CD62EA1920FB57005A82A4 /* RCRouterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCRouterConfiguration.m */; };
+		81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCSessionConfig.m */; };
+		81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62EF1921093C005A82A4 /* RCRouterProxy.m */; };
 		A8D6809BEF0648D9A70F6BD2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4CED1204DC40EC8CB7F0DA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -60,8 +61,12 @@
 		81CD62E21920FB22005A82A4 /* RCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouter.m; sourceTree = "<group>"; };
 		81CD62E41920FB2F005A82A4 /* RCRouterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterManager.h; sourceTree = "<group>"; };
 		81CD62E51920FB2F005A82A4 /* RCRouterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterManager.m; sourceTree = "<group>"; };
-		81CD62E81920FB57005A82A4 /* RCRouterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterConfiguration.h; sourceTree = "<group>"; };
-		81CD62E91920FB57005A82A4 /* RCRouterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterConfiguration.m; sourceTree = "<group>"; };
+		81CD62E81920FB57005A82A4 /* RCSessionConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSessionConfig.h; sourceTree = "<group>"; };
+		81CD62E91920FB57005A82A4 /* RCSessionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSessionConfig.m; sourceTree = "<group>"; };
+		81CD62EB19210156005A82A4 /* RCRouterApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCRouterApi.h; sourceTree = "<group>"; };
+		81CD62EE1921093C005A82A4 /* RCRouterProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterProxy.h; sourceTree = "<group>"; };
+		81CD62EF1921093C005A82A4 /* RCRouterProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterProxy.m; sourceTree = "<group>"; };
+		81CD62F5192118BC005A82A4 /* RCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCLogging.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +190,12 @@
 				81CD62E51920FB2F005A82A4 /* RCRouterManager.m */,
 				81CD62E11920FB22005A82A4 /* RCRouter.h */,
 				81CD62E21920FB22005A82A4 /* RCRouter.m */,
-				81CD62E81920FB57005A82A4 /* RCRouterConfiguration.h */,
-				81CD62E91920FB57005A82A4 /* RCRouterConfiguration.m */,
+				81CD62E81920FB57005A82A4 /* RCSessionConfig.h */,
+				81CD62E91920FB57005A82A4 /* RCSessionConfig.m */,
+				81CD62EB19210156005A82A4 /* RCRouterApi.h */,
+				81CD62EE1921093C005A82A4 /* RCRouterProxy.h */,
+				81CD62EF1921093C005A82A4 /* RCRouterProxy.m */,
+				81CD62F5192118BC005A82A4 /* RCLogging.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -325,11 +334,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,
 				812687B719202666002A0571 /* RCAppDelegate.m in Sources */,
-				81CD62EA1920FB57005A82A4 /* RCRouterConfiguration.m in Sources */,
+				81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +497,7 @@
 		};
 		812687D519202666002A0571 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PRemoteControl.app/Contents/MacOS/I2PRemoteControl";
 				COMBINE_HIDPI_IMAGES = YES;
