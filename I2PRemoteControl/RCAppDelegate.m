@@ -23,7 +23,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     RCSessionConfig *config = [RCSessionConfig defaultConfig];
-    config.host = @"pi";
     
     _router = [[RCRouter alloc] initWithSessionConfig:config];
     [_router startSessionWithCompletionHandler:^(BOOL success, NSError *error) {

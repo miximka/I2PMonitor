@@ -11,6 +11,7 @@
 #import "RCSessionConfig.h"
 
 #define CLIENT_API_VERSION 1
+#define DEFAULT_PASSWORD @"itoopie"
 
 //=========================================================================
 
@@ -47,7 +48,7 @@
     _proxy = [[RCRouterProxy alloc] initWithRouterURL:url];
     
     [self.proxy authenticate:CLIENT_API_VERSION
-                    password:@"fnord"
+                    password:DEFAULT_PASSWORD
            completionHandler:^(long serverAPI, NSString *token, NSError *error) {
                
                BOOL success = error == nil;

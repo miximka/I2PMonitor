@@ -7,7 +7,7 @@
 //
 
 #import "RCRouterProxy.h"
-#import "AFJSONRPCClient.h"
+#import "RCJsonRpcClient.h"
 
 @interface RCRouterProxy ()
 @property (nonatomic) AFJSONRPCClient *client;
@@ -22,7 +22,7 @@
     self = [super init];
     if (self)
     {
-        AFJSONRPCClient *client = [[AFJSONRPCClient alloc] initWithEndpointURL:routerURL];
+        RCJsonRpcClient *client = [[RCJsonRpcClient alloc] initWithEndpointURL:routerURL];
         _client = client;
     }
     return self;
@@ -39,14 +39,19 @@
 
 - (void)authenticate:(long)clientAPI password:(NSString *)password completionHandler:(void(^)(long serverAPI, NSString *token, NSError *error))completionHandler
 {
+    NSDictionary *params = @{@"API" : [NSNumber numberWithLong:clientAPI],
+                             @"Password" : password};
+    
     [self.client invokeMethod:@"Authenticate"
+               withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                         
-                          completionHandler(0, nil, nil);
                           
-                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          DDLogInfo(@"Success");
+                          
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-                          completionHandler(0, nil, error);
+                          DDLogError(@"Error: %@", error);
 
                       }];
 }
