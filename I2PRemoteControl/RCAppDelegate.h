@@ -2,7 +2,7 @@
 //  RCAppDelegate.h
 //  I2PRemoteControl
 //
-//  Created by Maksim Bauer on 11/05/14.
+//  Created by miximka on 11/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
