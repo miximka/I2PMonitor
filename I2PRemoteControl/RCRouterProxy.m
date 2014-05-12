@@ -9,6 +9,12 @@
 #import "RCRouterProxy.h"
 #import "RCJsonRpcClient.h"
 
+#define METHOD_AUTHENTICATE @"Authenticate"
+
+#define PARAM_KEY_API       @"API"
+#define PARAM_KEY_PASSWORD  @"Password"
+#define PARAM_KEY_TOKEN     @"Token"
+
 @interface RCRouterProxy ()
 @property (nonatomic) AFJSONRPCClient *client;
 @end
@@ -37,21 +43,25 @@
 
 //=========================================================================
 
-- (void)authenticate:(long)clientAPI password:(NSString *)password completionHandler:(void(^)(long serverAPI, NSString *token, NSError *error))completionHandler
+- (void)authenticate:(long)clientAPI password:(NSString *)password success:(void(^)(long serverAPI, NSString *token))success failure:(void(^)(NSError *error))failure
 {
-    NSDictionary *params = @{@"API" : [NSNumber numberWithLong:clientAPI],
-                             @"Password" : password};
+    NSDictionary *params = @{PARAM_KEY_API : [NSNumber numberWithLong:clientAPI],
+                             PARAM_KEY_PASSWORD : password};
     
-    [self.client invokeMethod:@"Authenticate"
+    [self.client invokeMethod:METHOD_AUTHENTICATE
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           
-                          DDLogInfo(@"Success");
+                          NSDictionary *responseDict = (NSDictionary *)responseObject;
+                          long serverAPI = [[responseDict objectForKey:PARAM_KEY_API] longValue];
+                          NSString *token = [responseObject objectForKey:PARAM_KEY_TOKEN];
+                          
+                          success(serverAPI, token);
                           
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-                          DDLogError(@"Error: %@", error);
+                          failure(error);
 
                       }];
 }

@@ -19,6 +19,7 @@
 		812687E11920287B002A0571 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 812687E31920287B002A0571 /* Credits.rtf */; };
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
 		8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC001921518200759F92 /* RCJsonRpcClient.m */; };
+		8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC061921715B00759F92 /* RCLogFormatter.m */; };
 		81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E21920FB22005A82A4 /* RCRouter.m */; };
 		81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E51920FB2F005A82A4 /* RCRouterManager.m */; };
 		81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCSessionConfig.m */; };
@@ -60,6 +61,8 @@
 		812687E51920287F002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8194CBFF1921518200759F92 /* RCJsonRpcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCJsonRpcClient.h; sourceTree = "<group>"; };
 		8194CC001921518200759F92 /* RCJsonRpcClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCJsonRpcClient.m; sourceTree = "<group>"; };
+		8194CC051921715B00759F92 /* RCLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLogFormatter.h; sourceTree = "<group>"; };
+		8194CC061921715B00759F92 /* RCLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLogFormatter.m; sourceTree = "<group>"; };
 		81CD62E11920FB22005A82A4 /* RCRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouter.h; sourceTree = "<group>"; };
 		81CD62E21920FB22005A82A4 /* RCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouter.m; sourceTree = "<group>"; };
 		81CD62E41920FB2F005A82A4 /* RCRouterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterManager.h; sourceTree = "<group>"; };
@@ -186,6 +189,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		8194CC041921714F00759F92 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				81CD62F5192118BC005A82A4 /* RCLogging.h */,
+				8194CC051921715B00759F92 /* RCLogFormatter.h */,
+				8194CC061921715B00759F92 /* RCLogFormatter.m */,
+			);
+			name = Logging;
+			sourceTree = "<group>";
+		};
 		81CD62E71920FB3A005A82A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,9 +211,9 @@
 				81CD62EB19210156005A82A4 /* RCRouterApi.h */,
 				81CD62EE1921093C005A82A4 /* RCRouterProxy.h */,
 				81CD62EF1921093C005A82A4 /* RCRouterProxy.m */,
-				81CD62F5192118BC005A82A4 /* RCLogging.h */,
 				8194CBFF1921518200759F92 /* RCJsonRpcClient.h */,
 				8194CC001921518200759F92 /* RCJsonRpcClient.m */,
+				8194CC041921714F00759F92 /* Logging */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -340,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,
+				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,

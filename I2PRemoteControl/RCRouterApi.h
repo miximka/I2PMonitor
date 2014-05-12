@@ -17,7 +17,7 @@
     @param API - [long] The version of the I2PControl API used by the client.
     @param password – [String] The password used for authenticating against the remote server.
  */
-- (void)authenticate:(long)clientAPI password:(NSString *)password completionHandler:(void(^)(long serverAPI, NSString *token, NSError *error))completionHandler;
+- (void)authenticate:(long)clientAPI password:(NSString *)password success:(void(^)(long serverAPI, NSString *token))success failure:(void(^)(NSError *error))failure;
 
 //=========================================================================
 @end

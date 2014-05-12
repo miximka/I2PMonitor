@@ -43,24 +43,48 @@
     
     NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
     NSURL *url = [NSURL URLWithString:urlStr];
-    
+
+    DDLogInfo(@"Will start session with URL: %@", urlStr);
+
     //Create proxy object
     _proxy = [[RCRouterProxy alloc] initWithRouterURL:url];
     
+    //Update session status
+    self.sessionStatus = kAuthenticating;
+    
+    __weak id blockSelf = self;
     [self.proxy authenticate:CLIENT_API_VERSION
                     password:DEFAULT_PASSWORD
-           completionHandler:^(long serverAPI, NSString *token, NSError *error) {
-               
-               BOOL success = error == nil;
-               completionHandler(success, error);
-               
-           }];
+                     success:^(long serverAPI, NSString *token) {
+                         
+                         [blockSelf sessionDidStart];
+                         completionHandler(YES, nil);
+                         
+                     } failure:^(NSError *error) {
+                         
+                         DDLogInfo(@"Failed to start session: %@", error);
+                         completionHandler(NO, error);
+                         
+                     }];
 }
 
 //=========================================================================
 
 - (void)stopSession
 {
+}
+
+//=========================================================================
+
+- (void)sessionDidStart
+{
+    DDLogInfo(@"Session did start");
+    
+    //Update session status
+    self.sessionStatus = kAuthenticated;
+    
+    //Start polling router
+    
 }
 
 //=========================================================================

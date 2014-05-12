@@ -9,6 +9,10 @@
 #import "RCAppDelegate.h"
 #import "RCRouter.h"
 #import "RCSessionConfig.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+#import "DDFileLogger.h"
+#import "RCLogFormatter.h"
 
 //=========================================================================
 
@@ -20,8 +24,34 @@
 @implementation RCAppDelegate
 //=========================================================================
 
+- (void)initializeLogging
+{
+    RCLogFormatter *logFormatter = [[RCLogFormatter alloc] init];
+    
+    [[DDASLLogger sharedInstance] setLogFormatter:logFormatter];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    
+    [[DDTTYLogger sharedInstance] setLogFormatter:logFormatter];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; //24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [fileLogger setLogFormatter:logFormatter];
+    [DDLog addLogger:fileLogger];
+    
+    //Log application version
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    DDLogInfo(@"===");
+    DDLogInfo(@"App version: %@ (%@)", [infoDict objectForKey:@"CFBundleShortVersionString"], [infoDict objectForKey:@"CFBundleVersion"]);
+}
+
+//=========================================================================
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self initializeLogging];
+    
     RCSessionConfig *config = [RCSessionConfig defaultConfig];
     
     _router = [[RCRouter alloc] initWithSessionConfig:config];
