@@ -8,23 +8,8 @@
 
 #import "RCRouterProxy.h"
 #import "RCJsonRpcClient.h"
-#import "RCRouterInfo.h"
 
 //=========================================================================
-
-#define METHOD_AUTHENTICATE     @"Authenticate"
-#define PARAM_KEY_API           @"API"
-#define PARAM_KEY_PASSWORD      @"Password"
-#define PARAM_KEY_TOKEN         @"Token"
-
-#define METHOD_ECHO             @"Echo"
-#define PARAM_KEY_ECHO          @"Echo"
-#define PARAM_KEY_ECHO_RESULT   @"Result"
-
-#define METHOD_ROUTER_INFO          @"RouterInfo"
-#define PARAM_KEY_ROUTER_STATUS     @"i2p.router.status"
-#define PARAM_KEY_ROUTER_UPTIME     @"i2p.router.uptime"
-#define PARAM_KEY_ROUTER_VERSION    @"i2p.router.version"
 
 @interface RCRouterProxy ()
 @property (nonatomic) AFJSONRPCClient *client;
@@ -106,24 +91,7 @@
 
 //=========================================================================
 
-- (RCRouterInfo *)routerInfoWithResponseObject:(id)responseObject
-{
-    assert([responseObject isKindOfClass:[NSDictionary class]]);
-    
-    NSDictionary *responseDict = responseObject;
-    
-    RCRouterInfo *info = [RCRouterInfo new];
-
-    info.routerStatus = [responseDict objectForKey:PARAM_KEY_ROUTER_STATUS];
-    info.routerUptime = [[responseDict objectForKey:PARAM_KEY_ROUTER_UPTIME] longValue];
-    info.routerVersion = [responseDict objectForKey:PARAM_KEY_ROUTER_VERSION];
-    
-    return info;
-}
-
-//=========================================================================
-
-- (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(RCRouterInfo *routerInfo))success failure:(void(^)(NSError *error))failure
+- (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.token forKey:PARAM_KEY_TOKEN];
     
@@ -137,13 +105,12 @@
     if (options & kRouterInfoVersion)
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_VERSION];
 
-    __weak RCRouterProxy *blockSelf = self;
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           
-                          RCRouterInfo *info = [blockSelf routerInfoWithResponseObject:responseObject];
-                          success(info);
+                          assert([responseObject isKindOfClass:[NSDictionary class]]);
+                          success(responseObject);
                           
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {

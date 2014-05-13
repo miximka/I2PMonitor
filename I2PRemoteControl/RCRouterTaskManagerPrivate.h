@@ -8,13 +8,13 @@
 
 #import "RCRouterTaskManager.h"
 
-@class RCPeriodicTask;
+@class RCTask;
 
 //=========================================================================
 @interface RCRouterTaskManager (Private)
 //=========================================================================
 
-- (void)taskDidFinishExecution:(RCPeriodicTask *)task;
+- (void)taskDidFinishExecution:(RCTask *)task;
 
 //=========================================================================
 @end

@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+//=========================================================================
+
 @class RCSessionConfig;
+@class RCRouterInfoTask;
 
 typedef NS_ENUM(NSUInteger, RCSessionStatus)
 {
@@ -35,6 +38,11 @@ typedef NS_ENUM(NSUInteger, RCSessionStatus)
  */
 - (void)startSessionWithCompletionHandler:(void(^)(BOOL success, NSError *error))completionHandler;
 - (void)stopSession;
+
+/**
+    Returns router info task
+ */
+@property (nonatomic, readonly) RCRouterInfoTask *routerInfoTask;
 
 //=========================================================================
 @end

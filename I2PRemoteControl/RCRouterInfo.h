@@ -16,6 +16,8 @@
 @property (nonatomic) long routerUptime;
 @property (nonatomic) NSString *routerVersion;
 
+- (void)updateWithResponseDictionary:(NSDictionary *)response;
+
 //=========================================================================
 @end
 //=========================================================================

@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCPeriodicTask.h"
+#import "RCTask.h"
 
 //=========================================================================
-@interface RCRouterEchoTask : RCPeriodicTask
+@interface RCRouterEchoTask : RCTask
 //=========================================================================
 
 //=========================================================================

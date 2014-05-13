@@ -7,8 +7,8 @@
 //
 
 #import "RCRouterTaskManager.h"
-#import "RCPeriodicTask.h"
-#import "RCPeriodicTaskPrivate.h"
+#import "RCTask.h"
+#import "RCTaskPrivate.h"
 
 //=========================================================================
 
@@ -56,18 +56,22 @@
 
 //=========================================================================
 
-- (void)addTask:(RCPeriodicTask *)task
+- (void)addTask:(RCTask *)task
 {
     [task setRouterProxy:self.routerProxy];
-
+    [task setParentManager:self];
+    
     [self.allTasks addObject:task];
     [self startTasks];
 }
 
 //=========================================================================
 
-- (void)removeTask:(RCPeriodicTask *)task
+- (void)removeTask:(RCTask *)task
 {
+    DDLogDebug(@"Remove task from pool: %@", task.identifier);
+    
+    [task setParentManager:nil];
     [self.allTasks removeObject:task];
 }
 
@@ -75,7 +79,7 @@
 
 - (void)startTasks:(NSArray *)tasks
 {
-    for (RCPeriodicTask *each in tasks)
+    for (RCTask *each in tasks)
     {
         [each start];
     }
@@ -88,7 +92,7 @@
     NSMutableArray *tasksToStart = [NSMutableArray new];
     
     //Find out tasks to execute
-    for (RCPeriodicTask *each in self.tasks)
+    for (RCTask *each in self.tasks)
     {
         BOOL isDue = each.lastStartDate == nil || [[NSDate date] timeIntervalSinceDate:each.lastStartDate] >= each.frequency;
         BOOL shouldStart = [each isExecuting] == NO && isDue;
@@ -113,8 +117,13 @@
 #pragma RCRouterTaskManager (Private)
 //=========================================================================
 
-- (void)taskDidFinishExecution:(RCPeriodicTask *)task
+- (void)taskDidFinishExecution:(RCTask *)task
 {
+    if (!task.isRecurring)
+    {
+        //Remove task automatically
+        [self removeTask:task];
+    }
 }
 
 //=========================================================================

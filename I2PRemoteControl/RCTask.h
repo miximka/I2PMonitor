@@ -1,5 +1,5 @@
 //
-//  RCPeriodicTask.h
+//  RCTask.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 13/05/14.
@@ -10,7 +10,7 @@
 #import "RCRouterProxy.h"
 
 //=========================================================================
-@interface RCPeriodicTask : NSObject
+@interface RCTask : NSObject
 //=========================================================================
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
@@ -19,6 +19,12 @@
     Task identifier
  */
 @property (nonatomic) NSString *identifier;
+
+/**
+    Indicates whether the task is recurring or not (i.e. will be removed from task manager when finished)
+    Default is NO;
+ */
+@property (nonatomic, getter = isRecurring) BOOL recurring;
 
 /**
     How often the task should be executed.

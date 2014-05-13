@@ -7,9 +7,19 @@
 //
 
 #import "RCRouterInfo.h"
+#import "RCRouterApi.h"
 
 //=========================================================================
 @implementation RCRouterInfo
+//=========================================================================
+
+- (void)updateWithResponseDictionary:(NSDictionary *)response
+{
+    self.routerStatus = [response objectForKey:PARAM_KEY_ROUTER_STATUS];
+    self.routerUptime = [[response objectForKey:PARAM_KEY_ROUTER_UPTIME] longValue];
+    self.routerVersion = [response objectForKey:PARAM_KEY_ROUTER_VERSION];
+}
+
 //=========================================================================
 
 - (NSString *)description

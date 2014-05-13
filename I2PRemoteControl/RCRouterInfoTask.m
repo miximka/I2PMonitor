@@ -7,9 +7,23 @@
 //
 
 #import "RCRouterInfoTask.h"
+#import "RCRouterInfo.h"
 
 //=========================================================================
 @implementation RCRouterInfoTask
+//=========================================================================
+
+- (instancetype)initWithIdentifier:(NSString *)identifier
+{
+    self = [super initWithIdentifier:identifier];
+    if (self)
+    {
+        _routerInfo = [RCRouterInfo new];
+        self.recurring = NO;
+    }
+    return self;
+}
+
 //=========================================================================
 
 - (void)execute
@@ -18,11 +32,13 @@
     
     CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion;
     
-    __weak id blockSelf = self;
+    __weak RCRouterInfoTask *blockSelf = self;
     [self.routerProxy routerInfoWithOptions:options
-                                    success:^(RCRouterInfo *routerInfo) {
+                                    success:^(NSDictionary *routerInfoDict) {
                                         
-                                        DDLogDebug(@"Received router info response: %@", routerInfo);
+                                        DDLogDebug(@"Received router info response: %@", routerInfoDict);
+                                        [blockSelf.routerInfo updateWithResponseDictionary:routerInfoDict];
+                                        
                                         [blockSelf didFinishExecutionWithError:nil];
                                         
                                     } failure:^(NSError *error) {

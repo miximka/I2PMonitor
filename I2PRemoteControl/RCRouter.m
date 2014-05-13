@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @interface RCRouter ()
 @property (nonatomic) RCRouterProxy *proxy;
 @property (nonatomic) RCRouterTaskManager *taskManager;
+@property (nonatomic) RCRouterInfoTask *routerInfoTask;
 @end
 
 //=========================================================================
@@ -97,8 +98,20 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     //Create task manager
     self.taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
     
+    //Schedule router info update
+    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+    self.routerInfoTask = infoTask;
+    [self updateRouterInfo];
+    
     //Schedule periodic tasks
     [self addPeriodicTasks];
+}
+
+//=========================================================================
+
+- (void)updateRouterInfo
+{
+    [self.taskManager addTask:self.routerInfoTask];
 }
 
 //=========================================================================
@@ -108,10 +121,6 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
     echoTask.frequency = 1;
     [self.taskManager addTask:echoTask];
-    
-    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
-    infoTask.frequency = 2;
-    [self.taskManager addTask:infoTask];
 }
 
 //=========================================================================

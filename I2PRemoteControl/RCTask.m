@@ -1,26 +1,26 @@
 //
-//  RCPeriodicTask.m
+//  RCTask.m
 //  I2PRemoteControl
 //
 //  Created by miximka on 13/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCPeriodicTask.h"
-#import "RCPeriodicTaskPrivate.h"
+#import "RCTask.h"
+#import "RCTaskPrivate.h"
 #import "RCRouterTaskManagerPrivate.h"
 
 //=========================================================================
 
-@interface RCPeriodicTask ()
-@property (nonatomic) RCRouterTaskManager *manager;
+@interface RCTask ()
+@property (nonatomic) RCRouterTaskManager *parentManager;
 @property (nonatomic) NSError *lastError;
 @property (nonatomic) BOOL isExecuting;
 @property (nonatomic) NSDate *lastStartDate;
 @end
 
 //=========================================================================
-@implementation RCPeriodicTask
+@implementation RCTask
 //=========================================================================
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
@@ -30,6 +30,7 @@
     {
         _identifier = identifier;
         _frequency = 60; //Sec
+        _recurring = NO;
     }
     return self;
 }
@@ -39,20 +40,6 @@
 - (instancetype)init
 {
     return [self initWithIdentifier:nil];
-}
-
-//=========================================================================
-
-- (RCRouterTaskManager *)parentManager
-{
-    return _manager;
-}
-
-//=========================================================================
-
-- (void)setParentManager:(RCRouterTaskManager *)manager
-{
-    _manager = manager;
 }
 
 //=========================================================================

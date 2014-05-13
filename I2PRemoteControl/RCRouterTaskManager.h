@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RCPeriodicTask;
+@class RCTask;
 @class RCRouterProxy;
 
 //=========================================================================
@@ -20,8 +20,8 @@
 @property (nonatomic, readonly) RCRouterProxy *routerProxy;
 @property (nonatomic, readonly) NSArray *tasks;
 
-- (void)addTask:(RCPeriodicTask *)task;
-- (void)removeTask:(RCPeriodicTask *)task;
+- (void)addTask:(RCTask *)task;
+- (void)removeTask:(RCTask *)task;
 
 //=========================================================================
 @end

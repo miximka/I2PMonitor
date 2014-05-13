@@ -12,6 +12,18 @@
 @implementation RCRouterEchoTask
 //=========================================================================
 
+- (instancetype)initWithIdentifier:(NSString *)identifier
+{
+    self = [super initWithIdentifier:identifier];
+    if (self)
+    {
+        self.recurring = YES;
+    }
+    return self;
+}
+
+//=========================================================================
+
 - (void)execute
 {
     NSString *echoStr = @"fnord";

@@ -8,6 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+//=========================================================================
+
+#define METHOD_AUTHENTICATE     @"Authenticate"
+#define PARAM_KEY_API           @"API"
+#define PARAM_KEY_PASSWORD      @"Password"
+#define PARAM_KEY_TOKEN         @"Token"
+
+#define METHOD_ECHO             @"Echo"
+#define PARAM_KEY_ECHO          @"Echo"
+#define PARAM_KEY_ECHO_RESULT   @"Result"
+
+#define METHOD_ROUTER_INFO          @"RouterInfo"
+#define PARAM_KEY_ROUTER_STATUS     @"i2p.router.status"
+#define PARAM_KEY_ROUTER_UPTIME     @"i2p.router.uptime"
+#define PARAM_KEY_ROUTER_VERSION    @"i2p.router.version"
+
 @class RCRouterInfo;
 
 typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
@@ -37,7 +53,7 @@ typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
 /**
     RouterInfo – Fetches basic information about the I2P router. Uptime, version etc.
  */
-- (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(RCRouterInfo *routerInfo))success failure:(void(^)(NSError *error))failure;
+- (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure;
 
 //=========================================================================
 @end
