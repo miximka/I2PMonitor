@@ -6,11 +6,15 @@
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCPeriodicTask.h"
+#import <Foundation/Foundation.h>
 
 //=========================================================================
-@interface RCRouterInfoTask : RCPeriodicTask
+@interface RCRouterInfo : NSObject
 //=========================================================================
+
+@property (nonatomic) NSString *routerStatus;
+@property (nonatomic) long routerUptime;
+@property (nonatomic) NSString *routerVersion;
 
 //=========================================================================
 @end

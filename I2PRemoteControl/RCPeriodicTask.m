@@ -68,7 +68,7 @@
 {
     NSAssert(self.isExecuting == NO, @"Tried to execute already executing task");
  
-    DDLogInfo(@"Will start task: %@", self.identifier);
+    DDLogDebug(@"Will start task: %@", self.identifier);
     
     self.isExecuting = YES;
     self.lastStartDate = [NSDate date];
@@ -90,7 +90,7 @@
     
     if (!error)
     {
-        DDLogInfo(@"Did finish task %@. Execution time: %.3f", self.identifier, executionTime);
+        DDLogDebug(@"Did finish task %@. Execution time: %.3f", self.identifier, executionTime);
     }
     else
     {

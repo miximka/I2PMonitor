@@ -12,6 +12,26 @@
 @implementation RCRouterInfoTask
 //=========================================================================
 
+- (void)execute
+{
+    DDLogDebug(@"Send router info request");
+    
+    CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion;
+    
+    __weak id blockSelf = self;
+    [self.routerProxy routerInfoWithOptions:options
+                                    success:^(RCRouterInfo *routerInfo) {
+                                        
+                                        DDLogDebug(@"Received router info response: %@", routerInfo);
+                                        [blockSelf didFinishExecutionWithError:nil];
+                                        
+                                    } failure:^(NSError *error) {
+                                        
+                                        [blockSelf didFinishExecutionWithError:error];
+                                        
+                                    }];
+}
+
 //=========================================================================
 @end
 //=========================================================================

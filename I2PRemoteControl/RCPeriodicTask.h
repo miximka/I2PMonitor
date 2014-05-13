@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class RCRouterProxy;
+#import "RCRouterProxy.h"
 
 //=========================================================================
 @interface RCPeriodicTask : NSObject

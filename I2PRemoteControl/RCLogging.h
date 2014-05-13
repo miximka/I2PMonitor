@@ -8,4 +8,8 @@
 
 #import "DDLog.h"
 
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#ifdef DEBUG
+static const int ddLogLevel = LOG_LEVEL_DEBUG;
+#else
+static const int ddLogLevel = LOG_LEVEL_INFO;
+#endif

@@ -105,10 +105,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)addPeriodicTasks
 {
-    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-    task.frequency = 1;
+    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+    echoTask.frequency = 1;
+    [self.taskManager addTask:echoTask];
     
-    [self.taskManager addTask:task];
+    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+    infoTask.frequency = 2;
+    [self.taskManager addTask:infoTask];
 }
 
 //=========================================================================

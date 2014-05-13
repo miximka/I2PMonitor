@@ -7,7 +7,6 @@
 //
 
 #import "RCRouterEchoTask.h"
-#import "RCRouterProxy.h"
 
 //=========================================================================
 @implementation RCRouterEchoTask
@@ -17,13 +16,13 @@
 {
     NSString *echoStr = @"fnord";
     
-    DDLogInfo(@"Send echo: %@", echoStr);
+    DDLogDebug(@"Send echo request: %@", echoStr);
     
     __weak id blockSelf = self;
     [self.routerProxy echoWithString:echoStr
                              success:^(NSString *result) {
                                  
-                                 DDLogInfo(@"Echo response: %@", result);
+                                 DDLogDebug(@"Received echo response: %@", result);
                                  [blockSelf didFinishExecutionWithError:nil];
                                  
                              } failure:^(NSError *error) {
