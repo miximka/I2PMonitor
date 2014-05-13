@@ -1,22 +1,22 @@
 //
-//  RCRouterProxy.h
+//  RCPeriodicTaskPrivate.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 12/05/14.
+//  Created by miximka on 13/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "RCRouterApi.h"
+#import "RCPeriodicTask.h"
+
+@class RCRouterTaskManager;
 
 //=========================================================================
-@interface RCRouterProxy : NSObject <RCRouterApi>
+@interface RCPeriodicTask (Private)
 //=========================================================================
 
-- (instancetype)initWithRouterURL:(NSURL *)routerURL;
-
-@property (nonatomic, readonly) NSURL *routerURL;
-@property (nonatomic, readonly) NSString *token;
+- (RCRouterTaskManager *)parentManager;
+- (void)setRouterProxy:(RCRouterProxy *)routerProxy;
+- (void)start;
 
 //=========================================================================
 @end

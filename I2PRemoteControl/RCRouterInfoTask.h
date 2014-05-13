@@ -1,22 +1,20 @@
 //
-//  RCRouterProxy.h
+//  RCRouterInfo.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 12/05/14.
+//  Created by miximka on 13/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "RCRouterApi.h"
+#import "RCPeriodicTask.h"
 
 //=========================================================================
-@interface RCRouterProxy : NSObject <RCRouterApi>
+@interface RCRouterInfoTask : RCPeriodicTask
 //=========================================================================
 
-- (instancetype)initWithRouterURL:(NSURL *)routerURL;
-
-@property (nonatomic, readonly) NSURL *routerURL;
-@property (nonatomic, readonly) NSString *token;
+@property (nonatomic) NSString *routerStatus;
+@property (nonatomic) long routerUptime;
+@property (nonatomic) NSString *routerVersion;
 
 //=========================================================================
 @end

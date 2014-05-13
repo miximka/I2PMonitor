@@ -19,6 +19,8 @@
  */
 - (void)authenticate:(long)clientAPI password:(NSString *)password success:(void(^)(long serverAPI, NSString *token))success failure:(void(^)(NSError *error))failure;
 
+- (void)echoWithString:(NSString *)string success:(void(^)(NSString *result))success failure:(void(^)(NSError *error))failure;
+
 //=========================================================================
 @end
 //=========================================================================

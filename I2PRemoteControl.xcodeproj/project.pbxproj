@@ -20,6 +20,10 @@
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
 		8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC001921518200759F92 /* RCJsonRpcClient.m */; };
 		8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC061921715B00759F92 /* RCLogFormatter.m */; };
+		8194CC1819217F1900759F92 /* RCPeriodicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC1719217F1900759F92 /* RCPeriodicTask.m */; };
+		8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC1A1921825C00759F92 /* RCRouterInfoTask.m */; };
+		8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC1D1922085300759F92 /* RCRouterTaskManager.m */; };
+		8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC221922108F00759F92 /* RCRouterEchoTask.m */; };
 		81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E21920FB22005A82A4 /* RCRouter.m */; };
 		81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E51920FB2F005A82A4 /* RCRouterManager.m */; };
 		81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCSessionConfig.m */; };
@@ -63,6 +67,16 @@
 		8194CC001921518200759F92 /* RCJsonRpcClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCJsonRpcClient.m; sourceTree = "<group>"; };
 		8194CC051921715B00759F92 /* RCLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLogFormatter.h; sourceTree = "<group>"; };
 		8194CC061921715B00759F92 /* RCLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLogFormatter.m; sourceTree = "<group>"; };
+		8194CC1619217F1900759F92 /* RCPeriodicTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPeriodicTask.h; sourceTree = "<group>"; };
+		8194CC1719217F1900759F92 /* RCPeriodicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPeriodicTask.m; sourceTree = "<group>"; };
+		8194CC191921825C00759F92 /* RCRouterInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterInfoTask.h; sourceTree = "<group>"; };
+		8194CC1A1921825C00759F92 /* RCRouterInfoTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterInfoTask.m; sourceTree = "<group>"; };
+		8194CC1C1922085300759F92 /* RCRouterTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterTaskManager.h; sourceTree = "<group>"; };
+		8194CC1D1922085300759F92 /* RCRouterTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterTaskManager.m; sourceTree = "<group>"; };
+		8194CC1F19220DC600759F92 /* RCPeriodicTaskPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCPeriodicTaskPrivate.h; sourceTree = "<group>"; };
+		8194CC2019220FF500759F92 /* RCRouterTaskManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCRouterTaskManagerPrivate.h; sourceTree = "<group>"; };
+		8194CC211922108F00759F92 /* RCRouterEchoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterEchoTask.h; sourceTree = "<group>"; };
+		8194CC221922108F00759F92 /* RCRouterEchoTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterEchoTask.m; sourceTree = "<group>"; };
 		81CD62E11920FB22005A82A4 /* RCRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouter.h; sourceTree = "<group>"; };
 		81CD62E21920FB22005A82A4 /* RCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouter.m; sourceTree = "<group>"; };
 		81CD62E41920FB2F005A82A4 /* RCRouterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterManager.h; sourceTree = "<group>"; };
@@ -199,6 +213,18 @@
 			name = Logging;
 			sourceTree = "<group>";
 		};
+		8194CC08192172D800759F92 /* RPC Client */ = {
+			isa = PBXGroup;
+			children = (
+				81CD62EB19210156005A82A4 /* RCRouterApi.h */,
+				81CD62EE1921093C005A82A4 /* RCRouterProxy.h */,
+				81CD62EF1921093C005A82A4 /* RCRouterProxy.m */,
+				8194CBFF1921518200759F92 /* RCJsonRpcClient.h */,
+				8194CC001921518200759F92 /* RCJsonRpcClient.m */,
+			);
+			name = "RPC Client";
+			sourceTree = "<group>";
+		};
 		81CD62E71920FB3A005A82A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,11 +234,17 @@
 				81CD62E21920FB22005A82A4 /* RCRouter.m */,
 				81CD62E81920FB57005A82A4 /* RCSessionConfig.h */,
 				81CD62E91920FB57005A82A4 /* RCSessionConfig.m */,
-				81CD62EB19210156005A82A4 /* RCRouterApi.h */,
-				81CD62EE1921093C005A82A4 /* RCRouterProxy.h */,
-				81CD62EF1921093C005A82A4 /* RCRouterProxy.m */,
-				8194CBFF1921518200759F92 /* RCJsonRpcClient.h */,
-				8194CC001921518200759F92 /* RCJsonRpcClient.m */,
+				8194CC1619217F1900759F92 /* RCPeriodicTask.h */,
+				8194CC1F19220DC600759F92 /* RCPeriodicTaskPrivate.h */,
+				8194CC1719217F1900759F92 /* RCPeriodicTask.m */,
+				8194CC1C1922085300759F92 /* RCRouterTaskManager.h */,
+				8194CC2019220FF500759F92 /* RCRouterTaskManagerPrivate.h */,
+				8194CC1D1922085300759F92 /* RCRouterTaskManager.m */,
+				8194CC191921825C00759F92 /* RCRouterInfoTask.h */,
+				8194CC1A1921825C00759F92 /* RCRouterInfoTask.m */,
+				8194CC211922108F00759F92 /* RCRouterEchoTask.h */,
+				8194CC221922108F00759F92 /* RCRouterEchoTask.m */,
+				8194CC08192172D800759F92 /* RPC Client */,
 				8194CC041921714F00759F92 /* Logging */,
 			);
 			name = Model;
@@ -353,7 +385,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,
+				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
+				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
+				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
+				8194CC1819217F1900759F92 /* RCPeriodicTask.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,

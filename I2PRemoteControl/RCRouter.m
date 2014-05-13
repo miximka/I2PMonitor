@@ -9,14 +9,25 @@
 #import "RCRouter.h"
 #import "RCRouterProxy.h"
 #import "RCSessionConfig.h"
+#import "RCRouterTaskManager.h"
+#import "RCRouterEchoTask.h"
+#import "RCRouterInfoTask.h"
+
+//=========================================================================
 
 #define CLIENT_API_VERSION 1
 #define DEFAULT_PASSWORD @"itoopie"
+
+typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
+{
+    kUpdateRouterInfoType,
+};
 
 //=========================================================================
 
 @interface RCRouter ()
 @property (nonatomic) RCRouterProxy *proxy;
+@property (nonatomic) RCRouterTaskManager *taskManager;
 @end
 
 //=========================================================================
@@ -83,8 +94,21 @@
     //Update session status
     self.sessionStatus = kAuthenticated;
     
-    //Start polling router
+    //Create task manager
+    self.taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
     
+    //Schedule periodic tasks
+    [self addPeriodicTasks];
+}
+
+//=========================================================================
+
+- (void)addPeriodicTasks
+{
+    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+    task.frequency = 1;
+    
+    [self.taskManager addTask:task];
 }
 
 //=========================================================================
