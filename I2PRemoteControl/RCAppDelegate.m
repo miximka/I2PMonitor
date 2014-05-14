@@ -173,6 +173,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     //Update router uptime
     item = [self.statusBarItem.menu itemWithTag:kRouterUptimeMenuTag];
     NSTimeInterval uptime = self.router.routerInfo.estimatedRouterUptime;
+    
     strValue = nil;
     if (uptime > 0)
     {
@@ -247,6 +248,10 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
     [[NSRunLoop currentRunLoop] addTimer:self.updateUITimer
                                  forMode:NSRunLoopCommonModes];
+    
+    //Trigger router info update immediately
+    DDLogInfo(@"wow");
+    [self.router updateRouterInfo];
 }
 
 //=========================================================================

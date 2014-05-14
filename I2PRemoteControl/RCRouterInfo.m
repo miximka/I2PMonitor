@@ -10,6 +10,12 @@
 #import "RCRouterApi.h"
 
 //=========================================================================
+
+@interface RCRouterInfo ()
+@property (nonatomic) NSDate *estimatedStartupDate;
+@end
+
+//=========================================================================
 @implementation RCRouterInfo
 //=========================================================================
 
@@ -17,6 +23,10 @@
 {
     self.routerStatus = [response objectForKey:PARAM_KEY_ROUTER_STATUS];
     self.routerUptime = [[response objectForKey:PARAM_KEY_ROUTER_UPTIME] longValue];
+
+    NSTimeInterval uptimeInSec = self.routerUptime / 1000;
+    self.estimatedStartupDate = [[NSDate date] dateByAddingTimeInterval:-uptimeInSec];
+
     self.routerVersion = [response objectForKey:PARAM_KEY_ROUTER_VERSION];
 }
 
@@ -24,10 +34,7 @@
 
 - (NSTimeInterval)estimatedRouterUptime
 {
-    NSTimeInterval uptimeInSec = self.routerUptime / 1000;
-    NSDate *startupDate = [[NSDate date] dateByAddingTimeInterval:-uptimeInSec];
-    NSTimeInterval estimatedUptime = [[NSDate date] timeIntervalSinceDate:startupDate];
-    
+    NSTimeInterval estimatedUptime = [[NSDate date] timeIntervalSinceDate:self.estimatedStartupDate];
     return estimatedUptime;
 }
 

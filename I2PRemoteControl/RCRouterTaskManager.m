@@ -100,7 +100,8 @@
     for (RCTask *each in self.tasks)
     {
         BOOL isDue = each.lastStartDate == nil || [[NSDate date] timeIntervalSinceDate:each.lastStartDate] >= each.frequency;
-        BOOL shouldStart = [each isExecuting] == NO && isDue;
+        BOOL isOneShotTask = each.isRecurring == NO;
+        BOOL shouldStart = [each isExecuting] == NO && (isOneShotTask || isDue);
         
         if (shouldStart)
         {

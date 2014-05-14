@@ -43,6 +43,11 @@ typedef NS_ENUM(NSUInteger, RCSessionStatus)
 
 @property (nonatomic, readonly) RCRouterInfo *routerInfo;
 
+/**
+    Manually schedule router info update task
+ */
+- (void)updateRouterInfo;
+
 //=========================================================================
 @end
 //=========================================================================
