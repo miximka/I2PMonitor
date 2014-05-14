@@ -13,7 +13,17 @@
 //=========================================================================
 
 @property (nonatomic) NSString *routerStatus;
+
+/**
+    Last known value from router
+ */
 @property (nonatomic) long routerUptime;
+
+/**
+    Calculated from -routerUptime and current date
+ */
+- (NSTimeInterval)estimatedRouterUptime;
+
 @property (nonatomic) NSString *routerVersion;
 
 - (void)updateWithResponseDictionary:(NSDictionary *)response;

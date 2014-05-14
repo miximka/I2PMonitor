@@ -11,7 +11,9 @@
 //=========================================================================
 
 @class RCSessionConfig;
-@class RCRouterInfoTask;
+@class RCRouterInfo;
+
+extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 
 typedef NS_ENUM(NSUInteger, RCSessionStatus)
 {
@@ -39,10 +41,7 @@ typedef NS_ENUM(NSUInteger, RCSessionStatus)
 - (void)startSessionWithCompletionHandler:(void(^)(BOOL success, NSError *error))completionHandler;
 - (void)stopSession;
 
-/**
-    Returns router info task
- */
-@property (nonatomic, readonly) RCRouterInfoTask *routerInfoTask;
+@property (nonatomic, readonly) RCRouterInfo *routerInfo;
 
 //=========================================================================
 @end

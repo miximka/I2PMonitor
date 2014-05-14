@@ -18,6 +18,8 @@
 #define CLIENT_API_VERSION 1
 #define DEFAULT_PASSWORD @"itoopie"
 
+NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
+
 typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     kUpdateRouterInfoType,
@@ -44,6 +46,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
         _sessionConfig = sessionConfig;
     }
     return self;
+}
+
+//=========================================================================
+
+- (RCRouterInfo *)routerInfo
+{
+    return self.routerInfoTask.routerInfo;
 }
 
 //=========================================================================
@@ -88,6 +97,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
+- (void)notifyDidUpdateRouterInfo
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCRouterDidUpdateRouterInfoNotification object:self];
+}
+
+//=========================================================================
+
 - (void)sessionDidStart
 {
     DDLogInfo(@"Session did start");
@@ -100,7 +116,18 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     
     //Schedule router info update
     RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+    
+    __weak RCRouter *blockSelf = self;
+    [infoTask setCompletionHandler:^(RCRouterInfo *routerInfo, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf notifyDidUpdateRouterInfo];
+        }
+        
+    }];
     self.routerInfoTask = infoTask;
+    
     [self updateRouterInfo];
     
     //Schedule periodic tasks
@@ -118,9 +145,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)addPeriodicTasks
 {
-    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-    echoTask.frequency = 1;
-    [self.taskManager addTask:echoTask];
+//    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+//    echoTask.frequency = 1;
+//    [self.taskManager addTask:echoTask];
 }
 
 //=========================================================================

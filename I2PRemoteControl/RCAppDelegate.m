@@ -13,10 +13,15 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "RCLogFormatter.h"
-#import "RCRouterInfoTask.h"
 #import "RCRouterInfo.h"
 
 //=========================================================================
+
+#define TIME_INTERVAL_MINUTE    60
+#define TIME_INTERVAL_HOUR      (TIME_INTERVAL_MINUTE * 60)
+#define TIME_INTERVAL_DAY       (TIME_INTERVAL_HOUR * 24)
+#define TIME_INTERVAL_HALF_YEAR (TIME_INTERVAL_DAY * 182)
+#define TIME_INTERVAL_YEAR      (TIME_INTERVAL_DAY * 365)
 
 //Should correspond to the statusBarMenu tags in MainMenu.xib
 typedef NS_ENUM(NSUInteger, RCMenuItemTag)
@@ -29,10 +34,54 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 @interface RCAppDelegate ()
 @property (nonatomic) RCRouter *router;
 @property (nonatomic) NSStatusItem *statusBarItem;
+@property (nonatomic) NSTimer *updateUITimer;
 @end
 
 //=========================================================================
 @implementation RCAppDelegate
+//=========================================================================
+
+- (void)dealloc
+{
+    [self unregisterForNotifications];
+}
+
+//=========================================================================
+
+- (void)setUpdateUITimer:(NSTimer *)updateUITimer
+{
+    if (_updateUITimer != nil)
+    {
+        [_updateUITimer invalidate];
+    }
+
+    _updateUITimer = updateUITimer;
+}
+
+//=========================================================================
+
+- (BOOL)isRunningUnitTests
+{
+	return NSClassFromString(@"XCTestRun") != nil;
+}
+
+//=========================================================================
+
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(routerDidUpdateRouterInfo:)
+                                                 name:RCRouterDidUpdateRouterInfoNotification
+                                               object:nil];
+}
+
+//=========================================================================
+
+- (void)unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //=========================================================================
 
 - (void)initializeLogging
@@ -84,10 +133,32 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
 //=========================================================================
 
-- (NSString *)durationStringWithDurationInSec:(long)duration
+- (NSString *)uptimeStringForInterval:(NSTimeInterval)interval
 {
-    //TODO: Implement it
-    return [NSString stringWithFormat:@"%li sec", duration];
+    NSString *str = @"";
+
+	if (interval < TIME_INTERVAL_MINUTE)
+	{
+        int secs = interval;
+        str = [NSString stringWithFormat:@"%i %@", secs, MyLocalStr(@"kSecondsShortAbbr")];
+	}
+	else if (interval >= TIME_INTERVAL_MINUTE && interval < TIME_INTERVAL_HOUR)
+	{
+        int mins = interval / TIME_INTERVAL_MINUTE;
+        str = [NSString stringWithFormat:@"%i %@", mins, MyLocalStr(@"kMinutesShortAbbr")];
+	}
+	else if (interval >= TIME_INTERVAL_HOUR && interval < TIME_INTERVAL_DAY)
+	{
+        int hours = interval / TIME_INTERVAL_HOUR;
+        str = [NSString stringWithFormat:@"%i %@", hours, MyLocalStr(@"kHoursShortAbbr")];
+	}
+	else
+	{
+        int days = interval / TIME_INTERVAL_DAY;
+        str = [NSString stringWithFormat:@"%i %@", days, MyLocalStr(@"kDaysShortAbbr")];
+	}
+    
+	return str;
 }
 
 //=========================================================================
@@ -96,30 +167,51 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     //Update router version
     NSMenuItem *item = [self.statusBarItem.menu itemWithTag:kRouterVersionMenuTag];
-    NSString *strValue = self.router.routerInfoTask.routerInfo.routerVersion;
+    NSString *strValue = self.router.routerInfo.routerVersion;
     [self menuItem:item setTitleWithFormat:MyLocalStr(@"VersionTitle") value:strValue];
     
     //Update router uptime
     item = [self.statusBarItem.menu itemWithTag:kRouterUptimeMenuTag];
-    long uptime = self.router.routerInfoTask.routerInfo.routerUptime;
+    NSTimeInterval uptime = self.router.routerInfo.estimatedRouterUptime;
     strValue = nil;
     if (uptime > 0)
     {
-        strValue = [self durationStringWithDurationInSec:uptime];
+        strValue = [self uptimeStringForInterval:uptime];
     }
     [self menuItem:item setTitleWithFormat:MyLocalStr(@"UptimeTitle") value:strValue];
 
     //Update router status
     item = [self.statusBarItem.menu itemWithTag:kRouterStatusMenuTag];
-    strValue = self.router.routerInfoTask.routerInfo.routerStatus;
+    strValue = self.router.routerInfo.routerStatus;
     [self menuItem:item setTitleWithFormat:MyLocalStr(@"StatusTitle") value:strValue];
 }
 
 //=========================================================================
 
+- (IBAction)shutdown:(id)sender
+{
+    DDLogInfo(@"Shutdown");
+}
+
+//=========================================================================
+
+- (IBAction)restart:(id)sender
+{
+    DDLogInfo(@"Restart");
+}
+
+//=========================================================================
+#pragma mark NSApplicationDelegate
+//=========================================================================
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    if ([self isRunningUnitTests])
+        return;
+    
     [self initializeLogging];
+    
+    [self registerForNotifications];
     [self addStatusBarItem];
     
     RCSessionConfig *config = [RCSessionConfig defaultConfig];
@@ -138,19 +230,53 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 }
 
 //=========================================================================
+#pragma mark NSMenuDelegate
+//=========================================================================
 
-- (IBAction)shutdown:(id)sender
+- (void)menuWillOpen:(NSMenu *)menu
 {
-    DDLogInfo(@"Shutdown");
+    if (menu != self.statusBarMenu)
+        return;
+    
+    self.updateUITimer = [NSTimer timerWithTimeInterval:1.0
+                                                 target:self
+                                               selector:@selector(updateTimerFired:)
+                                               userInfo:nil
+                                                repeats:YES];
+    
+    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
+    [[NSRunLoop currentRunLoop] addTimer:self.updateUITimer
+                                 forMode:NSRunLoopCommonModes];
 }
 
 //=========================================================================
 
-- (IBAction)restart:(id)sender
+- (void)menuDidClose:(NSMenu *)menu
 {
-    DDLogInfo(@"Restart");
+    if (menu != self.statusBarMenu)
+        return;
+    
+    //Stop updating UI
+    self.updateUITimer = nil;
+}
+
+//=========================================================================
+
+- (void)updateTimerFired:(NSTimer *)timer
+{
+    [self updateGUI];
+}
+
+//=========================================================================
+#pragma mark Notifications
+//=========================================================================
+
+- (void)routerDidUpdateRouterInfo:(NSNotification *)notification
+{
+    [self updateGUI];
 }
 
 //=========================================================================
 @end
 //=========================================================================
+

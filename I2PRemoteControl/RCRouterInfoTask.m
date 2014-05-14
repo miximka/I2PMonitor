@@ -26,6 +26,18 @@
 
 //=========================================================================
 
+- (void)didFinishExecutionWithError:(NSError *)error
+{
+    [super didFinishExecutionWithError:error];
+    
+    if (self.completionHandler != nil)
+    {
+        self.completionHandler(self.routerInfo, error);
+    }
+}
+
+//=========================================================================
+
 - (void)execute
 {
     DDLogDebug(@"Send router info request");

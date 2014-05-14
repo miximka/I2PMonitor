@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 //=========================================================================
-@interface RCAppDelegate : NSObject <NSApplicationDelegate>
+@interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 //=========================================================================
 
 @property (assign) IBOutlet NSWindow *window;
@@ -17,6 +17,12 @@
 
 - (IBAction)shutdown:(id)sender;
 - (IBAction)restart:(id)sender;
+
+//=========================================================================
+#pragma mark Unit Tests
+//=========================================================================
+
+- (NSString *)uptimeStringForInterval:(NSTimeInterval)interval;
 
 //=========================================================================
 @end

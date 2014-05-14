@@ -14,7 +14,6 @@
         <customObject id="Voe-Tx-rLC" customClass="RCAppDelegate">
             <connections>
                 <outlet property="statusBarMenu" destination="DMD-V3-BaM" id="7di-On-nZy"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -667,17 +666,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="I2PRemoteControl" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-        </window>
-        <menu id="DMD-V3-BaM">
+        <menu id="DMD-V3-BaM" userLabel="Status Bar Menu">
             <items>
                 <menuItem title="RouterVersion" id="Etd-qT-tDe">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -702,6 +691,9 @@
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="sVU-dN-h2Y"/>
+            </connections>
         </menu>
     </objects>
 </document>

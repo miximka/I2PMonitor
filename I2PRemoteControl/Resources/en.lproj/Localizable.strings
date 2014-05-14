@@ -9,3 +9,8 @@
 "VersionTitle" = "Version: %@";
 "StatusTitle" = "Status: %@";
 "UptimeTitle" = "Uptime: %@";
+
+"kSecondsShortAbbr" = "secs";
+"kMinutesShortAbbr" = "mins";
+"kHoursShortAbbr" = "hours";
+"kDaysShortAbbr" = "days";

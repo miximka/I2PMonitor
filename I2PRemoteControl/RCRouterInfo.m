@@ -22,6 +22,17 @@
 
 //=========================================================================
 
+- (NSTimeInterval)estimatedRouterUptime
+{
+    NSTimeInterval uptimeInSec = self.routerUptime / 1000;
+    NSDate *startupDate = [[NSDate date] dateByAddingTimeInterval:-uptimeInSec];
+    NSTimeInterval estimatedUptime = [[NSDate date] timeIntervalSinceDate:startupDate];
+    
+    return estimatedUptime;
+}
+
+//=========================================================================
+
 - (NSString *)description
 {
     NSString *descr = [NSString stringWithFormat:@"Router status: %@, uptime: %lu, version: %@", self.routerStatus, self.routerUptime, self.routerVersion];

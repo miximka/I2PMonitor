@@ -31,11 +31,14 @@
         _routerProxy = routerProxy;
         _allTasks = [NSMutableArray new];
         
-        _pollTimer = [NSTimer scheduledTimerWithTimeInterval:POLL_TIME_INTERVAL
-                                                      target:self
-                                                    selector:@selector(pollTimerFired:)
-                                                    userInfo:nil
-                                                     repeats:YES];
+        _pollTimer = [NSTimer timerWithTimeInterval:POLL_TIME_INTERVAL
+                                             target:self
+                                           selector:@selector(pollTimerFired:)
+                                           userInfo:nil
+                                            repeats:YES];
+        
+        //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
+        [[NSRunLoop currentRunLoop] addTimer:_pollTimer forMode:NSRunLoopCommonModes];
     }
     return self;
 }
@@ -58,6 +61,8 @@
 
 - (void)addTask:(RCTask *)task
 {
+    NSAssert([self.tasks containsObject:task] == NO, @"Task already added");
+    
     [task setRouterProxy:self.routerProxy];
     [task setParentManager:self];
     
@@ -100,6 +105,10 @@
         if (shouldStart)
         {
             [tasksToStart addObject:each];
+        }
+        else
+        {
+            DDLogInfo(@"Task: %@, %i, %i", each.identifier, [each isExecuting], isDue);
         }
     }
     
