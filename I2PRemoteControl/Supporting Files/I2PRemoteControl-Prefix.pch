@@ -9,3 +9,5 @@
 #endif
 
 #import "RCLogging.h"
+
+#define	MyLocalStr(str)				NSLocalizedString(str, @"")

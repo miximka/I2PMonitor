@@ -8,8 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+//=========================================================================
 @interface RCAppDelegate : NSObject <NSApplicationDelegate>
+//=========================================================================
 
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSMenu *statusBarMenu;
 
+- (IBAction)shutdown:(id)sender;
+- (IBAction)restart:(id)sender;
+
+//=========================================================================
 @end
+//=========================================================================
