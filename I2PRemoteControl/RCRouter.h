@@ -30,6 +30,9 @@ extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 - (void)start;
 - (void)stop;
 
+/**
+    Contains basic infos (router version, uptime, status)
+ */
 @property (nonatomic, readonly) RCRouterInfo *routerInfo;
 
 /**

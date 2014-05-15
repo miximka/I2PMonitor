@@ -303,6 +303,8 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogInfo(@"Stop polling router");
     
+    self.routerInfoTask = nil;
+    
     //Remove remaining tasks from manager
     [self.taskManager removeAllTasks];
     self.taskManager = nil;
