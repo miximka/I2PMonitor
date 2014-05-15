@@ -22,6 +22,8 @@
 #define CLIENT_API_VERSION 1
 #define DEFAULT_PASSWORD @"itoopie"
 
+#define STATE_ACTIVE            @"Active"
+
 //State Machine Events
 #define EVENT_START             @"EventStart"
 #define EVENT_AUTH_FAILED       @"EventAuthFailed"
@@ -98,7 +100,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
         
     }];
 
-    TKState *activeState = [TKState stateWithName:@"Active"];
+    TKState *activeState = [TKState stateWithName:STATE_ACTIVE];
     [activeState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
         [self startActivity];
@@ -303,11 +305,15 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogInfo(@"Stop polling router");
     
-    self.routerInfoTask = nil;
-    
     //Remove remaining tasks from manager
     [self.taskManager removeAllTasks];
     self.taskManager = nil;
+
+    //Invalidate router info
+    self.routerInfoTask = nil;
+
+    //Send notification to let UI know the router info has been changed
+    [self notifyDidUpdateRouterInfo];
 }
 
 //=========================================================================
@@ -315,6 +321,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (RCRouterInfo *)routerInfo
 {
     return self.routerInfoTask.routerInfo;
+}
+
+//=========================================================================
+
+- (BOOL)isActive
+{
+    return [self.stateMachine isInState:STATE_ACTIVE];
 }
 
 //=========================================================================

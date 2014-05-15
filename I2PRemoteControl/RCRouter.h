@@ -25,6 +25,11 @@ extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 @property (nonatomic, readonly) RCSessionConfig *sessionConfig;
 
 /**
+    Returns YES if session to the router is active
+ */
+- (BOOL)isActive;
+
+/**
     Entry point. Authenticates with router and starts updating data.
  */
 - (void)start;

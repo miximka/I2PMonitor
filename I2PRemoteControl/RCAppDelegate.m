@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     //Create status bar item
 	NSStatusItem *item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    NSImage *image = [NSImage imageNamed:@"StatusBarIcon"];
+    NSImage *image = [NSImage imageNamed:@"StatusBarIcon_Inactive"];
     [item setImage:image];
     [item setHighlightMode:YES];
     [item setMenu:self.statusBarMenu];
@@ -163,8 +163,30 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
 //=========================================================================
 
+- (void)updateStatusBarIcon
+{
+    NSString *imageName = @"StatusBarIcon_Inactive";
+    if ([self.router isActive])
+    {
+        imageName = @"StatusBarIcon";
+    }
+    
+    NSImage *image = [NSImage imageNamed:imageName];
+    
+    if (self.statusBarItem.image != image)
+    {
+        //Update image
+        self.statusBarItem.image = image;
+    }
+}
+
+//=========================================================================
+
 - (void)updateGUI
 {
+    //Update status bar icon
+    [self updateStatusBarIcon];
+    
     //Update router version
     NSMenuItem *item = [self.statusBarItem.menu itemWithTag:kRouterVersionMenuTag];
     NSString *strValue = self.router.routerInfo.routerVersion;
