@@ -118,10 +118,6 @@
         {
             [tasksToStart addObject:each];
         }
-        else
-        {
-            DDLogInfo(@"Task: %@, %i, %i", each.identifier, [each isExecuting], isDue);
-        }
     }
     
     [self startTasks:tasksToStart];
@@ -138,12 +134,17 @@
 #pragma RCRouterTaskManager (Private)
 //=========================================================================
 
-- (void)taskDidFinishExecution:(RCTask *)task
+- (void)taskDidFinishExecution:(RCTask *)task withError:(NSError *)error
 {
     if (!task.isRecurring)
     {
         //Remove task automatically
         [self removeTask:task];
+    }
+    
+    if (error != nil)
+    {
+        [self.delegate routerTaskManager:self taskDidFail:task withError:error];
     }
 }
 

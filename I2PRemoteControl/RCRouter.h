@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RCRouterTaskManager.h"
 
 //=========================================================================
 
@@ -16,7 +17,7 @@
 extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 
 //=========================================================================
-@interface RCRouter : NSObject
+@interface RCRouter : NSObject <RCRouterTaskManagerDelegate>
 //=========================================================================
 
 - (instancetype)initWithSessionConfig:(RCSessionConfig *)sessionConfig;

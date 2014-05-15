@@ -9,7 +9,6 @@
 #import "RCRouter.h"
 #import "RCRouterProxy.h"
 #import "RCSessionConfig.h"
-#import "RCRouterTaskManager.h"
 #import "RCRouterEchoTask.h"
 #import "RCRouterInfoTask.h"
 #import "TKStateMachine.h"
@@ -28,6 +27,8 @@
 #define EVENT_AUTH_FAILED       @"EventAuthFailed"
 #define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
 #define EVENT_RETRY_AUTH        @"EventRetryAuth"
+#define EVENT_ERROR             @"EventError"
+#define EVENT_STOP              @"EventStop"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
 
@@ -103,6 +104,11 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
         [self startActivity];
         
     }];
+    [activeState setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self stopActivity];
+        
+    }];
 
     [stateMachine addStates:@[idleState,
                               authenticatingState,
@@ -113,14 +119,18 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     //Initialize Events
     
     TKEvent *startEvent = [TKEvent eventWithName:EVENT_START transitioningFromStates:@[idleState] toState:authenticatingState];
-    TKEvent *authFailureEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
+    TKEvent *authErrorEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
     TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
     TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
+    TKEvent *errorEvent = [TKEvent eventWithName:EVENT_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
+    TKEvent *stopEvent = [TKEvent eventWithName:EVENT_STOP transitioningFromStates:@[activeState] toState:idleState];
     
     [stateMachine addEvents:@[startEvent,
-                              authFailureEvent,
+                              authErrorEvent,
                               authSucceessEvent,
-                              retryAuthEvent]];
+                              retryAuthEvent,
+                              errorEvent,
+                              stopEvent]];
     
     //Idle state is the initial state
     [stateMachine setInitialState:[stateMachine stateNamed:@"Idle"]];
@@ -177,6 +187,26 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     DDLogInfo(@"Retry authentication...");
     
     BOOL success = [self.stateMachine fireEvent:EVENT_RETRY_AUTH userInfo:nil error:nil];
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventError:(NSError *)error
+{
+    DDLogInfo(@"Error occurred: %@", error);
+    
+    BOOL success = [self.stateMachine fireEvent:EVENT_ERROR userInfo:nil error:nil];
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventStop
+{
+    DDLogInfo(@"Disconnect from router");
+    BOOL success = [self.stateMachine fireEvent:EVENT_STOP userInfo:nil error:nil];
+    
     return success;
 }
 
@@ -243,8 +273,10 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     DDLogInfo(@"Start polling router");
     
     //Create task manager
-    self.taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
-
+    RCRouterTaskManager *taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
+    [taskManager setDelegate:self];
+    self.taskManager = taskManager;
+    
     //Schedule router info update
     RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
 
@@ -263,6 +295,17 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
     //Schedule periodic tasks
     [self addPeriodicTasks];
+}
+
+//=========================================================================
+
+- (void)stopActivity
+{
+    DDLogInfo(@"Stop polling router");
+    
+    //Remove remaining tasks from manager
+    [self.taskManager removeAllTasks];
+    self.taskManager = nil;
 }
 
 //=========================================================================
@@ -289,6 +332,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)stop
 {
+    [self eventStop];
 }
 
 //=========================================================================
@@ -309,19 +353,15 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)addPeriodicTasks
 {
-//    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-//    echoTask.frequency = 1;
-//    [self.taskManager addTask:echoTask];
+    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+    echoTask.frequency = 1;
+    [self.taskManager addTask:echoTask];
 }
 
 //=========================================================================
 
 - (void)stateMachineDidTerminate
 {
-    //Remove remaining tasks from manager
-    [self.taskManager removeAllTasks];
-    self.taskManager = nil;
-
     //Release state machine when finished (to prevent retain cycle)
     self.stateMachine = nil;
 }
@@ -333,6 +373,15 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (void)authRetryTimerFired:(NSTimer *)timer
 {
     [self eventRetryAuthentication];
+}
+
+//=========================================================================
+#pragma mark RCRouterTaskManagerDelegate
+//=========================================================================
+
+- (void)routerTaskManager:(RCRouterTaskManager *)manager taskDidFail:(RCTask *)task withError:(NSError *)error
+{
+    [self eventError:error];
 }
 
 //=========================================================================

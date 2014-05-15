@@ -14,7 +14,7 @@
 @interface RCRouterTaskManager (Private)
 //=========================================================================
 
-- (void)taskDidFinishExecution:(RCTask *)task;
+- (void)taskDidFinishExecution:(RCTask *)task withError:(NSError *)error;
 
 //=========================================================================
 @end

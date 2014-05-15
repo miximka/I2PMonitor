@@ -87,7 +87,7 @@
     self.isExecuting = NO;
     self.lastError = error;
     
-    [self.parentManager taskDidFinishExecution:self];
+    [self.parentManager taskDidFinishExecution:self withError:error];
 }
 
 //=========================================================================
