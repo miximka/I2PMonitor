@@ -12,6 +12,12 @@
 #import "RCSessionConfig.h"
 
 //=========================================================================
+
+@interface RCRouterManager ()
+@property (nonatomic) RCRouter *router;
+@end
+
+//=========================================================================
 @implementation RCRouterManager
 //=========================================================================
 
@@ -20,15 +26,38 @@
     self = [super init];
     if (self)
     {
-        RCRouter *router = [self loadRouter];
-        [router start];
+        [self registerForNotifications];
+        [self restartRouter];
     }
     return self;
 }
 
 //=========================================================================
 
-- (RCRouter *)loadRouter
+- (void)dealloc
+{
+    [self unregisterFromNotifications];
+}
+
+//=========================================================================
+
+- (void)registerForNotifications
+{
+    //Register for preferences change notifications
+    [RCPrefs addObserver:self forPreferenceKey:PREFS_KEY_ROUTER_HOST];
+    [RCPrefs addObserver:self forPreferenceKey:PREFS_KEY_ROUTER_PORT];
+}
+
+//=========================================================================
+
+- (void)unregisterFromNotifications
+{
+    [RCPrefs removeObserver:self];
+}
+
+//=========================================================================
+
+- (RCRouter *)initializedRouter
 {
     RCSessionConfig *config = [[RCSessionConfig alloc] initWithHost:[RCPrefs routerHost]
                                                                port:[RCPrefs routerPort]];
@@ -39,8 +68,35 @@
 
 //=========================================================================
 
-- (void)saveRouter:(RCRouter *)router
+- (void)restartRouter
 {
+    if (self.router != nil)
+    {
+        //Stop current router
+        [self.router terminate];
+    }
+
+    //Create new router based on currect connection settings
+    RCRouter *router = [self initializedRouter];
+    
+    //Remember router
+    [self setRouter:router];
+    
+    //Start router
+    [router start];
+
+    //Notify delegate
+    [self.delegate managerDidChangeRouter:self];
+}
+
+//=========================================================================
+#pragma mark RCPreferencesObserver
+//=========================================================================
+
+- (void)preferenceChangedForKey:(NSString *)aKey
+{
+    //Host or port have been changed
+    [self restartRouter];
 }
 
 //=========================================================================

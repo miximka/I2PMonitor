@@ -125,8 +125,12 @@
 
 - (void)setObject:(id)anObj forKey:(NSString *)aKey
 {
-	[[NSUserDefaults standardUserDefaults] setObject:anObj forKey:aKey];
-	[self notifyObserversWithKey:aKey];
+    id currentValue = [self objectForKey:aKey];
+    if (![currentValue isEqual:anObj])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:anObj forKey:aKey];
+        [self notifyObserversWithKey:aKey];
+    }
 }
 
 //=========================================================================

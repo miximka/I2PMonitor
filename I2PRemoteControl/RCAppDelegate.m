@@ -11,7 +11,6 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "RCLogFormatter.h"
-#import "RCRouterManager.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCPreferencesWindowController.h"
@@ -254,11 +253,11 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     
     //Initialize router manager
     RCRouterManager *routerManager = [[RCRouterManager alloc] init];
+    [routerManager setDelegate:self];
     self.routerManager = routerManager;
     
-    //Obtain router instance
+    //Obtain router instance immediately
     self.currentRouter = self.routerManager.router;
-    
     [self updateGUI];
 }
 
@@ -300,6 +299,17 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
 - (void)updateTimerFired:(NSTimer *)timer
 {
+    [self updateGUI];
+}
+
+//=========================================================================
+#pragma mark RCRouterManagerDelegate
+//=========================================================================
+
+- (void)managerDidChangeRouter:(RCRouterManager *)manager
+{
+    //Update current router instance
+    self.currentRouter = self.routerManager.router;
     [self updateGUI];
 }
 

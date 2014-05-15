@@ -30,7 +30,6 @@
 #define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
 #define EVENT_RETRY_AUTH        @"EventRetryAuth"
 #define EVENT_ERROR             @"EventError"
-#define EVENT_STOP              @"EventStop"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
 
@@ -71,15 +70,6 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     //Initialize States
     
     TKState *idleState = [TKState stateWithName:@"Idle"];
-    [idleState setDidEnterStateBlock:^(TKState *state, TKTransition *transition)
-     {
-         if (transition != nil)
-         {
-             //Sync processing completed
-             [self stateMachineDidTerminate];
-         }
-     }];
-
     TKState *authenticatingState = [TKState stateWithName:@"Authenticating"];
     [authenticatingState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
@@ -125,14 +115,12 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
     TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
     TKEvent *errorEvent = [TKEvent eventWithName:EVENT_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
-    TKEvent *stopEvent = [TKEvent eventWithName:EVENT_STOP transitioningFromStates:@[activeState] toState:idleState];
     
     [stateMachine addEvents:@[startEvent,
                               authErrorEvent,
                               authSucceessEvent,
                               retryAuthEvent,
-                              errorEvent,
-                              stopEvent]];
+                              errorEvent]];
     
     //Idle state is the initial state
     [stateMachine setInitialState:[stateMachine stateNamed:@"Idle"]];
@@ -154,10 +142,24 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
+- (BOOL)fireEvent:(NSString *)event
+{
+    BOOL success = [self.stateMachine fireEvent:event userInfo:nil error:nil];
+
+    if (!success)
+    {
+        DDLogWarn(@"Event has been ignored: %@. Current state: %@", event, self.stateMachine.currentState);
+    }
+    
+    return success;
+}
+
+//=========================================================================
+
 - (BOOL)eventStart
 {
     DDLogInfo(@"Connect to router...");
-    BOOL success = [self.stateMachine fireEvent:EVENT_START userInfo:nil error:nil];
+    BOOL success = [self fireEvent:EVENT_START];
 
     return success;
 }
@@ -168,7 +170,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogError(@"Authentication failed with error: %@", error);
     
-    BOOL success = [self.stateMachine fireEvent:EVENT_AUTH_FAILED userInfo:nil error:nil];
+    BOOL success = [self fireEvent:EVENT_AUTH_FAILED];
     return success;
 }
 
@@ -178,7 +180,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogInfo(@"Authentication succeeded");
 
-    BOOL success = [self.stateMachine fireEvent:EVENT_AUTH_SUCCEDED userInfo:nil error:nil];
+    BOOL success = [self fireEvent:EVENT_AUTH_SUCCEDED];
     return success;
 }
 
@@ -188,7 +190,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogInfo(@"Retry authentication...");
     
-    BOOL success = [self.stateMachine fireEvent:EVENT_RETRY_AUTH userInfo:nil error:nil];
+    BOOL success = [self fireEvent:EVENT_RETRY_AUTH];
     return success;
 }
 
@@ -198,17 +200,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogInfo(@"Error occurred: %@", error);
     
-    BOOL success = [self.stateMachine fireEvent:EVENT_ERROR userInfo:nil error:nil];
-    return success;
-}
-
-//=========================================================================
-
-- (BOOL)eventStop
-{
-    DDLogInfo(@"Disconnect from router");
-    BOOL success = [self.stateMachine fireEvent:EVENT_STOP userInfo:nil error:nil];
-    
+    BOOL success = [self fireEvent:EVENT_ERROR];
     return success;
 }
 
@@ -345,9 +337,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (void)stop
+- (void)terminate
 {
-    [self eventStop];
+    //Release state machine when finished (to prevent retain cycle)
+    self.stateMachine = nil;
+
+    //Stop all tasks
+    [self stopActivity];
 }
 
 //=========================================================================
@@ -371,14 +367,6 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
     echoTask.frequency = 1;
     [self.taskManager addTask:echoTask];
-}
-
-//=========================================================================
-
-- (void)stateMachineDidTerminate
-{
-    //Release state machine when finished (to prevent retain cycle)
-    self.stateMachine = nil;
 }
 
 //=========================================================================

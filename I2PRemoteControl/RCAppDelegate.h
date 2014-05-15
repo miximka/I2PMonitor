@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "RCRouterManager.h"
 
 //=========================================================================
-@interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
+@interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate, RCRouterManagerDelegate>
 //=========================================================================
 
 @property (assign) IBOutlet NSWindow *window;

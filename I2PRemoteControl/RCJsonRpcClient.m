@@ -21,6 +21,9 @@
         //I2P Router has self-signed certificate but AFNetworking's certificate evaluation mechanism does not allow this per default.
         //TODO: Disable invalid certificates per default, but let user decide whether he wants to trust such certificates if one is found (like the all browser do).
         self.securityPolicy.allowInvalidCertificates = YES;
+
+        //Don't wait too long for a response. We better retry.
+        self.requestSerializer.timeoutInterval = 5;
         
         NSSet *acceptableContentTypes = self.responseSerializer.acceptableContentTypes;
         if (![acceptableContentTypes containsObject:@"application/json"])

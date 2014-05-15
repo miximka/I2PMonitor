@@ -24,7 +24,7 @@
 
 - (instancetype)initWithRouterProxy:(RCRouterProxy *)routerProxy;
 
-@property (nonatomic) id<RCRouterTaskManagerDelegate> delegate;
+@property (nonatomic, weak) id<RCRouterTaskManagerDelegate> delegate;
 
 @property (nonatomic, readonly) RCRouterProxy *routerProxy;
 @property (nonatomic, readonly) NSArray *tasks;

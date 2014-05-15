@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RCRouterTaskManager.h"
 
-//=========================================================================
-
 @class RCSessionConfig;
 @class RCRouterInfo;
 
@@ -33,7 +31,7 @@ extern NSString * const RCRouterDidUpdateRouterInfoNotification;
     Entry point. Authenticates with router and starts updating data.
  */
 - (void)start;
-- (void)stop;
+- (void)terminate;
 
 /**
     Contains basic infos (router version, uptime, status)
