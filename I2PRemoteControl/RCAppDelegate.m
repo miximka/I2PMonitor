@@ -7,12 +7,12 @@
 //
 
 #import "RCAppDelegate.h"
-#import "RCRouter.h"
-#import "RCSessionConfig.h"
 #import "DDASLLogger.h"
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "RCLogFormatter.h"
+#import "RCRouterManager.h"
+#import "RCRouter.h"
 #import "RCRouterInfo.h"
 
 //=========================================================================
@@ -32,9 +32,10 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 };
 
 @interface RCAppDelegate ()
-@property (nonatomic) RCRouter *router;
 @property (nonatomic) NSStatusItem *statusBarItem;
 @property (nonatomic) NSTimer *updateUITimer;
+@property (nonatomic) RCRouterManager *routerManager;
+@property (nonatomic) RCRouter *currentRouter;
 @end
 
 //=========================================================================
@@ -166,7 +167,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 - (void)updateStatusBarIcon
 {
     NSString *imageName = @"StatusBarIcon_Inactive";
-    if ([self.router isActive])
+    if ([self.currentRouter isActive])
     {
         imageName = @"StatusBarIcon";
     }
@@ -189,12 +190,12 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     
     //Update router version
     NSMenuItem *item = [self.statusBarItem.menu itemWithTag:kRouterVersionMenuTag];
-    NSString *strValue = self.router.routerInfo.routerVersion;
+    NSString *strValue = self.currentRouter.routerInfo.routerVersion;
     [self menuItem:item setTitleWithFormat:MyLocalStr(@"VersionTitle") value:strValue];
     
     //Update router uptime
     item = [self.statusBarItem.menu itemWithTag:kRouterUptimeMenuTag];
-    NSTimeInterval uptime = self.router.routerInfo.estimatedRouterUptime;
+    NSTimeInterval uptime = self.currentRouter.routerInfo.estimatedRouterUptime;
     
     strValue = nil;
     if (uptime > 0)
@@ -205,7 +206,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
     //Update router status
     item = [self.statusBarItem.menu itemWithTag:kRouterStatusMenuTag];
-    strValue = self.router.routerInfo.routerStatus;
+    strValue = self.currentRouter.routerInfo.routerStatus;
     [self menuItem:item setTitleWithFormat:MyLocalStr(@"StatusTitle") value:strValue];
 }
 
@@ -234,13 +235,15 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     
     [self initializeLogging];
     
-    [self registerForNotifications];
     [self addStatusBarItem];
+    [self registerForNotifications];
     
-    RCSessionConfig *config = [RCSessionConfig defaultConfig];
+    //Initialize router manager
+    RCRouterManager *routerManager = [[RCRouterManager alloc] init];
+    self.routerManager = routerManager;
     
-    _router = [[RCRouter alloc] initWithSessionConfig:config];
-    [_router start];
+    //Obtain router instance
+    self.currentRouter = self.routerManager.router;
     
     [self updateGUI];
 }
@@ -265,7 +268,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
                                  forMode:NSRunLoopCommonModes];
     
     //Trigger router info update immediately
-    [self.router updateRouterInfo];
+    [self.currentRouter updateRouterInfo];
 }
 
 //=========================================================================

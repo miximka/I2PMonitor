@@ -12,13 +12,10 @@
 @interface RCSessionConfig : NSObject
 //=========================================================================
 
-@property (nonatomic, copy) NSString *host;
-@property (nonatomic, assign) NSUInteger port;
+- (instancetype)initWithHost:(NSString *)host port:(NSUInteger)port;
 
-/**
-    Returns configuration with "localhost" host and port 7650
- */
-+ (instancetype)defaultConfig;
+@property (nonatomic) NSString *host;
+@property (nonatomic) NSUInteger port;
 
 //=========================================================================
 @end

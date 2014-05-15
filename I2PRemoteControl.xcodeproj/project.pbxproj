@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022711924E01C0025273D /* RCApplicationPreferences.m */; };
+		810022771924E09A0025273D /* RCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022761924E09A0025273D /* RCPreferences.m */; };
 		812687A419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687B019202666002A0571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687AF19202666002A0571 /* main.m */; };
 		812687B719202666002A0571 /* RCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687B619202666002A0571 /* RCAppDelegate.m */; };
@@ -47,6 +49,10 @@
 /* Begin PBXFileReference section */
 		7E4CED1204DC40EC8CB7F0DA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		810022701924E01C0025273D /* RCApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCApplicationPreferences.h; sourceTree = "<group>"; };
+		810022711924E01C0025273D /* RCApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCApplicationPreferences.m; sourceTree = "<group>"; };
+		810022751924E09A0025273D /* RCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPreferences.h; sourceTree = "<group>"; };
+		810022761924E09A0025273D /* RCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPreferences.m; sourceTree = "<group>"; };
 		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687A319202666002A0571 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		812687A619202666002A0571 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -118,6 +124,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8100226A1924D0CD0025273D /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				810022751924E09A0025273D /* RCPreferences.h */,
+				810022761924E09A0025273D /* RCPreferences.m */,
+				810022701924E01C0025273D /* RCApplicationPreferences.h */,
+				810022711924E01C0025273D /* RCApplicationPreferences.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		8126879719202666002A0571 = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +282,7 @@
 				81498C0F19227EA8004CDA17 /* Router Tasks */,
 				8194CC08192172D800759F92 /* RPC Client */,
 				8194CC041921714F00759F92 /* Logging */,
+				8100226A1924D0CD0025273D /* Preferences */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -404,7 +422,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */,
 				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,
+				810022771924E09A0025273D /* RCPreferences.m in Sources */,
 				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
 				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
 				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
