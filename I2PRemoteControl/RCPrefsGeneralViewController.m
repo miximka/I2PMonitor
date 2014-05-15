@@ -13,6 +13,24 @@
 //=========================================================================
 @implementation RCPrefsGeneralViewController
 //=========================================================================
+
+- (IBAction)startOnSystemStartup:(id)sender
+{
+    NSInteger state = [self.startOnSystemStartupButton state];
+    [RCPrefs setStartOnSystemStartup:state];
+}
+
+//=========================================================================
+
+- (IBAction)resetToDefaults:(id)sender
+{
+    [RCPrefs removeObjectForKey:PREFS_KEY_ROUTER_HOST];
+    [RCPrefs removeObjectForKey:PREFS_KEY_ROUTER_PORT];
+    
+    [self loadDefaultValuesForHostAndPort];
+}
+
+//=========================================================================
 #pragma mark Overriden methods
 //=========================================================================
 
@@ -23,14 +41,22 @@
 
 //=========================================================================
 
-- (void)loadDefaultValues
+- (void)loadDefaultValuesForHostAndPort
 {
-	[super loadDefaultValues];
-    
     [self.hostTextField setStringValue:[RCPrefs routerHost]];
     
     NSString *port = [NSString stringWithFormat:@"%li", [RCPrefs routerPort]];
     [self.portTextField setStringValue:port];
+}
+
+//=========================================================================
+
+- (void)loadDefaultValues
+{
+	[super loadDefaultValues];
+    
+    [self.startOnSystemStartupButton setState:[RCPrefs startOnSystemStartup]];
+    [self loadDefaultValuesForHostAndPort];
 }
 
 //=========================================================================

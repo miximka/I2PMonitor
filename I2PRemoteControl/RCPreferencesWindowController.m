@@ -110,6 +110,9 @@ enum
 	
 	[super showWindow:sender];
 
+    //Prevent any of the editable fields from being auto-edited when window opens
+    [self.window makeFirstResponder:nil];
+
 	if (![NSApp isActive])
 	{
 		//Application is not active. We need to activate application because otherwize the preferences window

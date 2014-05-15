@@ -18,6 +18,8 @@
 
 - (IBAction)shutdown:(id)sender;
 - (IBAction)restart:(id)sender;
+- (IBAction)openPreferences:(id)sender;
+- (IBAction)quit:(id)sender;
 
 //=========================================================================
 #pragma mark Unit Tests

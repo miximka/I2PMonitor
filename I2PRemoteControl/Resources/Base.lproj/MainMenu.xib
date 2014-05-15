@@ -697,6 +697,12 @@
                         <action selector="openPreferences:" target="Voe-Tx-rLC" id="wDB-Vw-ezq"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Quit I2PRemoteControl" tag="4" id="ceh-VO-Ig1">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quit:" target="Voe-Tx-rLC" id="HRD-2N-qZh"/>
+                    </connections>
+                </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="sVU-dN-h2Y"/>

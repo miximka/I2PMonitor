@@ -12,8 +12,12 @@
 @interface RCPrefsGeneralViewController : RCPrefsBaseViewController
 //=========================================================================
 
+@property (nonatomic, assign) IBOutlet NSButton *startOnSystemStartupButton;
 @property (nonatomic, assign) IBOutlet NSTextField *hostTextField;
 @property (nonatomic, assign) IBOutlet NSTextField *portTextField;
+
+- (IBAction)startOnSystemStartup:(id)sender;
+- (IBAction)resetToDefaults:(id)sender;
 
 //=========================================================================
 @end

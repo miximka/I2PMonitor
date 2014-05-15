@@ -15,6 +15,7 @@
 		810022841924EF9D0025273D /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022831924EF9D0025273D /* Preferences.xib */; };
 		810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022851924EFA50025273D /* PreferencesGeneral.xib */; };
 		8100228C1924F77F0025273D /* RCToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100228B1924F77F0025273D /* RCToolbar.m */; };
+		8100229519255FC60025273D /* RCLoginItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100229419255FC60025273D /* RCLoginItemManager.m */; };
 		812687A419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687B019202666002A0571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687AF19202666002A0571 /* main.m */; };
 		812687B719202666002A0571 /* RCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687B619202666002A0571 /* RCAppDelegate.m */; };
@@ -69,6 +70,8 @@
 		810022851924EFA50025273D /* PreferencesGeneral.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesGeneral.xib; sourceTree = "<group>"; };
 		8100228A1924F77F0025273D /* RCToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCToolbar.h; sourceTree = "<group>"; };
 		8100228B1924F77F0025273D /* RCToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCToolbar.m; sourceTree = "<group>"; };
+		8100229319255FC60025273D /* RCLoginItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLoginItemManager.h; sourceTree = "<group>"; };
+		8100229419255FC60025273D /* RCLoginItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLoginItemManager.m; sourceTree = "<group>"; };
 		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687A319202666002A0571 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		812687A619202666002A0571 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -171,6 +174,15 @@
 				8100228B1924F77F0025273D /* RCToolbar.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		8100229219255FB50025273D /* Login Item */ = {
+			isa = PBXGroup;
+			children = (
+				8100229319255FC60025273D /* RCLoginItemManager.h */,
+				8100229419255FC60025273D /* RCLoginItemManager.m */,
+			);
+			name = "Login Item";
 			sourceTree = "<group>";
 		};
 		8126879719202666002A0571 = {
@@ -323,6 +335,7 @@
 				8194CC1D1922085300759F92 /* RCRouterTaskManager.m */,
 				81498C0F19227EA8004CDA17 /* Router Tasks */,
 				8194CC08192172D800759F92 /* RPC Client */,
+				8100229219255FB50025273D /* Login Item */,
 				8194CC041921714F00759F92 /* Logging */,
 				8100226A1924D0CD0025273D /* Preferences */,
 			);
@@ -471,6 +484,7 @@
 				810022771924E09A0025273D /* RCPreferences.m in Sources */,
 				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
 				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
+				8100229519255FC60025273D /* RCLoginItemManager.m in Sources */,
 				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				8194CC1819217F1900759F92 /* RCTask.m in Sources */,

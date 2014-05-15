@@ -8,26 +8,27 @@
             <connections>
                 <outlet property="hostTextField" destination="Ohu-5o-lX5" id="iiV-pq-YDt"/>
                 <outlet property="portTextField" destination="fZs-4X-5qp" id="KAX-71-peA"/>
+                <outlet property="startOnSystemStartupButton" destination="aRR-VS-uGw" id="Pgs-ny-M1Q"/>
                 <outlet property="view" destination="2" id="14"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <customView id="2" userLabel="General" customClass="CPPreferencesGeneralView">
-            <rect key="frame" x="0.0" y="0.0" width="407" height="125"/>
+            <rect key="frame" x="0.0" y="0.0" width="407" height="223"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="58">
-                    <rect key="frame" x="25" y="88" width="261" height="17"/>
+                    <rect key="frame" x="26" y="117" width="261" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection Settings" id="59">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection Settings to I2P Router" id="59">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="7bn-rF-iTg">
-                    <rect key="frame" x="25" y="52" width="110" height="17"/>
+                    <rect key="frame" x="26" y="81" width="110" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Host:" id="1te-SM-FT0">
                         <font key="font" metaFont="system"/>
@@ -36,7 +37,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="Ohu-5o-lX5">
-                    <rect key="frame" x="141" y="50" width="246" height="22"/>
+                    <rect key="frame" x="142" y="79" width="246" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hg2-Pa-I6j">
                         <font key="font" metaFont="system"/>
@@ -48,7 +49,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="im2-0s-ymu">
-                    <rect key="frame" x="25" y="22" width="110" height="17"/>
+                    <rect key="frame" x="26" y="51" width="110" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Port:" id="f8A-xS-3gA">
                         <font key="font" metaFont="system"/>
@@ -57,7 +58,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="fZs-4X-5qp">
-                    <rect key="frame" x="141" y="20" width="83" height="22"/>
+                    <rect key="frame" x="142" y="49" width="83" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="H2G-zM-DOY">
                         <font key="font" metaFont="system"/>
@@ -68,6 +69,44 @@
                         <outlet property="delegate" destination="-2" id="eMN-aU-MwA"/>
                     </connections>
                 </textField>
+                <button id="aRR-VS-uGw">
+                    <rect key="frame" x="28" y="156" width="351" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Start I2PRemoteControl automatically at login" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="BAI-xK-JoW">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="startOnSystemStartup:" target="-2" id="rSe-CP-BMA"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="chC-rT-JWz">
+                    <rect key="frame" x="18" y="186" width="261" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Startup" id="xN5-Rq-43n">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="Arl-xT-bwV">
+                    <rect key="frame" x="136" y="13" width="147" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset to Defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dda-V5-pPK">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetToDefaults:" target="-2" id="ef9-sx-e5o"/>
+                    </connections>
+                </button>
+                <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="Nvm-TA-Ver">
+                    <rect key="frame" x="20" y="140" width="383" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
             </subviews>
             <connections>
                 <outlet property="ctrl" destination="-2" id="101"/>

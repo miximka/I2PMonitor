@@ -14,6 +14,7 @@
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCPreferencesWindowController.h"
+//#import "RCLoginItemManager.h"
 
 //=========================================================================
 
@@ -238,6 +239,46 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 }
 
 //=========================================================================
+
+- (IBAction)quit:(id)sender
+{
+    [NSApp terminate:self];
+}
+
+//=========================================================================
+
+- (void)showArrowPanel
+{
+//    NSRect statusBarRect = [[self.statusBarItem parentWindow] frame];
+//    NSRect aRect = self.arrowPanel.frame;
+//    aRect.origin.x = statusBarRect.origin.x + statusBarRect.size.width / 2.f - aRect.size.width / 2.f;
+//    aRect.origin.y = statusBarRect.origin.y - aRect.size.height - statusBarRect.size.height;
+//    [self.arrowPanel setFrame:aRect display:YES];
+//    [self.arrowPanel makeKeyAndOrderFront:self];
+}
+
+//=========================================================================
+
+//- (void)addLoginItemIfNeeded
+//{
+//    BOOL isFirstStart = [RCPrefs isFirstStart];
+//    
+//    if (isFirstStart)
+//    {
+//        [RCPrefs setIsFirstStart:NO];
+//        [RCPrefs synchronize];
+//        
+//        RCLoginItemManager *loginItemMgr = [RCLoginItemManager new];
+//        
+//        //Update login item
+//        [loginItemMgr addOrUpdateLoginItem:NO];
+//        
+//        //Show pointer to the login item
+//        [self showArrowPanel];
+//    }
+//}
+
+//=========================================================================
 #pragma mark NSApplicationDelegate
 //=========================================================================
 
@@ -259,6 +300,9 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     //Obtain router instance immediately
     self.currentRouter = self.routerManager.router;
     [self updateGUI];
+    
+    //Add login item if required but missing
+//    [self addLoginItemIfNeeded];
 }
 
 //=========================================================================

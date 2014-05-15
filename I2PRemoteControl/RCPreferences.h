@@ -10,8 +10,10 @@
 
 #define RCPrefs [RCPreferences sharedPreferences]
 
-#define PREFS_KEY_ROUTER_HOST @"RouterHost"
-#define PREFS_KEY_ROUTER_PORT @"RouterPort"
+#define PREFS_KEY_ROUTER_HOST               @"RouterHost"
+#define PREFS_KEY_ROUTER_PORT               @"RouterPort"
+#define PREFS_KEY_FIRST_START               @"FirstStart"
+#define PREFS_KEY_START_ON_SYSTEM_STARTUP   @"StartOnSystemStartup"
 
 //=========================================================================
 @interface RCPreferences : RCApplicationPreferences
@@ -24,6 +26,12 @@
 
 - (NSUInteger)routerPort;
 - (void)setRouterPort:(NSUInteger)port;
+
+- (BOOL)isFirstStart;
+- (void)setIsFirstStart:(BOOL)flag;
+
+- (BOOL)startOnSystemStartup;
+- (void)setStartOnSystemStartup:(BOOL)flag;
 
 //=========================================================================
 @end
