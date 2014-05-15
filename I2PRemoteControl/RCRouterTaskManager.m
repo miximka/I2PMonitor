@@ -82,6 +82,17 @@
 
 //=========================================================================
 
+- (void)removeAllTasks
+{
+    NSArray *tasks = [self.allTasks copy];
+    for (RCTask *task in tasks)
+    {
+        [self removeTask:task];
+    }
+}
+
+//=========================================================================
+
 - (void)startTasks:(NSArray *)tasks
 {
     for (RCTask *each in tasks)

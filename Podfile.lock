@@ -1,35 +1,38 @@
 PODS:
   - AFJSONRPCClient (2.0.0):
     - AFNetworking (~> 2.0)
-  - AFNetworking (2.2.3):
+  - AFNetworking (2.2.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.3):
+  - AFNetworking/NSURLConnection (2.2.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.3):
+  - AFNetworking/NSURLSession (2.2.4):
     - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.3)
-  - AFNetworking/Security (2.2.3)
-  - AFNetworking/Serialization (2.2.3)
+  - AFNetworking/Reachability (2.2.4)
+  - AFNetworking/Security (2.2.4)
+  - AFNetworking/Serialization (2.2.4)
   - CocoaLumberjack (1.8.1):
     - CocoaLumberjack/Extensions
   - CocoaLumberjack/Core (1.8.1)
   - CocoaLumberjack/Extensions (1.8.1):
     - CocoaLumberjack/Core
+  - TransitionKit (2.1.0)
 
 DEPENDENCIES:
   - AFJSONRPCClient (~> 2.0.0)
   - CocoaLumberjack (~> 1.8.1)
+  - TransitionKit (~> 2.1.0)
 
 SPEC CHECKSUMS:
   AFJSONRPCClient: d958b85037eef397f7c3c7657802392b5335583a
-  AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
+  AFNetworking: 01aa7c3aa9a200b94943e54072a4373f14b3d219
   CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
+  TransitionKit: 60b6a2cd9370e471c960b2cdf23b0b2593867625
 
 COCOAPODS: 0.32.1

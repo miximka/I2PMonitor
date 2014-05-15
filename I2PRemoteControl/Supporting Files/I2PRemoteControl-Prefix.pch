@@ -11,3 +11,4 @@
 #import "RCLogging.h"
 
 #define	MyLocalStr(str)				NSLocalizedString(str, @"")
+#define RCInvalidateTimer(x) {[x invalidate]; x = nil;}

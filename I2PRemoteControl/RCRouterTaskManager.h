@@ -22,6 +22,7 @@
 
 - (void)addTask:(RCTask *)task;
 - (void)removeTask:(RCTask *)task;
+- (void)removeAllTasks;
 
 //=========================================================================
 @end

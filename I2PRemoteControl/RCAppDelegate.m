@@ -218,14 +218,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     RCSessionConfig *config = [RCSessionConfig defaultConfig];
     
     _router = [[RCRouter alloc] initWithSessionConfig:config];
-    [_router startSessionWithCompletionHandler:^(BOOL success, NSError *error) {
-        
-        if (!success)
-        {
-            DDLogError(@"Failed to start router: %@", error);
-        }
-        
-    }];
+    [_router start];
     
     [self updateGUI];
 }
@@ -250,7 +243,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
                                  forMode:NSRunLoopCommonModes];
     
     //Trigger router info update immediately
-    DDLogInfo(@"wow");
     [self.router updateRouterInfo];
 }
 

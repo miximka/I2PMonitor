@@ -12,11 +12,22 @@
 #import "RCRouterTaskManager.h"
 #import "RCRouterEchoTask.h"
 #import "RCRouterInfoTask.h"
+#import "TKStateMachine.h"
+#import "TKState.h"
+#import "TKEvent.h"
 
 //=========================================================================
 
+#define RETRY_AUTH_DELAY 2 //Sec
+
 #define CLIENT_API_VERSION 1
 #define DEFAULT_PASSWORD @"itoopie"
+
+//State Machine Events
+#define EVENT_START             @"EventStart"
+#define EVENT_AUTH_FAILED       @"EventAuthFailed"
+#define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
+#define EVENT_RETRY_AUTH        @"EventRetryAuth"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
 
@@ -31,6 +42,8 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @property (nonatomic) RCRouterProxy *proxy;
 @property (nonatomic) RCRouterTaskManager *taskManager;
 @property (nonatomic) RCRouterInfoTask *routerInfoTask;
+@property (nonatomic) TKStateMachine *stateMachine;
+@property (nonatomic) NSTimer *authRetryTimer;
 @end
 
 //=========================================================================
@@ -42,10 +55,214 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     self = [super init];
     if (self)
     {
-        _sessionStatus = kIdle;
         _sessionConfig = sessionConfig;
     }
     return self;
+}
+
+//=========================================================================
+
+- (void)prepareStateMachine:(TKStateMachine *)stateMachine
+{
+    //**********************
+    //Initialize States
+    
+    TKState *idleState = [TKState stateWithName:@"Idle"];
+    [idleState setDidEnterStateBlock:^(TKState *state, TKTransition *transition)
+     {
+         if (transition != nil)
+         {
+             //Sync processing completed
+             [self stateMachineDidTerminate];
+         }
+     }];
+
+    TKState *authenticatingState = [TKState stateWithName:@"Authenticating"];
+    [authenticatingState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self startAuthentication];
+        
+    }];
+
+    TKState *waitingAuthRetryState = [TKState stateWithName:@"WaitingAuthRetry"];
+    [waitingAuthRetryState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self waitForAuthRetry];
+        
+    }];
+    [waitingAuthRetryState setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
+
+        //Invalidate timer, if not yet
+        RCInvalidateTimer(self.authRetryTimer);
+        
+    }];
+
+    TKState *activeState = [TKState stateWithName:@"Active"];
+    [activeState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self startActivity];
+        
+    }];
+
+    [stateMachine addStates:@[idleState,
+                              authenticatingState,
+                              waitingAuthRetryState,
+                              activeState]];
+    
+    //**********************
+    //Initialize Events
+    
+    TKEvent *startEvent = [TKEvent eventWithName:EVENT_START transitioningFromStates:@[idleState] toState:authenticatingState];
+    TKEvent *authFailureEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
+    TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
+    TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
+    
+    [stateMachine addEvents:@[startEvent,
+                              authFailureEvent,
+                              authSucceessEvent,
+                              retryAuthEvent]];
+    
+    //Idle state is the initial state
+    [stateMachine setInitialState:[stateMachine stateNamed:@"Idle"]];
+}
+
+//=========================================================================
+
+- (void)initializeStateMachine
+{
+    TKStateMachine *stateMachine = [[TKStateMachine alloc] init];
+    
+    [self prepareStateMachine:stateMachine];
+    
+    //Activate state machine
+    [stateMachine activate];
+    
+    _stateMachine = stateMachine;
+}
+
+//=========================================================================
+
+- (BOOL)eventStart
+{
+    DDLogInfo(@"Connect to router...");
+    BOOL success = [self.stateMachine fireEvent:EVENT_START userInfo:nil error:nil];
+
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventAuthenticationFailedWithError:(NSError *)error
+{
+    DDLogError(@"Authentication failed with error: %@", error);
+    
+    BOOL success = [self.stateMachine fireEvent:EVENT_AUTH_FAILED userInfo:nil error:nil];
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventAuthenticationSucceeded
+{
+    DDLogInfo(@"Authentication succeeded");
+
+    BOOL success = [self.stateMachine fireEvent:EVENT_AUTH_SUCCEDED userInfo:nil error:nil];
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventRetryAuthentication
+{
+    DDLogInfo(@"Retry authentication...");
+    
+    BOOL success = [self.stateMachine fireEvent:EVENT_RETRY_AUTH userInfo:nil error:nil];
+    return success;
+}
+
+//=========================================================================
+
+- (void)didFinishAuthenticationWithServerApi:(long)serverAPI sessionToken:(NSString *)token error:(NSError *)error
+{
+    if (error)
+    {
+        //Authentication failed
+        [self eventAuthenticationFailedWithError:error];
+        return;
+    }
+    
+    //Authentication succeeded
+    [self eventAuthenticationSucceeded];
+}
+
+//=========================================================================
+
+- (void)startAuthentication
+{
+    NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    
+    DDLogInfo(@"Starting authentication with URL: %@", urlStr);
+    
+    //Create proxy object
+    self.proxy = [[RCRouterProxy alloc] initWithRouterURL:url];
+    
+    __weak id blockSelf = self;
+    [self.proxy authenticate:CLIENT_API_VERSION
+                    password:DEFAULT_PASSWORD
+                     success:^(long serverAPI, NSString *token) {
+                         
+                         [blockSelf didFinishAuthenticationWithServerApi:serverAPI sessionToken:token error:nil];
+                         
+                     } failure:^(NSError *error) {
+                         
+                         [blockSelf didFinishAuthenticationWithServerApi:0 sessionToken:nil error:error];
+                         
+                     }];
+}
+
+//=========================================================================
+
+- (void)waitForAuthRetry
+{
+    self.authRetryTimer = [NSTimer timerWithTimeInterval:RETRY_AUTH_DELAY
+                                                  target:self
+                                                selector:@selector(authRetryTimerFired:)
+                                                userInfo:nil
+                                                 repeats:NO];
+    
+    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
+    [[NSRunLoop currentRunLoop] addTimer:self.authRetryTimer
+                                 forMode:NSRunLoopCommonModes];
+}
+
+//=========================================================================
+
+- (void)startActivity
+{
+    DDLogInfo(@"Start polling router");
+    
+    //Create task manager
+    self.taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
+
+    //Schedule router info update
+    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+
+    __weak RCRouter *blockSelf = self;
+    [infoTask setCompletionHandler:^(RCRouterInfo *routerInfo, NSError *error){
+
+        if (!error)
+        {
+            [blockSelf notifyDidUpdateRouterInfo];
+        }
+
+    }];
+    self.routerInfoTask = infoTask;
+
+    [self updateRouterInfo];
+
+    //Schedule periodic tasks
+    [self addPeriodicTasks];
 }
 
 //=========================================================================
@@ -57,41 +274,20 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (void)startSessionWithCompletionHandler:(void(^)(BOOL success, NSError *error))completionHandler
+- (void)start
 {
-    if (self.sessionStatus != kIdle)
-        return;
+    if (self.stateMachine == nil)
+    {
+        [self initializeStateMachine];
+    }
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
-    NSURL *url = [NSURL URLWithString:urlStr];
-
-    DDLogInfo(@"Will start session with URL: %@", urlStr);
-
-    //Create proxy object
-    _proxy = [[RCRouterProxy alloc] initWithRouterURL:url];
-    
-    //Update session status
-    self.sessionStatus = kAuthenticating;
-    
-    __weak id blockSelf = self;
-    [self.proxy authenticate:CLIENT_API_VERSION
-                    password:DEFAULT_PASSWORD
-                     success:^(long serverAPI, NSString *token) {
-                         
-                         [blockSelf sessionDidStart];
-                         completionHandler(YES, nil);
-                         
-                     } failure:^(NSError *error) {
-                         
-                         DDLogInfo(@"Failed to start session: %@", error);
-                         completionHandler(NO, error);
-                         
-                     }];
+    //Trigger start event
+    [self eventStart];
 }
 
 //=========================================================================
 
-- (void)stopSession
+- (void)stop
 {
 }
 
@@ -100,38 +296,6 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (void)notifyDidUpdateRouterInfo
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:RCRouterDidUpdateRouterInfoNotification object:self];
-}
-
-//=========================================================================
-
-- (void)sessionDidStart
-{
-    DDLogInfo(@"Session did start");
-    
-    //Update session status
-    self.sessionStatus = kAuthenticated;
-    
-    //Create task manager
-    self.taskManager = [[RCRouterTaskManager alloc] initWithRouterProxy:self.proxy];
-    
-    //Schedule router info update
-    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
-    
-    __weak RCRouter *blockSelf = self;
-    [infoTask setCompletionHandler:^(RCRouterInfo *routerInfo, NSError *error){
-        
-        if (!error)
-        {
-            [blockSelf notifyDidUpdateRouterInfo];
-        }
-        
-    }];
-    self.routerInfoTask = infoTask;
-    
-    [self updateRouterInfo];
-    
-    //Schedule periodic tasks
-    [self addPeriodicTasks];
 }
 
 //=========================================================================
@@ -148,6 +312,27 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 //    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
 //    echoTask.frequency = 1;
 //    [self.taskManager addTask:echoTask];
+}
+
+//=========================================================================
+
+- (void)stateMachineDidTerminate
+{
+    //Remove remaining tasks from manager
+    [self.taskManager removeAllTasks];
+    self.taskManager = nil;
+
+    //Release state machine when finished (to prevent retain cycle)
+    self.stateMachine = nil;
+}
+
+//=========================================================================
+#pragma mark Timer Callback
+//=========================================================================
+
+- (void)authRetryTimerFired:(NSTimer *)timer
+{
+    [self eventRetryAuthentication];
 }
 
 //=========================================================================
