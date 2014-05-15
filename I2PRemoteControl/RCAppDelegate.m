@@ -14,6 +14,7 @@
 #import "RCRouterManager.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
+#import "RCPreferencesWindowController.h"
 
 //=========================================================================
 
@@ -36,6 +37,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 @property (nonatomic) NSTimer *updateUITimer;
 @property (nonatomic) RCRouterManager *routerManager;
 @property (nonatomic) RCRouter *currentRouter;
+@property (nonatomic) RCPreferencesWindowController *prefsWindowController;
 @end
 
 //=========================================================================
@@ -222,6 +224,18 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 - (IBAction)restart:(id)sender
 {
     DDLogInfo(@"Restart");
+}
+
+//=========================================================================
+
+- (IBAction)openPreferences:(id)sender
+{
+	if (!self.prefsWindowController)
+	{
+		self.prefsWindowController = [[RCPreferencesWindowController alloc] initWithWindowNibName:@"Preferences"];
+	}
+	
+	[self.prefsWindowController showWindow:self];
 }
 
 //=========================================================================

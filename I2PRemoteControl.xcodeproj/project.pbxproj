@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022711924E01C0025273D /* RCApplicationPreferences.m */; };
 		810022771924E09A0025273D /* RCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022761924E09A0025273D /* RCPreferences.m */; };
+		8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100227B1924EF680025273D /* RCPreferencesWindowController.m */; };
+		810022811924EF6F0025273D /* RCPrefsBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100227E1924EF6F0025273D /* RCPrefsBaseViewController.m */; };
+		810022821924EF6F0025273D /* RCPrefsGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022801924EF6F0025273D /* RCPrefsGeneralViewController.m */; };
+		810022841924EF9D0025273D /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022831924EF9D0025273D /* Preferences.xib */; };
+		810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022851924EFA50025273D /* PreferencesGeneral.xib */; };
+		8100228C1924F77F0025273D /* RCToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100228B1924F77F0025273D /* RCToolbar.m */; };
 		812687A419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687B019202666002A0571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687AF19202666002A0571 /* main.m */; };
 		812687B719202666002A0571 /* RCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687B619202666002A0571 /* RCAppDelegate.m */; };
@@ -53,6 +59,16 @@
 		810022711924E01C0025273D /* RCApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCApplicationPreferences.m; sourceTree = "<group>"; };
 		810022751924E09A0025273D /* RCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPreferences.h; sourceTree = "<group>"; };
 		810022761924E09A0025273D /* RCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPreferences.m; sourceTree = "<group>"; };
+		8100227A1924EF680025273D /* RCPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPreferencesWindowController.h; sourceTree = "<group>"; };
+		8100227B1924EF680025273D /* RCPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPreferencesWindowController.m; sourceTree = "<group>"; };
+		8100227D1924EF6F0025273D /* RCPrefsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPrefsBaseViewController.h; sourceTree = "<group>"; };
+		8100227E1924EF6F0025273D /* RCPrefsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPrefsBaseViewController.m; sourceTree = "<group>"; };
+		8100227F1924EF6F0025273D /* RCPrefsGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPrefsGeneralViewController.h; sourceTree = "<group>"; };
+		810022801924EF6F0025273D /* RCPrefsGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPrefsGeneralViewController.m; sourceTree = "<group>"; };
+		810022831924EF9D0025273D /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		810022851924EFA50025273D /* PreferencesGeneral.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesGeneral.xib; sourceTree = "<group>"; };
+		8100228A1924F77F0025273D /* RCToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCToolbar.h; sourceTree = "<group>"; };
+		8100228B1924F77F0025273D /* RCToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCToolbar.m; sourceTree = "<group>"; };
 		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687A319202666002A0571 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		812687A619202666002A0571 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -135,6 +151,28 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		810022781924EF140025273D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8100227A1924EF680025273D /* RCPreferencesWindowController.h */,
+				8100227B1924EF680025273D /* RCPreferencesWindowController.m */,
+				8100227D1924EF6F0025273D /* RCPrefsBaseViewController.h */,
+				8100227E1924EF6F0025273D /* RCPrefsBaseViewController.m */,
+				8100227F1924EF6F0025273D /* RCPrefsGeneralViewController.h */,
+				810022801924EF6F0025273D /* RCPrefsGeneralViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		810022891924F7680025273D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8100228A1924F77F0025273D /* RCToolbar.h */,
+				8100228B1924F77F0025273D /* RCToolbar.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		8126879719202666002A0571 = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +219,9 @@
 			children = (
 				812687B519202666002A0571 /* RCAppDelegate.h */,
 				812687B619202666002A0571 /* RCAppDelegate.m */,
+				810022781924EF140025273D /* Controller */,
 				81CD62E71920FB3A005A82A4 /* Model */,
+				810022891924F7680025273D /* Views */,
 				812687AA19202666002A0571 /* Supporting Files */,
 				812687D719202802002A0571 /* Resources */,
 			);
@@ -221,6 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				812687DC19202851002A0571 /* MainMenu.xib */,
+				810022831924EF9D0025273D /* Preferences.xib */,
+				810022851924EFA50025273D /* PreferencesGeneral.xib */,
 				81EC34811922B4040011D2D8 /* Localizable.strings */,
 				812687BB19202666002A0571 /* Images.xcassets */,
 				812687E31920287B002A0571 /* Credits.rtf */,
@@ -369,7 +411,9 @@
 				81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */,
 				812687BC19202666002A0571 /* Images.xcassets in Resources */,
 				812687E41920287F002A0571 /* InfoPlist.strings in Resources */,
+				810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */,
 				812687E11920287B002A0571 /* Credits.rtf in Resources */,
+				810022841924EF9D0025273D /* Preferences.xib in Resources */,
 				812687DA19202851002A0571 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,9 +474,13 @@
 				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				8194CC1819217F1900759F92 /* RCTask.m in Sources */,
+				8100228C1924F77F0025273D /* RCToolbar.m in Sources */,
+				810022821924EF6F0025273D /* RCPrefsGeneralViewController.m in Sources */,
 				8194CC26192256FB00759F92 /* RCRouterInfo.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
+				810022811924EF6F0025273D /* RCPrefsBaseViewController.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
+				8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,
 				812687B719202666002A0571 /* RCAppDelegate.m in Sources */,
 				81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */,

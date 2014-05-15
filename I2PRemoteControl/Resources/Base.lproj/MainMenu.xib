@@ -690,6 +690,13 @@
                         <action selector="restart:" target="Voe-Tx-rLC" id="dhZ-24-X2A"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="JSS-OV-EGA"/>
+                <menuItem title="Open Preferences..." tag="4" id="H7P-ZE-VQY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openPreferences:" target="Voe-Tx-rLC" id="wDB-Vw-ezq"/>
+                    </connections>
+                </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="sVU-dN-h2Y"/>
