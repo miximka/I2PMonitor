@@ -12,15 +12,13 @@
 @class RCRouter;
 @class RCRouterManager;
 
-@protocol RCRouterManagerDelegate <NSObject>
-- (void)managerDidChangeRouter:(RCRouterManager *)manager;
-@end
+//Sent when manager changes the router
+extern NSString * const RCManagerDidSetRouterNotification;
 
 //=========================================================================
 @interface RCRouterManager : NSObject <RCPreferencesObserver>
 //=========================================================================
 
-@property (nonatomic, weak) id<RCRouterManagerDelegate> delegate;
 @property (nonatomic, readonly) RCRouter *router;
 
 //=========================================================================

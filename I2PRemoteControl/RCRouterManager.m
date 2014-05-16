@@ -13,6 +13,8 @@
 
 //=========================================================================
 
+NSString * const RCManagerDidSetRouterNotification = @"RCManagerDidSetRouterNotification";
+
 @interface RCRouterManager ()
 @property (nonatomic) RCRouter *router;
 @end
@@ -85,8 +87,7 @@
     //Start router
     [router start];
 
-    //Notify delegate
-    [self.delegate managerDidChangeRouter:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCManagerDidSetRouterNotification object:self];
 }
 
 //=========================================================================

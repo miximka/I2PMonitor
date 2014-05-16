@@ -44,8 +44,14 @@
  */
 - (void)loadDefaultValues;
 
+//=========================================================================
+#pragma mark -
+//=========================================================================
+
+- (void)didSelectTab;
+
 /**
-	Call this method to notify controller that preferences tab will close.
+	Method will be called by window controller to notify that the tab with integrated view controller is going to be closed.
 	@return YES if controller allow to close tab immediately.
  */
 - (BOOL)tabWillClose:(void *)contextInfo;

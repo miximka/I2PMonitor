@@ -10,6 +10,7 @@
 #import "RCPrefsBaseViewController.h"
 
 @class RCPrefsGeneralViewController;
+@class RCRouterManager;
 
 //=========================================================================
 @interface RCPreferencesWindowController : NSWindowController <RCPrefsViewControllerDelegate>
@@ -19,6 +20,8 @@
 	RCPrefsGeneralViewController    *_generalPrefsCtrl;
 	NSDictionary                    *_closingTabContextInfo;
 }
+
+@property (nonatomic) RCRouterManager *routerManager;
 
 //=========================================================================
 @end

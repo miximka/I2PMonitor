@@ -14,7 +14,7 @@
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCPreferencesWindowController.h"
-//#import "RCLoginItemManager.h"
+#import "RCRouterManager.h"
 
 //=========================================================================
 
@@ -75,6 +75,11 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(routerDidUpdateRouterInfo:)
                                                  name:RCRouterDidUpdateRouterInfoNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managerDidSetRouter:)
+                                                 name:RCManagerDidSetRouterNotification
                                                object:nil];
 }
 
@@ -169,7 +174,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 - (void)updateStatusBarIcon
 {
     NSString *imageName = @"StatusBarIcon_Inactive";
-    if ([self.currentRouter isActive])
+    if ([self.currentRouter active])
     {
         imageName = @"StatusBarIcon";
     }
@@ -232,7 +237,9 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
 	if (!self.prefsWindowController)
 	{
-		self.prefsWindowController = [[RCPreferencesWindowController alloc] initWithWindowNibName:@"Preferences"];
+		RCPreferencesWindowController *ctrl = [[RCPreferencesWindowController alloc] initWithWindowNibName:@"Preferences"];
+        [ctrl setRouterManager:self.routerManager];
+        self.prefsWindowController = ctrl;
 	}
 	
 	[self.prefsWindowController showWindow:self];
@@ -244,39 +251,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     [NSApp terminate:self];
 }
-
-//=========================================================================
-
-- (void)showArrowPanel
-{
-//    NSRect statusBarRect = [[self.statusBarItem parentWindow] frame];
-//    NSRect aRect = self.arrowPanel.frame;
-//    aRect.origin.x = statusBarRect.origin.x + statusBarRect.size.width / 2.f - aRect.size.width / 2.f;
-//    aRect.origin.y = statusBarRect.origin.y - aRect.size.height - statusBarRect.size.height;
-//    [self.arrowPanel setFrame:aRect display:YES];
-//    [self.arrowPanel makeKeyAndOrderFront:self];
-}
-
-//=========================================================================
-
-//- (void)addLoginItemIfNeeded
-//{
-//    BOOL isFirstStart = [RCPrefs isFirstStart];
-//    
-//    if (isFirstStart)
-//    {
-//        [RCPrefs setIsFirstStart:NO];
-//        [RCPrefs synchronize];
-//        
-//        RCLoginItemManager *loginItemMgr = [RCLoginItemManager new];
-//        
-//        //Update login item
-//        [loginItemMgr addOrUpdateLoginItem:NO];
-//        
-//        //Show pointer to the login item
-//        [self showArrowPanel];
-//    }
-//}
 
 //=========================================================================
 #pragma mark NSApplicationDelegate
@@ -294,7 +268,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     
     //Initialize router manager
     RCRouterManager *routerManager = [[RCRouterManager alloc] init];
-    [routerManager setDelegate:self];
     self.routerManager = routerManager;
     
     //Obtain router instance immediately
@@ -347,22 +320,20 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 }
 
 //=========================================================================
-#pragma mark RCRouterManagerDelegate
-//=========================================================================
-
-- (void)managerDidChangeRouter:(RCRouterManager *)manager
-{
-    //Update current router instance
-    self.currentRouter = self.routerManager.router;
-    [self updateGUI];
-}
-
-//=========================================================================
 #pragma mark Notifications
 //=========================================================================
 
 - (void)routerDidUpdateRouterInfo:(NSNotification *)notification
 {
+    [self updateGUI];
+}
+
+//=========================================================================
+
+- (void)managerDidSetRouter:(NSNotification *)notification
+{
+    //Update current router instance
+    self.currentRouter = self.routerManager.router;
     [self updateGUI];
 }
 

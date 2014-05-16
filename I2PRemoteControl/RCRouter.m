@@ -23,6 +23,7 @@
 #define DEFAULT_PASSWORD @"itoopie"
 
 #define STATE_ACTIVE            @"Active"
+#define STATE_AUTHENTICATING    @"Authenticating"
 
 //State Machine Events
 #define EVENT_START             @"EventStart"
@@ -46,6 +47,8 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @property (nonatomic) RCRouterInfoTask *routerInfoTask;
 @property (nonatomic) TKStateMachine *stateMachine;
 @property (nonatomic) NSTimer *authRetryTimer;
+@property (nonatomic) BOOL active;
+@property (nonatomic) BOOL authenticating;
 @end
 
 //=========================================================================
@@ -70,10 +73,16 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     //Initialize States
     
     TKState *idleState = [TKState stateWithName:@"Idle"];
-    TKState *authenticatingState = [TKState stateWithName:@"Authenticating"];
+    TKState *authenticatingState = [TKState stateWithName:STATE_AUTHENTICATING];
     [authenticatingState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
+        [self setAuthenticating:YES];
         [self startAuthentication];
+        
+    }];
+    [authenticatingState setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self setAuthenticating:NO];
         
     }];
 
@@ -93,11 +102,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     TKState *activeState = [TKState stateWithName:STATE_ACTIVE];
     [activeState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
+        [self setActive:YES];
         [self startActivity];
         
     }];
     [activeState setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
         
+        [self setActive:NO];
         [self stopActivity];
         
     }];
@@ -170,8 +181,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     DDLogError(@"Authentication failed with error: %@", error);
     
-    BOOL success = [self fireEvent:EVENT_AUTH_FAILED];
-    return success;
+    BOOL success = [self fireEvent:EVENT_AUTH_FAILED];    return success;
 }
 
 //=========================================================================
@@ -317,9 +327,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (BOOL)isActive
+- (BOOL)isAuthenticating
 {
-    return [self.stateMachine isInState:STATE_ACTIVE];
+    return [self.stateMachine isInState:STATE_AUTHENTICATING];
 }
 
 //=========================================================================

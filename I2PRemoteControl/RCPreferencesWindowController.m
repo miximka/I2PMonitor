@@ -24,15 +24,17 @@ enum
 @implementation RCPreferencesWindowController
 //=========================================================================
 
-- (RCPrefsGeneralViewController *) allocGeneralPrefsController
+- (RCPrefsGeneralViewController *)allocGeneralPrefsController
 {
 	RCPrefsGeneralViewController *ctrl = [[RCPrefsGeneralViewController alloc] init];
+    [ctrl setRouterManager:self.routerManager];
+    
 	return ctrl;
 }
 
 //=========================================================================
 
-- (RCPrefsGeneralViewController *) generalPrefsCtrl
+- (RCPrefsGeneralViewController *)generalPrefsCtrl
 {
 	if (_generalPrefsCtrl == nil)
 	{
@@ -168,14 +170,17 @@ enum
 	[currentView removeFromSuperview];
 	
 	[_prefContainerView addSubview:newView];
-	
+    
 	//Animated size update
 	[self updateMainWindowSizeWithCtrlView:[newView frame] animate:YES];	
+
+    //Notify controller it has been selected
+	[aCtrl didSelectTab];
 }
 
 //=========================================================================
 
-- (IBAction) switchToGeneralPrefs:(id)sender
+- (IBAction)switchToGeneralPrefs:(id)sender
 {
 }
 
@@ -194,7 +199,7 @@ enum
 
 //=========================================================================
 
-- (void) performOperationWithCode:(int)aCode param:(NSString *)aParam
+- (void)performOperationWithCode:(int)aCode param:(NSString *)aParam
 {
 	switch (aCode)
 	{

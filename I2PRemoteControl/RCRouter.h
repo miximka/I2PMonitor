@@ -25,7 +25,8 @@ extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 /**
     Returns YES if session to the router is active
  */
-- (BOOL)isActive;
+@property (nonatomic, readonly) BOOL active;
+@property (nonatomic, readonly) BOOL authenticating;
 
 /**
     Entry point. Authenticates with router and starts updating data.
