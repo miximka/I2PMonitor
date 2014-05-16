@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="RCAppDelegate">
             <connections>
+                <outlet property="arrowPanel" destination="a7r-S3-7A6" id="EYO-mS-uR9"/>
                 <outlet property="statusBarMenu" destination="DMD-V3-BaM" id="7di-On-nZy"/>
             </connections>
         </customObject>
@@ -708,5 +709,25 @@
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="sVU-dN-h2Y"/>
             </connections>
         </menu>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hasShadow="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="a7r-S3-7A6" customClass="RCArrowPanel">
+            <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="283" y="305" width="48" height="78"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="WsA-an-ezF">
+                <rect key="frame" x="0.0" y="0.0" width="48" height="78"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nCR-tn-rVu">
+                        <rect key="frame" x="0.0" y="0.0" width="48" height="78"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" image="RedArrow" id="sCr-OR-fzR"/>
+                    </imageView>
+                </subviews>
+            </view>
+        </window>
     </objects>
+    <resources>
+        <image name="RedArrow" width="50" height="60"/>
+    </resources>
 </document>

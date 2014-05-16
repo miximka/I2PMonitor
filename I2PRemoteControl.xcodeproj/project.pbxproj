@@ -27,6 +27,9 @@
 		812687DA19202851002A0571 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812687DC19202851002A0571 /* MainMenu.xib */; };
 		812687E11920287B002A0571 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 812687E31920287B002A0571 /* Credits.rtf */; };
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
+		815BDA3B19261E6600E518E9 /* RCStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA3A19261E6600E518E9 /* RCStatusBarView.m */; };
+		815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA411926278600E518E9 /* RCArrowPanel.m */; };
+		815BDA451926278600E518E9 /* RCArrowAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA431926278600E518E9 /* RCArrowAnimation.m */; };
 		8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC001921518200759F92 /* RCJsonRpcClient.m */; };
 		8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC061921715B00759F92 /* RCLogFormatter.m */; };
 		8194CC1819217F1900759F92 /* RCTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC1719217F1900759F92 /* RCTask.m */; };
@@ -91,6 +94,12 @@
 		812687DB19202851002A0571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		812687E21920287B002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		812687E51920287F002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		815BDA3919261E6600E518E9 /* RCStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCStatusBarView.h; sourceTree = "<group>"; };
+		815BDA3A19261E6600E518E9 /* RCStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCStatusBarView.m; sourceTree = "<group>"; };
+		815BDA401926278600E518E9 /* RCArrowPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCArrowPanel.h; sourceTree = "<group>"; };
+		815BDA411926278600E518E9 /* RCArrowPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCArrowPanel.m; sourceTree = "<group>"; };
+		815BDA421926278600E518E9 /* RCArrowAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCArrowAnimation.h; sourceTree = "<group>"; };
+		815BDA431926278600E518E9 /* RCArrowAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCArrowAnimation.m; sourceTree = "<group>"; };
 		8194CBFF1921518200759F92 /* RCJsonRpcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCJsonRpcClient.h; sourceTree = "<group>"; };
 		8194CC001921518200759F92 /* RCJsonRpcClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCJsonRpcClient.m; sourceTree = "<group>"; };
 		8194CC051921715B00759F92 /* RCLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLogFormatter.h; sourceTree = "<group>"; };
@@ -172,6 +181,8 @@
 			children = (
 				8100228A1924F77F0025273D /* RCToolbar.h */,
 				8100228B1924F77F0025273D /* RCToolbar.m */,
+				815BDA3919261E6600E518E9 /* RCStatusBarView.h */,
+				815BDA3A19261E6600E518E9 /* RCStatusBarView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -297,6 +308,17 @@
 			name = "Router Tasks";
 			sourceTree = "<group>";
 		};
+		815BDA3F1926277500E518E9 /* Arrow Panel */ = {
+			isa = PBXGroup;
+			children = (
+				815BDA401926278600E518E9 /* RCArrowPanel.h */,
+				815BDA411926278600E518E9 /* RCArrowPanel.m */,
+				815BDA421926278600E518E9 /* RCArrowAnimation.h */,
+				815BDA431926278600E518E9 /* RCArrowAnimation.m */,
+			);
+			name = "Arrow Panel";
+			sourceTree = "<group>";
+		};
 		8194CC041921714F00759F92 /* Logging */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +358,7 @@
 				81498C0F19227EA8004CDA17 /* Router Tasks */,
 				8194CC08192172D800759F92 /* RPC Client */,
 				8100229219255FB50025273D /* Login Item */,
+				815BDA3F1926277500E518E9 /* Arrow Panel */,
 				8194CC041921714F00759F92 /* Logging */,
 				8100226A1924D0CD0025273D /* Preferences */,
 			);
@@ -480,7 +503,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */,
+				815BDA451926278600E518E9 /* RCArrowAnimation.m in Sources */,
 				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,
+				815BDA3B19261E6600E518E9 /* RCStatusBarView.m in Sources */,
 				810022771924E09A0025273D /* RCPreferences.m in Sources */,
 				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
 				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
@@ -488,6 +513,7 @@
 				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				8194CC1819217F1900759F92 /* RCTask.m in Sources */,
+				815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */,
 				8100228C1924F77F0025273D /* RCToolbar.m in Sources */,
 				810022821924EF6F0025273D /* RCPrefsGeneralViewController.m in Sources */,
 				8194CC26192256FB00759F92 /* RCRouterInfo.m in Sources */,

@@ -15,6 +15,7 @@
 #import "RCRouterInfo.h"
 #import "RCPreferencesWindowController.h"
 #import "RCRouterManager.h"
+#import "RCStatusBarView.h"
 
 //=========================================================================
 
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 @property (nonatomic) RCRouterManager *routerManager;
 @property (nonatomic) RCRouter *currentRouter;
 @property (nonatomic) RCPreferencesWindowController *prefsWindowController;
+@property (nonatomic) BOOL isFirstStart;
 @end
 
 //=========================================================================
@@ -120,12 +122,39 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     //Create status bar item
 	NSStatusItem *item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    NSImage *image = [NSImage imageNamed:@"StatusBarIcon_Inactive"];
-    [item setImage:image];
+    
+    CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
+    RCStatusBarView *statusBarView = [[RCStatusBarView alloc] initWithFrame:NSMakeRect(0, 1, thickness, thickness)];
+    [statusBarView setStatusItem:item];
+    [statusBarView setImage:[NSImage imageNamed:@"StatusBarIcon_Inactive"]];
+    
+    [item setView:statusBarView];
     [item setHighlightMode:YES];
     [item setMenu:self.statusBarMenu];
     
     self.statusBarItem = item;
+}
+
+//=========================================================================
+
+- (RCStatusBarView *)statusBarItemView
+{
+    return (RCStatusBarView *)self.statusBarItem.view;
+}
+
+//=========================================================================
+
+- (void)showArrowPanel
+{
+    NSWindow *statusBarItemWindow = [[self statusBarItemView] window];
+    
+    NSRect statusBarRect = statusBarItemWindow.frame;
+    NSRect aRect = self.arrowPanel.frame;
+    aRect.origin.x = statusBarRect.origin.x + statusBarRect.size.width / 2.f - aRect.size.width / 2.f;
+    aRect.origin.y = statusBarRect.origin.y - aRect.size.height - statusBarRect.size.height;
+
+    [self.arrowPanel setFrame:aRect display:YES];
+    [self.arrowPanel makeKeyAndOrderFront:self];
 }
 
 //=========================================================================
@@ -171,29 +200,15 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
 //=========================================================================
 
-- (void)updateStatusBarIcon
-{
-    NSString *imageName = @"StatusBarIcon_Inactive";
-    if ([self.currentRouter active])
-    {
-        imageName = @"StatusBarIcon";
-    }
-    
-    NSImage *image = [NSImage imageNamed:imageName];
-    
-    if (self.statusBarItem.image != image)
-    {
-        //Update image
-        self.statusBarItem.image = image;
-    }
-}
-
-//=========================================================================
-
 - (void)updateGUI
 {
     //Update status bar icon
-    [self updateStatusBarIcon];
+    RCStatusBarIconType iconType = RCIconTypeInactive;
+    if (self.currentRouter.active)
+    {
+        iconType = RCIconTypeActive;
+    }
+    [[self statusBarItemView] setIconType:iconType];
     
     //Update router version
     NSMenuItem *item = [self.statusBarItem.menu itemWithTag:kRouterVersionMenuTag];
@@ -260,11 +275,22 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     if ([self isRunningUnitTests])
         return;
-    
+
     [self initializeLogging];
-    
-    [self addStatusBarItem];
     [self registerForNotifications];
+
+    //Add status bar item
+    [self addStatusBarItem];
+    
+    BOOL isFirstStart = [RCPrefs isFirstStart];
+    if (isFirstStart)
+    {
+        [RCPrefs setIsFirstStart:NO];
+        [RCPrefs synchronize];
+        
+        //Show window with the pointing arrow to the login item
+        [self showArrowPanel];
+    }
     
     //Initialize router manager
     RCRouterManager *routerManager = [[RCRouterManager alloc] init];
@@ -273,9 +299,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     //Obtain router instance immediately
     self.currentRouter = self.routerManager.router;
     [self updateGUI];
-    
-    //Add login item if required but missing
-//    [self addLoginItemIfNeeded];
 }
 
 //=========================================================================
@@ -287,6 +310,17 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     if (menu != self.statusBarMenu)
         return;
     
+    if (self.arrowPanel)
+    {
+        //Dismiss arrow panel
+        [self.arrowPanel orderOut:self];
+        self.arrowPanel = nil;
+    }
+
+    //Draw blue background under the status bar icon
+    [[self statusBarItemView] setHighlighted:YES];
+    
+    //Start periodically update menu entries
     self.updateUITimer = [NSTimer timerWithTimeInterval:1.0
                                                  target:self
                                                selector:@selector(updateTimerFired:)
@@ -307,6 +341,8 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     if (menu != self.statusBarMenu)
         return;
+
+    [[self statusBarItemView] setHighlighted:NO];
     
     //Stop updating UI
     self.updateUITimer = nil;

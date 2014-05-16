@@ -12,8 +12,9 @@
 @interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 //=========================================================================
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSMenu *statusBarMenu;
+@property (assign, nonatomic) IBOutlet NSWindow *window;
+@property (assign, nonatomic) IBOutlet NSMenu *statusBarMenu;
+@property (assign, nonatomic) IBOutlet NSPanel *arrowPanel;
 
 - (IBAction)shutdown:(id)sender;
 - (IBAction)restart:(id)sender;
