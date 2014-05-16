@@ -29,7 +29,6 @@ NSString * const RCManagerDidSetRouterNotification = @"RCManagerDidSetRouterNoti
     if (self)
     {
         [self registerForNotifications];
-        [self restartRouter];
     }
     return self;
 }

@@ -667,25 +667,19 @@
                 </menuItem>
             </items>
         </menu>
-        <menu id="DMD-V3-BaM" userLabel="Status Bar Menu">
+        <menu id="DMD-V3-BaM" userLabel="Status Bar Menu" customClass="RCMenu">
             <items>
-                <menuItem title="RouterVersion" id="Etd-qT-tDe">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="RouterUptime" tag="1" id="E8G-av-LSW">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="RouterStatus" tag="2" id="1np-yn-sl9">
+                <menuItem title="RouterBasicInfo" tag="1" id="Etd-qT-tDe" customClass="RCRouterOverviewMenuItem">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="ccp-9x-wcO"/>
-                <menuItem title="Shutdown" tag="3" id="VOu-20-v88">
+                <menuItem title="Shutdown" tag="2" id="VOu-20-v88">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="shutdown:" target="Voe-Tx-rLC" id="fOJ-p9-ann"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Restart" tag="4" id="Fni-8q-drB">
+                <menuItem title="Restart" tag="3" id="Fni-8q-drB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="restart:" target="Voe-Tx-rLC" id="dhZ-24-X2A"/>
@@ -698,7 +692,7 @@
                         <action selector="openPreferences:" target="Voe-Tx-rLC" id="wDB-Vw-ezq"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit I2PRemoteControl" tag="4" id="ceh-VO-Ig1">
+                <menuItem title="Quit I2PRemoteControl" tag="5" id="ceh-VO-Ig1">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="quit:" target="Voe-Tx-rLC" id="HRD-2N-qZh"/>

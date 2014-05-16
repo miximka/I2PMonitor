@@ -8,24 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class RCMenu;
+
 //=========================================================================
 @interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 //=========================================================================
 
 @property (assign, nonatomic) IBOutlet NSWindow *window;
-@property (assign, nonatomic) IBOutlet NSMenu *statusBarMenu;
+@property (assign, nonatomic) IBOutlet RCMenu *statusBarMenu;
 @property (assign, nonatomic) IBOutlet NSPanel *arrowPanel;
 
 - (IBAction)shutdown:(id)sender;
 - (IBAction)restart:(id)sender;
 - (IBAction)openPreferences:(id)sender;
 - (IBAction)quit:(id)sender;
-
-//=========================================================================
-#pragma mark Unit Tests
-//=========================================================================
-
-- (NSString *)uptimeStringForInterval:(NSTimeInterval)interval;
 
 //=========================================================================
 @end

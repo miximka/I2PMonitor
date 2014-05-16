@@ -1,26 +1,18 @@
 //
-//  RCRouterManager.h
+//  RCMenu.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 12/05/14.
+//  Created by miximka on 16/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "RCPreferences.h"
-
-@class RCRouter;
-@class RCRouterManager;
-
-//Sent when manager changes the router
-extern NSString * const RCManagerDidSetRouterNotification;
+#import <Cocoa/Cocoa.h>
 
 //=========================================================================
-@interface RCRouterManager : NSObject <RCPreferencesObserver>
+@interface RCMenu : NSMenu
 //=========================================================================
 
-@property (nonatomic, readonly) RCRouter *router;
-- (void)restartRouter;
+@property (nonatomic) BOOL enableUpdates;
 
 //=========================================================================
 @end
