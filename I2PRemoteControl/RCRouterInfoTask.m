@@ -18,7 +18,6 @@
     self = [super initWithIdentifier:identifier];
     if (self)
     {
-        _routerInfo = [RCRouterInfo new];
         self.recurring = NO;
     }
     return self;
@@ -26,13 +25,13 @@
 
 //=========================================================================
 
-- (void)didFinishExecutionWithError:(NSError *)error
+- (void)didFinishExecutionWithResponseDict:(NSDictionary *)responseDict error:(NSError *)error
 {
     [super didFinishExecutionWithError:error];
     
     if (self.completionHandler != nil)
     {
-        self.completionHandler(self.routerInfo, error);
+        self.completionHandler(responseDict, error);
     }
 }
 
@@ -49,13 +48,11 @@
                                     success:^(NSDictionary *routerInfoDict) {
                                         
                                         DDLogDebug(@"Received router info response: %@", routerInfoDict);
-                                        [blockSelf.routerInfo updateWithResponseDictionary:routerInfoDict];
-                                        
-                                        [blockSelf didFinishExecutionWithError:nil];
+                                        [blockSelf didFinishExecutionWithResponseDict:routerInfoDict error:nil];
                                         
                                     } failure:^(NSError *error) {
                                         
-                                        [blockSelf didFinishExecutionWithError:error];
+                                        [blockSelf didFinishExecutionWithResponseDict:nil error:error];
                                         
                                     }];
 }

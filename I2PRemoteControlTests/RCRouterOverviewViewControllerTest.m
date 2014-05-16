@@ -1,5 +1,5 @@
 //
-//  RCAppDelegateTest.m
+//  RCRouterOverviewViewControllerTest.m
 //  I2PRemoteControl
 //
 //  Created by miximka on 14/05/14.
@@ -7,22 +7,22 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "RCAppDelegate.h"
+#import "RCRouterOverviewViewController.h"
 
 //=========================================================================
 
-@interface RCAppDelegateTest : XCTestCase
-@property (nonatomic) RCAppDelegate *testObject;
+@interface RCRouterOverviewViewControllerTest : XCTestCase
+@property (nonatomic) RCRouterOverviewViewController *testObject;
 @end
 
 //=========================================================================
-@implementation RCAppDelegateTest
+@implementation RCRouterOverviewViewControllerTest
 //=========================================================================
 
 - (void)setUp
 {
     [super setUp];
-    _testObject = [[RCAppDelegate alloc] init];
+    _testObject = [[RCRouterOverviewViewController alloc] initWithNibName:nil bundle:nil];
 }
 
 //=========================================================================

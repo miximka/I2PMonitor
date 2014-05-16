@@ -66,6 +66,12 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 8
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 1
 
+// KVOController
+#define COCOAPODS_POD_AVAILABLE_KVOController
+#define COCOAPODS_VERSION_MAJOR_KVOController 1
+#define COCOAPODS_VERSION_MINOR_KVOController 0
+#define COCOAPODS_VERSION_PATCH_KVOController 1
+
 // TransitionKit
 #define COCOAPODS_POD_AVAILABLE_TransitionKit
 #define COCOAPODS_VERSION_MAJOR_TransitionKit 2

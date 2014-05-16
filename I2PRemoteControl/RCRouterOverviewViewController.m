@@ -9,6 +9,7 @@
 #import "RCRouterOverviewViewController.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
+#import "FBKVOController.h"
 
 //=========================================================================
 
@@ -19,6 +20,12 @@
 #define TIME_INTERVAL_YEAR      (TIME_INTERVAL_DAY * 365)
 
 #define GetValueOrDefaulIfNil(x) ( (x != nil) ? x : @"-" )
+
+//=========================================================================
+
+@interface RCRouterOverviewViewController ()
+@property (nonatomic) FBKVOController *kvoController;
+@end
 
 //=========================================================================
 @implementation RCRouterOverviewViewController
@@ -65,31 +72,46 @@
 
 //=========================================================================
 
-- (void)updateGUI
+- (void)updateVersion
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+
+    NSString *str = router.routerInfo.routerVersion;
+    [self.versionTextField setStringValue:GetValueOrDefaulIfNil(str)];
+}
+
+//=========================================================================
+
+- (void)updateUptime
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     
-    //Update router version
-//    NSMenuItem *item = [self.statusBarItem.menu itemWithTag:kRouterVersionMenuTag];
-//    NSString *strValue = self.currentRouter.routerInfo.routerVersion;
-//    [self menuItem:item setTitleWithFormat:MyLocalStr(@"VersionTitle") value:strValue];
-//    [self.versionTextField setStringValue:]
-    
-    //Router version
-    NSString *str = router.routerInfo.routerVersion;
-    [self.versionTextField setStringValue:GetValueOrDefaulIfNil(str)];
-
-    //Router uptime
+    NSString *str = nil;
     NSTimeInterval uptime = router.routerInfo.estimatedRouterUptime;
     if (uptime > 0)
     {
         str = [self uptimeStringForInterval:uptime];
     }
     [self.uptimeTextField setStringValue:GetValueOrDefaulIfNil(str)];
+}
 
-    //Router status
-    str = router.routerInfo.routerStatus;
+//=========================================================================
+
+- (void)updateStatus
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    
+    NSString *str = router.routerInfo.routerStatus;
     [self.statusTextField setStringValue:GetValueOrDefaulIfNil(str)];
+}
+
+//=========================================================================
+
+- (void)updateGUI
+{
+    [self updateVersion];
+    [self updateUptime];
+    [self updateStatus];
 }
 
 //=========================================================================
@@ -120,9 +142,43 @@
 
 - (void)setRepresentedObject:(id)object
 {
-    NSAssert([object isKindOfClass:[RCRouter class]], @"Invalid object");
-    
     [super setRepresentedObject:object];
+
+    NSAssert([object isKindOfClass:[RCRouter class]], @"Invalid object");
+    RCRouter *router = (RCRouter *)object;
+    
+    //Register for KVO notifications
+    FBKVOController *kvoController = [[FBKVOController alloc] initWithObserver:self];
+    self.kvoController = kvoController;
+    
+    __weak RCRouterOverviewViewController *blockSelf = self;
+    [self.kvoController observe:router.routerInfo
+                        keyPath:NSStringFromSelector(@selector(routerVersion))
+                        options:0
+                          block:^(id observer, id object, NSDictionary *change) {
+                              
+                              [blockSelf updateVersion];
+                              
+                          }];
+
+    [self.kvoController observe:router.routerInfo
+                        keyPath:NSStringFromSelector(@selector(routerUptime))
+                        options:0
+                          block:^(id observer, id object, NSDictionary *change) {
+                              
+                              [blockSelf updateUptime];
+                              
+                          }];
+
+    [self.kvoController observe:router.routerInfo
+                        keyPath:NSStringFromSelector(@selector(routerStatus))
+                        options:0
+                          block:^(id observer, id object, NSDictionary *change) {
+                              
+                              [blockSelf updateStatus];
+                              
+                          }];
+
     [self updateGUI];
 }
 

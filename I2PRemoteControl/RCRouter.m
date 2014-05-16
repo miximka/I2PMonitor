@@ -14,6 +14,7 @@
 #import "TKStateMachine.h"
 #import "TKState.h"
 #import "TKEvent.h"
+#import "RCRouterInfo.h"
 
 //=========================================================================
 
@@ -60,6 +61,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     self = [super init];
     if (self)
     {
+        _routerInfo = [RCRouterInfo new];
         _sessionConfig = sessionConfig;
     }
     return self;
@@ -281,20 +283,6 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     [taskManager setDelegate:self];
     self.taskManager = taskManager;
     
-    //Schedule router info update
-    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
-
-    __weak RCRouter *blockSelf = self;
-    [infoTask setCompletionHandler:^(RCRouterInfo *routerInfo, NSError *error){
-
-        if (!error)
-        {
-            [blockSelf notifyDidUpdateRouterInfo];
-        }
-
-    }];
-    self.routerInfoTask = infoTask;
-
     [self updateRouterInfo];
 
     //Schedule periodic tasks
@@ -311,18 +299,8 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     [self.taskManager removeAllTasks];
     self.taskManager = nil;
 
-    //Invalidate router info
-    self.routerInfoTask = nil;
-
     //Send notification to let UI know the router info has been changed
     [self notifyDidUpdateRouterInfo];
-}
-
-//=========================================================================
-
-- (RCRouterInfo *)routerInfo
-{
-    return self.routerInfoTask.routerInfo;
 }
 
 //=========================================================================
@@ -365,9 +343,31 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
+- (void)didUpdateRouterInfo:(NSDictionary *)responseDict
+{
+    //Update local router info with one from the task
+    [self.routerInfo updateWithResponseDictionary:responseDict];
+    [self notifyDidUpdateRouterInfo];
+}
+
+//=========================================================================
+
 - (void)updateRouterInfo
 {
-    [self.taskManager addTask:self.routerInfoTask];
+    //Schedule router info update
+    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+    
+    __weak RCRouter *blockSelf = self;
+    [infoTask setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf didUpdateRouterInfo:responseDict];
+        }
+        
+    }];
+
+    [self.taskManager addTask:infoTask];
 }
 
 //=========================================================================
