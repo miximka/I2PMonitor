@@ -25,6 +25,7 @@
 
 @interface RCRouterOverviewViewController ()
 @property (nonatomic) FBKVOController *kvoController;
+@property (nonatomic) NSTimer *uiUpdateTimer;
 @end
 
 //=========================================================================
@@ -115,12 +116,35 @@
 }
 
 //=========================================================================
+
+- (void)restartUiUpdateTimer
+{
+    //Invalidate previous timer,
+    RCInvalidateTimer(self.uiUpdateTimer);
+    
+    //Start periodically update menu entries
+    self.uiUpdateTimer = [NSTimer timerWithTimeInterval:1.0
+                                                 target:self
+                                               selector:@selector(uiUpdateTimerFired:)
+                                               userInfo:nil
+                                                repeats:YES];
+    
+    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
+    [[NSRunLoop currentRunLoop] addTimer:self.uiUpdateTimer
+                                 forMode:NSRunLoopCommonModes];
+}
+
+//=========================================================================
 #pragma mark Overridden Methods
 //=========================================================================
 
 - (void)startUpdating
 {
     DDLogInfo(@"Start updating");
+    [self restartUiUpdateTimer];
+    
+    //Immediately trigger router info update
+    [(RCRouter *)self.representedObject updateRouterInfo];
 }
 
 //=========================================================================
@@ -128,6 +152,7 @@
 - (void)stopUpdating
 {
     DDLogInfo(@"Stop updating");
+    RCInvalidateTimer(self.uiUpdateTimer);
 }
 
 //=========================================================================
@@ -180,6 +205,15 @@
                           }];
 
     [self updateGUI];
+}
+
+//=========================================================================
+#pragma mark NSTimer callback
+//=========================================================================
+
+- (void)uiUpdateTimerFired:(NSTimer *)timer
+{
+    [self updateUptime];
 }
 
 //=========================================================================

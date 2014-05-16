@@ -29,9 +29,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
 @interface RCAppDelegate ()
 @property (nonatomic) NSStatusItem *statusBarItem;
-//@property (nonatomic) NSTimer *updateUITimer;
 @property (nonatomic) RCRouterManager *routerManager;
-//@property (nonatomic) RCRouter *currentRouter;
 @property (nonatomic) RCPreferencesWindowController *prefsWindowController;
 @property (nonatomic) BOOL isFirstStart;
 @end
@@ -44,18 +42,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     [self unregisterForNotifications];
 }
-
-//=========================================================================
-
-//- (void)setUpdateUITimer:(NSTimer *)updateUITimer
-//{
-//    if (_updateUITimer != nil)
-//    {
-//        [_updateUITimer invalidate];
-//    }
-//
-//    _updateUITimer = updateUITimer;
-//}
 
 //=========================================================================
 
@@ -162,36 +148,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     [menuItem setTitle:title];
 }
 
-////=========================================================================
-//
-//- (NSString *)uptimeStringForInterval:(NSTimeInterval)interval
-//{
-//    NSString *str = @"";
-//
-//	if (interval < TIME_INTERVAL_MINUTE)
-//	{
-//        int secs = interval;
-//        str = [NSString stringWithFormat:@"%i %@", secs, MyLocalStr(@"kSecondsShortAbbr")];
-//	}
-//	else if (interval >= TIME_INTERVAL_MINUTE && interval < TIME_INTERVAL_HOUR)
-//	{
-//        int mins = interval / TIME_INTERVAL_MINUTE;
-//        str = [NSString stringWithFormat:@"%i %@", mins, MyLocalStr(@"kMinutesShortAbbr")];
-//	}
-//	else if (interval >= TIME_INTERVAL_HOUR && interval < TIME_INTERVAL_DAY)
-//	{
-//        int hours = interval / TIME_INTERVAL_HOUR;
-//        str = [NSString stringWithFormat:@"%i %@", hours, MyLocalStr(@"kHoursShortAbbr")];
-//	}
-//	else
-//	{
-//        int days = interval / TIME_INTERVAL_DAY;
-//        str = [NSString stringWithFormat:@"%i %@", days, MyLocalStr(@"kDaysShortAbbr")];
-//	}
-//    
-//	return str;
-//}
-
 //=========================================================================
 
 - (void)updateStatusBarIcon
@@ -294,20 +250,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
     //Draw blue background under the status bar icon
     [[self statusBarItemView] setHighlighted:YES];
-    
-    //Start periodically update menu entries
-//    self.updateUITimer = [NSTimer timerWithTimeInterval:1.0
-//                                                 target:self
-//                                               selector:@selector(updateTimerFired:)
-//                                               userInfo:nil
-//                                                repeats:YES];
-//    
-//    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
-//    [[NSRunLoop currentRunLoop] addTimer:self.updateUITimer
-//                                 forMode:NSRunLoopCommonModes];
-    
-    //Trigger router info update immediately
-//    [self.currentRouter updateRouterInfo];
 }
 
 //=========================================================================
@@ -320,17 +262,7 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     [(RCMenu *)menu setEnableUpdates:NO];
 
     [[self statusBarItemView] setHighlighted:NO];
-    
-//    //Stop updating UI
-//    self.updateUITimer = nil;
 }
-
-//=========================================================================
-
-//- (void)updateTimerFired:(NSTimer *)timer
-//{
-//    [self updateGUI];
-//}
 
 //=========================================================================
 #pragma mark Notifications
