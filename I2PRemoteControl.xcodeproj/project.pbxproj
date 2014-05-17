@@ -27,6 +27,8 @@
 		812687DA19202851002A0571 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812687DC19202851002A0571 /* MainMenu.xib */; };
 		812687E11920287B002A0571 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 812687E31920287B002A0571 /* Credits.rtf */; };
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
+		814F92F81926ADF100635B1C /* RCBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92F71926ADF100635B1C /* RCBackgroundView.m */; };
+		814F92FB1926B5EE00635B1C /* RCContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92FA1926B5EE00635B1C /* RCContentView.m */; };
 		81581AC619263B6300289DD5 /* RouterOverview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81581AC519263B6300289DD5 /* RouterOverview.xib */; };
 		81581ACA19263E1900289DD5 /* RCRouterOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81581AC919263E1900289DD5 /* RCRouterOverviewViewController.m */; };
 		81581ACD1926424900289DD5 /* RCRouterOverviewMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 81581ACC1926424900289DD5 /* RCRouterOverviewMenuItem.m */; };
@@ -100,6 +102,10 @@
 		812687DB19202851002A0571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		812687E21920287B002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		812687E51920287F002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		814F92F61926ADF100635B1C /* RCBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCBackgroundView.h; sourceTree = "<group>"; };
+		814F92F71926ADF100635B1C /* RCBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCBackgroundView.m; sourceTree = "<group>"; };
+		814F92F91926B5EE00635B1C /* RCContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContentView.h; sourceTree = "<group>"; };
+		814F92FA1926B5EE00635B1C /* RCContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContentView.m; sourceTree = "<group>"; };
 		81581AC519263B6300289DD5 /* RouterOverview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouterOverview.xib; sourceTree = "<group>"; };
 		81581AC819263E1900289DD5 /* RCRouterOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterOverviewViewController.h; sourceTree = "<group>"; };
 		81581AC919263E1900289DD5 /* RCRouterOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterOverviewViewController.m; sourceTree = "<group>"; };
@@ -196,6 +202,10 @@
 				8100228B1924F77F0025273D /* RCToolbar.m */,
 				815BDA3919261E6600E518E9 /* RCStatusBarView.h */,
 				815BDA3A19261E6600E518E9 /* RCStatusBarView.m */,
+				814F92F61926ADF100635B1C /* RCBackgroundView.h */,
+				814F92F71926ADF100635B1C /* RCBackgroundView.m */,
+				814F92F91926B5EE00635B1C /* RCContentView.h */,
+				814F92FA1926B5EE00635B1C /* RCContentView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -297,9 +307,9 @@
 			isa = PBXGroup;
 			children = (
 				812687DC19202851002A0571 /* MainMenu.xib */,
+				81581AC519263B6300289DD5 /* RouterOverview.xib */,
 				810022831924EF9D0025273D /* Preferences.xib */,
 				810022851924EFA50025273D /* PreferencesGeneral.xib */,
-				81581AC519263B6300289DD5 /* RouterOverview.xib */,
 				81EC34811922B4040011D2D8 /* Localizable.strings */,
 				812687BB19202666002A0571 /* Images.xcassets */,
 				812687E31920287B002A0571 /* Credits.rtf */,
@@ -564,11 +574,13 @@
 				810022821924EF6F0025273D /* RCPrefsGeneralViewController.m in Sources */,
 				81581ACA19263E1900289DD5 /* RCRouterOverviewViewController.m in Sources */,
 				8194CC26192256FB00759F92 /* RCRouterInfo.m in Sources */,
+				814F92F81926ADF100635B1C /* RCBackgroundView.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
 				810022811924EF6F0025273D /* RCPrefsBaseViewController.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				81581AD619264E8D00289DD5 /* RCMenuItem.m in Sources */,
 				8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */,
+				814F92FB1926B5EE00635B1C /* RCContentView.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,
 				81581AD319264BB500289DD5 /* RCMenu.m in Sources */,
 				812687B719202666002A0571 /* RCAppDelegate.m in Sources */,

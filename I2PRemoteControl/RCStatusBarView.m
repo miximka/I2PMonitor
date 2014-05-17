@@ -86,6 +86,7 @@
 {
     [super mouseDown:theEvent];
     [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
+    
 }
 
 //=========================================================================

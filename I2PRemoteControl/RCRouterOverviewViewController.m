@@ -10,6 +10,7 @@
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "FBKVOController.h"
+#import "RCSessionConfig.h"
 
 //=========================================================================
 
@@ -73,6 +74,16 @@
 
 //=========================================================================
 
+- (void)updateHost
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    
+    NSString *str = router.sessionConfig.host;
+    [self.hostTextField setStringValue:GetValueOrDefaulIfNil(str)];
+}
+
+//=========================================================================
+
 - (void)updateVersion
 {
     RCRouter *router = (RCRouter *)self.representedObject;
@@ -110,6 +121,7 @@
 
 - (void)updateGUI
 {
+    [self updateHost];
     [self updateVersion];
     [self updateUptime];
     [self updateStatus];
