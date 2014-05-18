@@ -1,21 +1,16 @@
 //
-//  RCAppDelegate.h
+//  RCBackgroundView.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 11/05/14.
+//  Created by miximka on 16/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
 //=========================================================================
-@interface RCAppDelegate : NSObject <NSApplicationDelegate>
+@interface RCMainBackgroundView : NSView
 //=========================================================================
-
-@property (assign, nonatomic) IBOutlet NSPanel *arrowPanel;
-@property (assign, nonatomic) IBOutlet NSMenu *menu;
-
-- (IBAction)openPreferences:(id)sender;
 
 //=========================================================================
 @end

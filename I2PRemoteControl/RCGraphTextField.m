@@ -1,15 +1,15 @@
 //
-//  RCSeparatorView.m
+//  RCTextField.m
 //  I2PRemoteControl
 //
-//  Created by miximka on 18/05/14.
+//  Created by miximka on 17/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCSeparatorView.h"
+#import "RCGraphTextField.h"
 
 //=========================================================================
-@implementation RCSeparatorView
+@implementation RCGraphTextField
 //=========================================================================
 
 - (id)initWithFrame:(NSRect)frame
@@ -24,19 +24,26 @@
 
 //=========================================================================
 
-//- (BOOL)isOpaque
-//{
-//    return NO;
-//}
+- (BOOL)isOpaque
+{
+    return NO;
+}
+
+//=========================================================================
+
+- (void)awakeFromNib
+{
+    self.backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.8];
+    self.drawsBackground = YES;
+    self.layer.cornerRadius = 3.0;
+}
 
 //=========================================================================
 
 - (void)drawRect:(NSRect)dirtyRect
 {
 	[super drawRect:dirtyRect];
-    
-    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.3] setFill];
-    NSRectFill(dirtyRect);
+    // Drawing code here.
 }
 
 //=========================================================================

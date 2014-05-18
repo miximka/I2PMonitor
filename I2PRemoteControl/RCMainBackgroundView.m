@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCBackgroundView.h"
+#import "RCMainBackgroundView.h"
 
 //=========================================================================
 
-@interface RCBackgroundView ()
+@interface RCMainBackgroundView ()
 @property (nonatomic) NSColor *pattern;
 @end
 
 //=========================================================================
-@implementation RCBackgroundView
+@implementation RCMainBackgroundView
 //=========================================================================
 
 - (id)initWithFrame:(NSRect)frame

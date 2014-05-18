@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCBackgroundView.h"
+#import "RCMainBackgroundView.h"
 
 #define GREEN_GRADIENT_START_COLOR  [NSColor colorWithCalibratedRed:43.0/255.0 green:254.0/255.0 blue:166.0/255.0 alpha:1.0]
 #define GREEN_GRADIENT_END_COLOR    [NSColor colorWithCalibratedRed:188.0/255.0 green:254.0/255.0 blue:83.0/255.0 alpha:1.0]

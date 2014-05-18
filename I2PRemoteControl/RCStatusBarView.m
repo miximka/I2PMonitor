@@ -69,9 +69,18 @@
 
 //=========================================================================
 
-- (void)showMenu
+- (void)toggleMenu
 {
-    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
+    NSMenu *menu = self.statusItem.menu;
+    [self.statusItem popUpStatusItemMenu:menu];
+}
+
+//=========================================================================
+
+- (void)toggleHighlighted
+{
+    self.highlighted = !self.highlighted;
+    [self.delegate statusBarViewDidChangeHighlighted:self];
 }
 
 //=========================================================================
@@ -92,7 +101,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [super mouseDown:theEvent];
-    [self showMenu];
+    [self toggleHighlighted];
 }
 
 //=========================================================================
@@ -100,7 +109,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     [super rightMouseDown:theEvent];
-    [self showMenu];
+    [self toggleMenu];
 }
 
 //=========================================================================

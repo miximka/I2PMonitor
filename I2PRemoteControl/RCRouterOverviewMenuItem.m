@@ -7,7 +7,7 @@
 //
 
 #import "RCRouterOverviewMenuItem.h"
-#import "RCRouterOverviewViewController.h"
+#import "RCNetworkStatusViewController.h"
 
 //=========================================================================
 
@@ -21,7 +21,7 @@
 - (void)awakeFromNib
 {
     //Initialize view controller
-    RCRouterOverviewViewController *controller = [[RCRouterOverviewViewController alloc] initWithNibName:@"RouterOverview" bundle:nil];
+    RCNetworkStatusViewController *controller = [[RCNetworkStatusViewController alloc] initWithNibName:@"RouterOverview" bundle:nil];
     self.controller = controller;
     
     NSView *view = controller.view;

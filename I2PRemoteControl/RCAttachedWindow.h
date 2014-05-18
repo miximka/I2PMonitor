@@ -1,16 +1,18 @@
 //
-//  RCBackgroundView.h
+//  RCAttachedWindow.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 16/05/14.
+//  Created by miximka on 18/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "RCBorderlessPanel.h"
 
 //=========================================================================
-@interface RCBackgroundView : NSView
+@interface RCAttachedWindow : RCBorderlessPanel
 //=========================================================================
+
+@property (nonatomic, readonly) NSView *contentHolderView;
 
 //=========================================================================
 @end

@@ -1,5 +1,5 @@
 //
-//  RCRouterOverviewViewController.h
+//  RCNetworkStatusViewController.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 16/05/14.
@@ -9,10 +9,10 @@
 #import "RCViewController.h"
 
 @class CPTGraphHostingView;
-@class RCTextField;
+@class RCGraphTextField;
 
 //=========================================================================
-@interface RCRouterOverviewViewController : RCViewController
+@interface RCNetworkStatusViewController : RCViewController
 //=========================================================================
 
 @property (nonatomic) IBOutlet NSTextField *hostTextField;
@@ -20,8 +20,8 @@
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;
 @property (nonatomic) IBOutlet NSTextField *statusTextField;
 @property (nonatomic, assign) IBOutlet CPTGraphHostingView *graphHostView;
-@property (nonatomic) IBOutlet RCTextField *downloadTextField;
-@property (nonatomic) IBOutlet RCTextField *uploadTextField;
+@property (nonatomic) IBOutlet RCGraphTextField *downloadTextField;
+@property (nonatomic) IBOutlet RCGraphTextField *uploadTextField;
 
 //=========================================================================
 #pragma mark Unit Tests

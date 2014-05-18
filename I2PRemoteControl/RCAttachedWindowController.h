@@ -1,5 +1,5 @@
 //
-//  RCSeparatorView.h
+//  RCAttachedWindowController.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 18/05/14.
@@ -8,9 +8,23 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class RCAttachedWindowController;
+
 //=========================================================================
-@interface RCSeparatorView : NSView
+@interface RCAttachedWindowController : NSWindowController <NSWindowDelegate>
 //=========================================================================
+
+- (NSView *)contentHolderView;
+
+/**
+    Shows window with the top left corner positioned to the the specified coordinate
+ */
+- (void)showWindowAtPoint:(NSPoint)point;
+
+/**
+    Called during initialization
+ */
+- (void)setupViews;
 
 //=========================================================================
 @end

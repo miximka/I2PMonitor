@@ -1,18 +1,18 @@
 //
-//  RCRouterOverviewViewController.m
+//  RCNetworkStatusViewController.m
 //  I2PRemoteControl
 //
 //  Created by miximka on 16/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCRouterOverviewViewController.h"
+#import "RCNetworkStatusViewController.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "FBKVOController.h"
 #import "RCSessionConfig.h"
 #import <CorePlot/CorePlot.h>
-#import "RCTextField.h"
+#import "RCGraphTextField.h"
 
 //=========================================================================
 
@@ -26,7 +26,7 @@
 
 //=========================================================================
 
-@interface RCRouterOverviewViewController () <CPTPlotDataSource>
+@interface RCNetworkStatusViewController () <CPTPlotDataSource>
 @property (nonatomic) FBKVOController *kvoController;
 @property (nonatomic) NSTimer *uiUpdateTimer;
 @property (nonatomic) CPTXYGraph *graph;
@@ -35,7 +35,7 @@
 @end
 
 //=========================================================================
-@implementation RCRouterOverviewViewController
+@implementation RCNetworkStatusViewController
 //=========================================================================
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -299,7 +299,7 @@
     FBKVOController *kvoController = [[FBKVOController alloc] initWithObserver:self];
     self.kvoController = kvoController;
     
-    __weak RCRouterOverviewViewController *blockSelf = self;
+    __weak RCNetworkStatusViewController *blockSelf = self;
     [self.kvoController observe:router.routerInfo
                         keyPath:NSStringFromSelector(@selector(routerVersion))
                         options:0

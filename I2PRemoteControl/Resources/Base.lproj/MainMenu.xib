@@ -14,7 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="RCAppDelegate">
             <connections>
                 <outlet property="arrowPanel" destination="a7r-S3-7A6" id="EYO-mS-uR9"/>
-                <outlet property="statusBarMenu" destination="DMD-V3-BaM" id="7di-On-nZy"/>
+                <outlet property="menu" destination="hXT-w4-kI3" id="LyU-Or-0bD"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -667,16 +667,6 @@
                 </menuItem>
             </items>
         </menu>
-        <menu id="DMD-V3-BaM" userLabel="Status Bar Menu" customClass="RCMenu">
-            <items>
-                <menuItem title="RouterBasicInfo" tag="1" id="Etd-qT-tDe" customClass="RCRouterOverviewMenuItem">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-            </items>
-            <connections>
-                <outlet property="delegate" destination="Voe-Tx-rLC" id="sVU-dN-h2Y"/>
-            </connections>
-        </menu>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hasShadow="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="a7r-S3-7A6" customClass="RCArrowPanel">
             <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -694,6 +684,22 @@
                 </subviews>
             </view>
         </window>
+        <menu id="hXT-w4-kI3">
+            <items>
+                <menuItem title="About" id="Ph1-OX-aQJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="orderFrontStandardAboutPanel:" target="-3" id="Qmp-AC-gId"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit I2PRemoteControl" id="2re-lU-vpG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="terminate:" target="-3" id="6p4-6s-heh"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
     <resources>
         <image name="RedArrow" width="50" height="60"/>

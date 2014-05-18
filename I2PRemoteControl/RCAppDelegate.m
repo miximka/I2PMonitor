@@ -16,22 +16,18 @@
 #import "RCPreferencesWindowController.h"
 #import "RCRouterManager.h"
 #import "RCStatusBarView.h"
-#import "RCRouterOverviewViewController.h"
-#import "RCMenu.h"
+#import "RCNetworkStatusViewController.h"
+#import "RCAttachedWindow.h"
+#import "RCMainWindowController.h"
 
 //=========================================================================
 
-//Should correspond to the statusBarMenu tags in MainMenu.xib
-typedef NS_ENUM(NSUInteger, RCMenuItemTag)
-{
-    kRouterBasicInfoMenuTag   = 1,
-};
-
-@interface RCAppDelegate ()
+@interface RCAppDelegate () <RCStatusBarViewDelegate>
 @property (nonatomic) NSStatusItem *statusBarItem;
 @property (nonatomic) RCRouterManager *routerManager;
 @property (nonatomic) RCPreferencesWindowController *prefsWindowController;
 @property (nonatomic) BOOL isFirstStart;
+@property (nonatomic) RCMainWindowController *mainWindowController;
 @end
 
 //=========================================================================
@@ -62,6 +58,11 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(managerDidSetRouter:)
                                                  name:RCManagerDidSetRouterNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(windowDidResignKey:)
+                                                 name:NSWindowDidResignKeyNotification
                                                object:nil];
 }
 
@@ -102,15 +103,16 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 {
     //Create status bar item
 	NSStatusItem *item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [item setMenu:self.menu];
     
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
     RCStatusBarView *statusBarView = [[RCStatusBarView alloc] initWithFrame:NSMakeRect(0, 1, thickness, thickness)];
+    [statusBarView setDelegate:self];
     [statusBarView setStatusItem:item];
     [statusBarView setImage:[NSImage imageNamed:@"StatusBarIcon_Inactive"]];
     
     [item setView:statusBarView];
     [item setHighlightMode:YES];
-    [item setMenu:self.statusBarMenu];
     
     self.statusBarItem = item;
 }
@@ -120,6 +122,21 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 - (RCStatusBarView *)statusBarItemView
 {
     return (RCStatusBarView *)self.statusBarItem.view;
+}
+
+//=========================================================================
+
+- (NSPoint)bottomLeftCornerOfStatusBarItemView
+{
+    NSWindow *statusBarItemWindow = [[self statusBarItemView] window];
+
+    NSRect statusBarRect = statusBarItemWindow.frame;
+
+    NSPoint point;
+    point.x = statusBarRect.origin.x;
+    point.y = statusBarRect.origin.y - statusBarRect.size.height;
+    
+    return point;
 }
 
 //=========================================================================
@@ -135,17 +152,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
     [self.arrowPanel setFrame:aRect display:YES];
     [self.arrowPanel makeKeyAndOrderFront:self];
-}
-
-//=========================================================================
-
-- (void)menuItem:(NSMenuItem *)menuItem setTitleWithFormat:(NSString *)format value:(id)value
-{
-    if (value == nil)
-        value = @"-";
-    
-    NSString *title = [NSString stringWithFormat:format, value];
-    [menuItem setTitle:title];
 }
 
 //=========================================================================
@@ -190,13 +196,6 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 }
 
 //=========================================================================
-
-- (IBAction)quit:(id)sender
-{
-    [NSApp terminate:self];
-}
-
-//=========================================================================
 #pragma mark NSApplicationDelegate
 //=========================================================================
 
@@ -228,44 +227,11 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
     //Start looking for router
     [self.routerManager restartRouter];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[self statusBarItemView] showMenu];
-    });
-}
 
-//=========================================================================
-#pragma mark NSMenuDelegate
-//=========================================================================
-
-- (void)menuWillOpen:(NSMenu *)menu
-{
-    if (menu != self.statusBarMenu)
-        return;
-    
-    [(RCMenu *)menu setEnableUpdates:YES];
-    
-    if (self.arrowPanel)
-    {
-        //Dismiss arrow panel
-        [self.arrowPanel orderOut:self];
-        self.arrowPanel = nil;
-    }
-
-    //Draw blue background under the status bar icon
-    [[self statusBarItemView] setHighlighted:YES];
-}
-
-//=========================================================================
-
-- (void)menuDidClose:(NSMenu *)menu
-{
-    if (menu != self.statusBarMenu)
-        return;
-
-    [(RCMenu *)menu setEnableUpdates:NO];
-
-    [[self statusBarItemView] setHighlighted:NO];
+    //Initialize main window controller
+    RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 248, 338) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
+    RCMainWindowController *windowController = [[RCMainWindowController alloc] initWithWindow:window];
+    self.mainWindowController = windowController;
 }
 
 //=========================================================================
@@ -284,8 +250,39 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
     [self updateStatusBarIcon];
 
     //Update router info menu entry
-    NSMenuItem *basicInfoMenuItem = [self.statusBarMenu itemWithTag:kRouterBasicInfoMenuTag];
-    [basicInfoMenuItem setRepresentedObject:self.routerManager.router];
+//    NSMenuItem *basicInfoMenuItem = [self.statusBarMenu itemWithTag:kRouterBasicInfoMenuTag];
+//    [basicInfoMenuItem setRepresentedObject:self.routerManager.router];
+}
+
+//=========================================================================
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+    NSWindow *object = notification.object;
+    
+    if (object == self.mainWindowController.window)
+    {
+        //Close window
+        [[self statusBarItemView] setHighlighted:NO];
+        [self.mainWindowController.window close];
+    }
+}
+
+//=========================================================================
+#pragma mark RCStatusBarViewDelegate
+//=========================================================================
+
+- (void)statusBarViewDidChangeHighlighted:(RCStatusBarView *)view
+{
+    if (view.isHighlighted)
+    {
+        NSPoint point = view.window.frame.origin;
+        [self.mainWindowController showWindowAtPoint:point];
+    }
+    else
+    {
+        [self.mainWindowController.window close];
+    }
 }
 
 //=========================================================================
