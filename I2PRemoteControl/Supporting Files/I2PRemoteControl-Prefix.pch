@@ -12,3 +12,11 @@
 
 #define	MyLocalStr(str)				NSLocalizedString(str, @"")
 #define RCInvalidateTimer(x) {[x invalidate]; x = nil;}
+
+#define GetValueOrDefaulIfNil(x) ( (x != nil) ? x : @"-" )
+
+#define TIME_INTERVAL_MINUTE    60
+#define TIME_INTERVAL_HOUR      (TIME_INTERVAL_MINUTE * 60)
+#define TIME_INTERVAL_DAY       (TIME_INTERVAL_HOUR * 24)
+#define TIME_INTERVAL_HALF_YEAR (TIME_INTERVAL_DAY * 182)
+#define TIME_INTERVAL_YEAR      (TIME_INTERVAL_DAY * 365)

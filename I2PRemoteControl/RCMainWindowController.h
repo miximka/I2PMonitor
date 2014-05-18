@@ -8,9 +8,13 @@
 
 #import "RCAttachedWindowController.h"
 
+@class RCMainViewController;
+
 //=========================================================================
-@interface RCMainWindowController : RCAttachedWindowController
+@interface RCMainWindowController : RCAttachedWindowController <NSWindowDelegate>
 //=========================================================================
+
+@property (nonatomic, readonly) RCMainViewController *mainViewController;
 
 //=========================================================================
 @end

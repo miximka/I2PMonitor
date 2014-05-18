@@ -8,7 +8,10 @@
             <connections>
                 <outlet property="congestionButton" destination="sPJ-gR-DJ6" id="JhE-KI-B6n"/>
                 <outlet property="contentView" destination="Y5i-dz-Lb2" id="A47-Kv-6ec"/>
+                <outlet property="hostTextField" destination="pTW-Fi-TSP" id="g0P-eF-FCk"/>
                 <outlet property="networkButton" destination="d6K-2E-LfO" id="7TF-bR-JLv"/>
+                <outlet property="uptimeTextField" destination="JeF-EX-LHp" id="RzH-4o-6tW"/>
+                <outlet property="versionTextField" destination="g80-Vc-QRj" id="7c4-y4-3Jt"/>
                 <outlet property="view" destination="c22-O7-iKe" id="o79-2s-Zad"/>
             </connections>
         </customObject>
@@ -31,7 +34,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" title="Network" bezelStyle="shadowlessSquare" image="Network" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qT5-1D-5ip" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-gR-DJ6">
@@ -39,15 +42,15 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" title="Congestion" bezelStyle="shadowlessSquare" image="Congestion" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ylH-pY-xSx" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU">
                             <rect key="frame" x="167" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Preferences" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Preferences" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                     </subviews>
@@ -100,6 +103,6 @@
     <resources>
         <image name="Congestion" width="50" height="50"/>
         <image name="Network" width="50" height="50"/>
-        <image name="Preferences" width="50" height="50"/>
+        <image name="Preferences" width="25" height="25"/>
     </resources>
 </document>

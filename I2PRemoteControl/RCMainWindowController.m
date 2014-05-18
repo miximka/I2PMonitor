@@ -36,5 +36,24 @@
 }
 
 //=========================================================================
+
+- (void)showWindow:(id)sender
+{
+    [super showWindow:sender];
+    
+    [self.mainViewController windowWillShow];
+}
+
+//=========================================================================
+#pragma mark NSWindowDelegate
+//=========================================================================
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    DDLogInfo(@"Close");
+    [self.mainViewController windowWillClose];
+}
+
+//=========================================================================
 @end
 //=========================================================================

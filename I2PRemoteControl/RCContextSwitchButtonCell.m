@@ -26,14 +26,23 @@
 {
     NSPoint center = NSMakePoint(cellFrame.origin.x + cellFrame.size.width/2, cellFrame.origin.x + cellFrame.size.height/2);
 
+    //===================
     //Draw image in the middle of the button
     NSSize imageSize = self.image.size;
     NSPoint imagePoint = NSMakePoint(center.x - imageSize.width/2, center.y - imageSize.height/2);
     NSRect imageFrame = NSMakeRect(imagePoint.x, imagePoint.y, imageSize.width, imageSize.height);
     [self drawImage:self.image withFrame:imageFrame inView:controlView];
 
+    //===================
     //Draw title
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [NSColor whiteColor],
+    NSColor *textColor = [NSColor whiteColor];
+    if ([self isEnabled] == NO)
+    {
+        //Use disabled text color
+        textColor = [NSColor lightGrayColor];
+    }
+    
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : textColor,
                                   NSFontAttributeName : [NSFont fontWithName:@"Helvetica Neue Bold" size:12] };
     
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.title attributes:attributes];

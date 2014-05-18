@@ -19,6 +19,7 @@
 #import "RCNetworkStatusViewController.h"
 #import "RCAttachedWindow.h"
 #import "RCMainWindowController.h"
+#import "RCMainViewController.h"
 
 //=========================================================================
 
@@ -223,15 +224,16 @@
     RCRouterManager *routerManager = [[RCRouterManager alloc] init];
     self.routerManager = routerManager;
 
+    //Initialize main window controller
+    RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 248, 338) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
+    RCMainWindowController *windowController = [[RCMainWindowController alloc] initWithWindow:window];
+    [window setDelegate:windowController];
+    self.mainWindowController = windowController;
+
     [self registerForNotifications];
 
     //Start looking for router
     [self.routerManager restartRouter];
-
-    //Initialize main window controller
-    RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 248, 338) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
-    RCMainWindowController *windowController = [[RCMainWindowController alloc] initWithWindow:window];
-    self.mainWindowController = windowController;
 }
 
 //=========================================================================
@@ -247,11 +249,11 @@
 
 - (void)managerDidSetRouter:(NSNotification *)notification
 {
+    //Update status bar
     [self updateStatusBarIcon];
 
-    //Update router info menu entry
-//    NSMenuItem *basicInfoMenuItem = [self.statusBarMenu itemWithTag:kRouterBasicInfoMenuTag];
-//    [basicInfoMenuItem setRepresentedObject:self.routerManager.router];
+    //Update view controller
+    [self.mainWindowController.mainViewController setRepresentedObject:self.routerManager.router];
 }
 
 //=========================================================================

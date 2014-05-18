@@ -30,8 +30,6 @@ typedef NS_ENUM(NSUInteger, RCStatusBarIconType)
 @property (nonatomic, getter = isHighlighted) BOOL highlighted;
 @property (nonatomic) RCStatusBarIconType iconType;
 
-- (void)showMenu;
-
 //=========================================================================
 @end
 //=========================================================================
