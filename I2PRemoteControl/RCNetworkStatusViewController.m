@@ -37,12 +37,33 @@
 
 //=========================================================================
 
+- (void)setRouterStatusString:(NSString *)string
+{
+    //Check whether the string fits into one line
+    NSDictionary *attributes = @{ NSFontAttributeName : self.singleLineStatusTextField.font };
+    NSAttributedString *attributedStr = [[NSAttributedString alloc] initWithString:string attributes:attributes];
+    
+    NSSize textFieldSize = self.singleLineStatusTextField.frame.size;
+    NSRect boundingRect = [attributedStr boundingRectWithSize:textFieldSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine];
+    
+    //Decide to use single or multiline text field
+    BOOL fitsIntoOneLine = textFieldSize.height >= boundingRect.size.height;
+
+    [self.singleLineStatusTextField setHidden:!fitsIntoOneLine];
+    [self.multiLineStatusTextField setHidden:fitsIntoOneLine];
+    
+    [self.singleLineStatusTextField setStringValue:string];
+    [self.multiLineStatusTextField setStringValue:string];
+}
+
+//=========================================================================
+
 - (void)updateStatus
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     
     NSString *str = router.routerInfo.routerStatus;
-    [self.statusTextField setStringValue:GetValueOrDefaulIfNil(str)];
+    [self setRouterStatusString:GetValueOrDefaulIfNil(str)];
 }
 
 //=========================================================================

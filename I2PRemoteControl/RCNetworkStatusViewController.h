@@ -15,10 +15,12 @@
 @interface RCNetworkStatusViewController : RCViewController
 //=========================================================================
 
-@property (nonatomic) IBOutlet NSTextField *statusTextField;
 @property (nonatomic, assign) IBOutlet CPTGraphHostingView *graphHostView;
 @property (nonatomic) IBOutlet RCGraphTextField *downloadTextField;
 @property (nonatomic) IBOutlet RCGraphTextField *uploadTextField;
+@property (nonatomic) IBOutlet NSImageView *statusImageView;
+@property (nonatomic) IBOutlet NSTextField *singleLineStatusTextField;
+@property (nonatomic) IBOutlet NSTextField *multiLineStatusTextField;
 
 //=========================================================================
 @end

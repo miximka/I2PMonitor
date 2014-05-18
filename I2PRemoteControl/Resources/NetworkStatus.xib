@@ -8,7 +8,8 @@
             <connections>
                 <outlet property="downloadTextField" destination="Hom-6i-oFp" id="99k-aj-muG"/>
                 <outlet property="graphHostView" destination="wHa-Wl-CYs" id="rwU-WI-Efr"/>
-                <outlet property="statusTextField" destination="lmZ-Xv-rZv" id="2Rs-jd-Tm7"/>
+                <outlet property="multiLineStatusTextField" destination="lmZ-Xv-rZv" id="HCl-Bh-8xv"/>
+                <outlet property="singleLineStatusTextField" destination="u4s-bq-SoM" id="Ntb-ED-Ilc"/>
                 <outlet property="uploadTextField" destination="EdD-6S-tnE" id="PaF-ZF-dKg"/>
                 <outlet property="view" destination="vEV-DW-AU6" id="Ybd-yf-tbl"/>
             </connections>
@@ -20,11 +21,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wHa-Wl-CYs" customClass="CPTGraphHostingView">
-                    <rect key="frame" x="0.0" y="63" width="248" height="68"/>
+                    <rect key="frame" x="0.0" y="48" width="248" height="77"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EdD-6S-tnE" customClass="RCGraphTextField">
-                    <rect key="frame" x="5" y="100" width="60" height="14"/>
+                    <rect key="frame" x="5" y="94" width="60" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="150 KBps" id="jXR-m8-aWq">
                         <font key="font" metaFont="smallSystem"/>
@@ -33,7 +34,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hom-6i-oFp" customClass="RCGraphTextField">
-                    <rect key="frame" x="5" y="116" width="60" height="14"/>
+                    <rect key="frame" x="5" y="110" width="60" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="220 KBps" id="RwU-2b-kw9">
                         <font key="font" metaFont="smallSystem"/>
@@ -50,35 +51,17 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lmZ-Xv-rZv">
-                    <rect key="frame" x="51" y="156" width="187" height="14"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lmZ-Xv-rZv">
+                    <rect key="frame" x="45" y="137" width="197" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="yx5-8a-wts">
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="charWrapping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Multiline Label" id="yx5-8a-wts">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="afF-0o-WOq">
-                    <rect key="frame" x="10" y="137" width="228" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Bandwidth in/out" id="a5d-gO-isz">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQh-1E-sfw">
-                    <rect key="frame" x="10" y="156" width="37" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Status" id="sZO-p4-LJZ">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7zU-P5-1kn">
-                    <rect key="frame" x="10" y="22" width="30" height="14"/>
+                    <rect key="frame" x="10" y="7" width="30" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Used" id="n9D-BP-Zw6">
                         <font key="font" metaFont="smallSystem"/>
@@ -87,7 +70,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1t0-Lw-KAo">
-                    <rect key="frame" x="137" y="22" width="101" height="14"/>
+                    <rect key="frame" x="137" y="7" width="101" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="-- MB/-- MB " id="jmu-w9-SJN">
                         <font key="font" metaFont="smallSystem"/>
@@ -96,16 +79,16 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Itc-CY-eXc">
-                    <rect key="frame" x="10" y="41" width="31" height="14"/>
+                    <rect key="frame" x="10" y="26" width="63" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Total" id="XJk-Aw-UiF">
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Last 15 sec" id="XJk-Aw-UiF">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aec-fB-mx1">
-                    <rect key="frame" x="137" y="41" width="101" height="14"/>
+                    <rect key="frame" x="137" y="26" width="101" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="-- KBps/-- KBps " id="jcg-es-6gp">
                         <font key="font" metaFont="smallSystem"/>
@@ -113,6 +96,20 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u4s-bq-SoM">
+                    <rect key="frame" x="45" y="146" width="197" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Single Line Label" id="jEt-qg-tL5">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nTg-t4-xMv">
+                    <rect key="frame" x="10" y="137" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSInfo" id="MTc-0c-IGN"/>
+                </imageView>
             </subviews>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="type">
@@ -121,4 +118,7 @@
             </userDefinedRuntimeAttributes>
         </customView>
     </objects>
+    <resources>
+        <image name="NSInfo" width="32" height="32"/>
+    </resources>
 </document>
