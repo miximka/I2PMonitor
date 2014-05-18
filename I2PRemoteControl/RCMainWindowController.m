@@ -41,7 +41,8 @@
 {
     [super showWindow:sender];
     
-    [self.mainViewController windowWillShow];
+    //Window is about to open, start updating UI
+    [self.mainViewController startUpdating];
 }
 
 //=========================================================================
@@ -50,8 +51,8 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    DDLogInfo(@"Close");
-    [self.mainViewController windowWillClose];
+    //Window is about to close, stop updating UI
+    [self.mainViewController stopUpdating];
 }
 
 //=========================================================================

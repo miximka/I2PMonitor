@@ -19,11 +19,8 @@
 @property (nonatomic) IBOutlet NSButton *networkButton;
 @property (nonatomic) IBOutlet NSButton *congestionButton;
 
-/**
-    Called by main window controller when window visibility changes
- */
-- (void)windowWillShow;
-- (void)windowWillClose;
+- (void)startUpdating;
+- (void)stopUpdating;
 
 //=========================================================================
 #pragma mark Unit Tests

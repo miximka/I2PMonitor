@@ -136,7 +136,7 @@
 
 //=========================================================================
 
-- (void)windowWillShow
+- (void)startUpdating
 {
     DDLogInfo(@"Start updating");
     [self restartUiUpdateTimer];
@@ -147,7 +147,7 @@
 
 //=========================================================================
 
-- (void)windowWillClose
+- (void)stopUpdating
 {
     DDLogInfo(@"Stop updating");
     RCInvalidateTimer(self.uiUpdateTimer);
@@ -172,6 +172,9 @@
     [super setRepresentedObject:object];
     assert([object isKindOfClass:[RCRouter class]]);
 
+    //Also set represented object to network view controller
+    [self.networkViewController setRepresentedObject:object];
+    
     RCRouter *router = (RCRouter *)object;
     
     //Register for KVO notifications
