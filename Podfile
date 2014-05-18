@@ -2,4 +2,4 @@ pod 'AFJSONRPCClient', '~> 2.0.0'
 pod 'CocoaLumberjack', '~> 1.8.1'
 pod 'TransitionKit', '~> 2.1.0'
 pod 'KVOController', '~> 1.0.1'
-
+pod 'CorePlot', '~> 1.5.1'

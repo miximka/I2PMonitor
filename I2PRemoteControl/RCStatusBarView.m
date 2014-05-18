@@ -68,6 +68,13 @@
 }
 
 //=========================================================================
+
+- (void)showMenu
+{
+    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
+}
+
+//=========================================================================
 #pragma mark Overriden methods
 //=========================================================================
 
@@ -85,8 +92,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [super mouseDown:theEvent];
-    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
-    
+    [self showMenu];
 }
 
 //=========================================================================
@@ -94,7 +100,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     [super rightMouseDown:theEvent];
-    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
+    [self showMenu];
 }
 
 //=========================================================================

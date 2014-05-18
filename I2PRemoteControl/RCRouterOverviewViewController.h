@@ -8,6 +8,9 @@
 
 #import "RCViewController.h"
 
+@class CPTGraphHostingView;
+@class RCTextField;
+
 //=========================================================================
 @interface RCRouterOverviewViewController : RCViewController
 //=========================================================================
@@ -16,6 +19,9 @@
 @property (nonatomic) IBOutlet NSTextField *versionTextField;
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;
 @property (nonatomic) IBOutlet NSTextField *statusTextField;
+@property (nonatomic, assign) IBOutlet CPTGraphHostingView *graphHostView;
+@property (nonatomic) IBOutlet RCTextField *downloadTextField;
+@property (nonatomic) IBOutlet RCTextField *uploadTextField;
 
 //=========================================================================
 #pragma mark Unit Tests

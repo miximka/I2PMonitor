@@ -46,13 +46,18 @@
     
     if (type == RCContentViewColorGreen)
     {
-        startColor = [NSColor colorWithCalibratedRed:43.0/255.0 green:254.0/255.0 blue:166.0/255.0 alpha:1.0];
-        endColor = [NSColor colorWithCalibratedRed:188.0/255.0 green:254.0/255.0 blue:83.0/255.0 alpha:1.0];
+        startColor = GREEN_GRADIENT_START_COLOR;
+        endColor = GREEN_GRADIENT_END_COLOR;
     }
     else if (type == RCContentViewColorRed)
     {
-        startColor = [NSColor colorWithCalibratedRed:252.0/255.0 green:15.0/255.0 blue:26.0/255.0 alpha:1.0];
-        endColor = [NSColor colorWithCalibratedRed:255.0/255.0 green:205.0/255.0 blue:56.0/255.0 alpha:1.0];
+        startColor = RED_GRADIENT_START_COLOR;
+        endColor = RED_GRADIENT_END_COLOR;
+    }
+    else if (type == RCContentViewColorViolet)
+    {
+        startColor = VIOLETT_GRADIENT_START_COLOR;
+        endColor = VIOLETT_GRADIENT_END_COLOR;
     }
     
     if (startColor != nil && endColor != nil)

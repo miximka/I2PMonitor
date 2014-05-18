@@ -228,6 +228,10 @@ typedef NS_ENUM(NSUInteger, RCMenuItemTag)
 
     //Start looking for router
     [self.routerManager restartRouter];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self statusBarItemView] showMenu];
+    });
 }
 
 //=========================================================================

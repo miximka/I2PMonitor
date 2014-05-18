@@ -22,12 +22,14 @@ PODS:
   - CocoaLumberjack/Core (1.8.1)
   - CocoaLumberjack/Extensions (1.8.1):
     - CocoaLumberjack/Core
+  - CorePlot (1.5.1)
   - KVOController (1.0.1)
   - TransitionKit (2.1.0)
 
 DEPENDENCIES:
   - AFJSONRPCClient (~> 2.0.0)
   - CocoaLumberjack (~> 1.8.1)
+  - CorePlot (~> 1.5.1)
   - KVOController (~> 1.0.1)
   - TransitionKit (~> 2.1.0)
 
@@ -35,6 +37,7 @@ SPEC CHECKSUMS:
   AFJSONRPCClient: d958b85037eef397f7c3c7657802392b5335583a
   AFNetworking: 01aa7c3aa9a200b94943e54072a4373f14b3d219
   CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
+  CorePlot: 7b55ddfce42eb93051c0f9edba927fd246831f6d
   KVOController: 2205f0d1a24f919e92a8f0b3254ac3ca40412f1a
   TransitionKit: 60b6a2cd9370e471c960b2cdf23b0b2593867625
 

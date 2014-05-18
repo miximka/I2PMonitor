@@ -51,6 +51,9 @@
 		81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62EF1921093C005A82A4 /* RCRouterProxy.m */; };
 		81E99BBB1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E99BBA1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m */; };
 		81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81EC34811922B4040011D2D8 /* Localizable.strings */; };
+		81FFF3E21927FB4200D18156 /* RCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 81FFF3E11927FB4200D18156 /* RCTextField.m */; };
+		81FFF3E5192812AD00D18156 /* RCButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81FFF3E4192812AD00D18156 /* RCButtonView.m */; };
+		81FFF3E81928157200D18156 /* RCSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81FFF3E71928157200D18156 /* RCSeparatorView.m */; };
 		A8D6809BEF0648D9A70F6BD2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4CED1204DC40EC8CB7F0DA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -151,6 +154,12 @@
 		81CD62F5192118BC005A82A4 /* RCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCLogging.h; sourceTree = "<group>"; };
 		81E99BBA1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterOverviewViewControllerTest.m; sourceTree = "<group>"; };
 		81EC34801922B4040011D2D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81FFF3E01927FB4200D18156 /* RCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTextField.h; sourceTree = "<group>"; };
+		81FFF3E11927FB4200D18156 /* RCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTextField.m; sourceTree = "<group>"; };
+		81FFF3E3192812AD00D18156 /* RCButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCButtonView.h; sourceTree = "<group>"; };
+		81FFF3E4192812AD00D18156 /* RCButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCButtonView.m; sourceTree = "<group>"; };
+		81FFF3E61928157200D18156 /* RCSeparatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSeparatorView.h; sourceTree = "<group>"; };
+		81FFF3E71928157200D18156 /* RCSeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSeparatorView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +215,12 @@
 				814F92F71926ADF100635B1C /* RCBackgroundView.m */,
 				814F92F91926B5EE00635B1C /* RCContentView.h */,
 				814F92FA1926B5EE00635B1C /* RCContentView.m */,
+				81FFF3E01927FB4200D18156 /* RCTextField.h */,
+				81FFF3E11927FB4200D18156 /* RCTextField.m */,
+				81FFF3E3192812AD00D18156 /* RCButtonView.h */,
+				81FFF3E4192812AD00D18156 /* RCButtonView.m */,
+				81FFF3E61928157200D18156 /* RCSeparatorView.h */,
+				81FFF3E71928157200D18156 /* RCSeparatorView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -308,8 +323,7 @@
 			children = (
 				812687DC19202851002A0571 /* MainMenu.xib */,
 				81581AC519263B6300289DD5 /* RouterOverview.xib */,
-				810022831924EF9D0025273D /* Preferences.xib */,
-				810022851924EFA50025273D /* PreferencesGeneral.xib */,
+				81FFF3DF1927DE1800D18156 /* Preferences */,
 				81EC34811922B4040011D2D8 /* Localizable.strings */,
 				812687BB19202666002A0571 /* Images.xcassets */,
 				812687E31920287B002A0571 /* Credits.rtf */,
@@ -417,6 +431,15 @@
 				8100226A1924D0CD0025273D /* Preferences */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		81FFF3DF1927DE1800D18156 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				810022831924EF9D0025273D /* Preferences.xib */,
+				810022851924EFA50025273D /* PreferencesGeneral.xib */,
+			);
+			name = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -567,6 +590,7 @@
 				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
 				8100229519255FC60025273D /* RCLoginItemManager.m in Sources */,
 				8194CC1B1921825C00759F92 /* RCRouterInfoTask.m in Sources */,
+				81FFF3E81928157200D18156 /* RCSeparatorView.m in Sources */,
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				8194CC1819217F1900759F92 /* RCTask.m in Sources */,
 				815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */,
@@ -576,7 +600,9 @@
 				8194CC26192256FB00759F92 /* RCRouterInfo.m in Sources */,
 				814F92F81926ADF100635B1C /* RCBackgroundView.m in Sources */,
 				812687B019202666002A0571 /* main.m in Sources */,
+				81FFF3E21927FB4200D18156 /* RCTextField.m in Sources */,
 				810022811924EF6F0025273D /* RCPrefsBaseViewController.m in Sources */,
+				81FFF3E5192812AD00D18156 /* RCButtonView.m in Sources */,
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				81581AD619264E8D00289DD5 /* RCMenuItem.m in Sources */,
 				8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */,
