@@ -11,18 +11,40 @@
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCSessionConfig.h"
-#import "FBKVOController.h"
 
 //=========================================================================
 
 @interface RCMainViewController ()
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
-@property (nonatomic) FBKVOController *kvoController;
 @property (nonatomic) NSTimer *uiUpdateTimer;
 @end
 
 //=========================================================================
 @implementation RCMainViewController
+//=========================================================================
+
+- (void)dealloc
+{
+    [self unregisterFromNotifications];
+}
+
+//=========================================================================
+
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(routerDidUpdateRouterInfo:)
+                                                 name:RCRouterDidUpdateRouterInfoNotification
+                                               object:nil];
+}
+
+//=========================================================================
+
+- (void)unregisterFromNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //=========================================================================
 
 - (void)switchToControllerView:(RCViewController *)controller
@@ -159,6 +181,8 @@
 
 - (void)awakeFromNib
 {
+    [self registerForNotifications];
+
     RCNetworkStatusViewController *networkController = [[RCNetworkStatusViewController alloc] initWithNibName:@"NetworkStatus" bundle:nil];
     self.networkViewController = networkController;
     
@@ -174,32 +198,8 @@
 
     //Also set represented object to network view controller
     [self.networkViewController setRepresentedObject:object];
-    
-    RCRouter *router = (RCRouter *)object;
-    
-    //Register for KVO notifications
-    FBKVOController *kvoController = [[FBKVOController alloc] initWithObserver:self];
-    self.kvoController = kvoController;
-    
-    __weak RCMainViewController *blockSelf = self;
-    [self.kvoController observe:router.routerInfo
-                        keyPath:NSStringFromSelector(@selector(routerVersion))
-                        options:0
-                          block:^(id observer, id object, NSDictionary *change) {
-                              
-                              [blockSelf updateVersion];
-                              
-                          }];
-    
-    [self.kvoController observe:router.routerInfo
-                        keyPath:NSStringFromSelector(@selector(routerUptime))
-                        options:0
-                          block:^(id observer, id object, NSDictionary *change) {
-                              
-                              [blockSelf updateUptime];
-                              
-                          }];
-    
+
+    //Update UI immediately
     [self updateGUI];
 }
 
@@ -209,7 +209,16 @@
 
 - (void)uiUpdateTimerFired:(NSTimer *)timer
 {
-    [self updateUptime];
+    [self updateGUI];
+}
+
+//=========================================================================
+#pragma mark Notifications
+//=========================================================================
+
+- (void)routerDidUpdateRouterInfo:(NSNotification *)notification
+{
+    [self updateGUI];
 }
 
 //=========================================================================

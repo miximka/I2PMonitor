@@ -37,7 +37,7 @@
 
 - (void)dealloc
 {
-    [self unregisterForNotifications];
+    [self unregisterFromNotifications];
 }
 
 //=========================================================================
@@ -69,7 +69,7 @@
 
 //=========================================================================
 
-- (void)unregisterForNotifications
+- (void)unregisterFromNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

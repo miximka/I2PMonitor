@@ -12,6 +12,10 @@
 @interface RCRouterInfo : NSObject
 //=========================================================================
 
+- (instancetype)initWithResponseDictionary:(NSDictionary *)response;
+
+- (void)updateWithResponseDictionary:(NSDictionary *)response;
+
 @property (nonatomic) NSString *routerStatus;
 
 /**
@@ -25,8 +29,6 @@
 - (NSTimeInterval)estimatedRouterUptime;
 
 @property (nonatomic) NSString *routerVersion;
-
-- (void)updateWithResponseDictionary:(NSDictionary *)response;
 
 //=========================================================================
 @end

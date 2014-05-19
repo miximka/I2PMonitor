@@ -12,8 +12,7 @@
 @interface RCViewController : NSViewController
 //=========================================================================
 
-- (void)startUpdating;
-- (void)stopUpdating;
+- (void)updateGUI;
 
 //=========================================================================
 @end

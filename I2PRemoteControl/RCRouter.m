@@ -18,8 +18,8 @@
 
 //=========================================================================
 
-#define RETRY_AUTH_DELAY 2 //Sec
-
+#define RETRY_AUTH_DELAY 2 //sec
+#define RETRY_COUNT_INVALIDATE_ROUTER_INFO 3 //times
 #define CLIENT_API_VERSION 1
 #define DEFAULT_PASSWORD @"itoopie"
 
@@ -50,6 +50,8 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @property (nonatomic) NSTimer *authRetryTimer;
 @property (nonatomic) BOOL active;
 @property (nonatomic) BOOL authenticating;
+@property (nonatomic) NSUInteger authRetryCounter;
+@property (nonatomic) RCRouterInfo *routerInfo;
 @end
 
 //=========================================================================
@@ -61,8 +63,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     self = [super init];
     if (self)
     {
-        _routerInfo = [RCRouterInfo new];
+        //_routerInfo = [RCRouterInfo new];
         _sessionConfig = sessionConfig;
+        _authRetryCounter = 0;
     }
     return self;
 }
@@ -223,9 +226,23 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     if (error)
     {
         //Authentication failed
+        if (self.authRetryCounter < RETRY_COUNT_INVALIDATE_ROUTER_INFO)
+        {
+            //Increase retry counter
+            self.authRetryCounter++;
+        }
+        else
+        {
+            //We are trying too long, invalidate current router info
+            [self invalidateRouterInfo];
+        }
+        
         [self eventAuthenticationFailedWithError:error];
         return;
     }
+    
+    //Reset retry counter
+    self.authRetryCounter = 0;
     
     //Authentication succeeded
     [self eventAuthenticationSucceeded];
@@ -346,7 +363,15 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (void)didUpdateRouterInfo:(NSDictionary *)responseDict
 {
     //Update local router info with one from the task
-    [self.routerInfo updateWithResponseDictionary:responseDict];
+    if (self.routerInfo == nil)
+    {
+        self.routerInfo = [[RCRouterInfo alloc] initWithResponseDictionary:responseDict];
+    }
+    else
+    {
+        [self.routerInfo updateWithResponseDictionary:responseDict];
+    }
+    
     [self notifyDidUpdateRouterInfo];
 }
 
@@ -372,11 +397,21 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
+- (void)invalidateRouterInfo
+{
+    DDLogInfo(@"Invalidating router info");
+    
+    _routerInfo = nil;
+    [self notifyDidUpdateRouterInfo];
+}
+
+//=========================================================================
+
 - (void)addPeriodicTasks
 {
-//    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-//    echoTask.frequency = 1;
-//    [self.taskManager addTask:echoTask];
+    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+    echoTask.frequency = 1;
+    [self.taskManager addTask:echoTask];
 }
 
 //=========================================================================

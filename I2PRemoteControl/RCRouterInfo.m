@@ -19,6 +19,18 @@
 @implementation RCRouterInfo
 //=========================================================================
 
+- (instancetype)initWithResponseDictionary:(NSDictionary *)response
+{
+    self = [super init];
+    if (self)
+    {
+        [self updateWithResponseDictionary:response];
+    }
+    return self;
+}
+
+//=========================================================================
+
 - (void)updateWithResponseDictionary:(NSDictionary *)response
 {
     self.routerVersion = [response objectForKey:PARAM_KEY_ROUTER_VERSION];

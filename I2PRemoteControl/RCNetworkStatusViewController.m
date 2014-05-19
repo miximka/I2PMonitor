@@ -11,12 +11,10 @@
 #import <CorePlot/CorePlot.h>
 #import "RCGraphTextField.h"
 #import "RCRouterInfo.h"
-#import "FBKVOController.h"
 
 //=========================================================================
 
 @interface RCNetworkStatusViewController () <CPTPlotDataSource>
-@property (nonatomic) FBKVOController *kvoController;
 @property (nonatomic) CPTXYGraph *graph;
 @property (nonatomic) NSArray *downloadPlotData;
 @property (nonatomic) NSArray *uploadPlotData;
@@ -26,13 +24,26 @@
 @implementation RCNetworkStatusViewController
 //=========================================================================
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)dealloc
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
+    [self unregisterFromNotifications];
+}
+
+//=========================================================================
+
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(routerDidUpdateRouterInfo:)
+                                                 name:RCRouterDidUpdateRouterInfoNotification
+                                               object:nil];
+}
+
+//=========================================================================
+
+- (void)unregisterFromNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //=========================================================================
@@ -171,6 +182,7 @@
 
 - (void)updateGUI
 {
+    [super updateGUI];
     [self updateStatus];
 }
 
@@ -187,6 +199,8 @@
 
     [self updateGUI];
     [self initializeGraph];
+    
+    [self registerForNotifications];
 }
 
 //=========================================================================
@@ -194,24 +208,6 @@
 - (void)setRepresentedObject:(id)object
 {
     [super setRepresentedObject:object];
-
-    NSAssert([object isKindOfClass:[RCRouter class]], @"Invalid object");
-    RCRouter *router = (RCRouter *)object;
-    
-    //Register for KVO notifications
-    FBKVOController *kvoController = [[FBKVOController alloc] initWithObserver:self];
-    self.kvoController = kvoController;
-    
-    __weak RCNetworkStatusViewController *blockSelf = self;
-    [self.kvoController observe:router.routerInfo
-                        keyPath:NSStringFromSelector(@selector(routerStatus))
-                        options:0
-                          block:^(id observer, id object, NSDictionary *change) {
-                              
-                              [blockSelf updateStatus];
-                              
-                          }];
-
     [self updateGUI];
 }
 
@@ -249,6 +245,15 @@
     }
     
     return plotData[index][@(fieldEnum)];
+}
+
+//=========================================================================
+#pragma mark Notifications
+//=========================================================================
+
+- (void)routerDidUpdateRouterInfo:(NSNotification *)notification
+{
+    [self updateGUI];
 }
 
 //=========================================================================
