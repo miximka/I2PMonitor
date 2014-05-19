@@ -287,6 +287,38 @@
 }
 
 //=========================================================================
+
+- (void)configureLabels
+{
+    NSColor *inboundTextColor = [NSColor colorWithCalibratedRed:0.5 green:1.0 blue:0.5 alpha:1.0];
+    NSColor *outboundTextColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:0.5 alpha:1.0];
+    
+    self.inboundTextField.textColor = inboundTextColor;
+    self.outboundTextField.textColor = outboundTextColor;
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       self.inOutTextField.font, NSFontAttributeName,
+                                       inboundTextColor, NSForegroundColorAttributeName,
+                                       nil];
+    
+    NSAttributedString *inStr = [[NSAttributedString alloc] initWithString:MyLocalStr(@"in") attributes:attributes];
+    
+    [attributes setObject:outboundTextColor forKey:NSForegroundColorAttributeName];
+    NSAttributedString *outStr = [[NSAttributedString alloc] initWithString:MyLocalStr(@"out") attributes:attributes];
+    
+    [attributes setObject:[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] forKey:NSForegroundColorAttributeName];
+    NSAttributedString *separatorStr = [[NSAttributedString alloc] initWithString:@"/" attributes:attributes];
+
+    NSMutableAttributedString *completeStr = [inStr mutableCopy];
+    [completeStr appendAttributedString:separatorStr];
+    [completeStr appendAttributedString:outStr];
+    //[completeStr addAttributes:nil range:NSMakeRange(0, completeStr.length)];
+    [completeStr setAlignment:NSRightTextAlignment range:NSMakeRange(0, completeStr.length)];
+    
+    [self.inOutTextField setAttributedStringValue:completeStr];
+}
+
+//=========================================================================
 #pragma mark Overridden Methods
 //=========================================================================
 
@@ -294,11 +326,9 @@
 {
     [super loadView];
 
+    [self configureLabels];
     [self initializeGraph];
-
-    self.inboundTextField.textColor = [NSColor colorWithCalibratedRed:0.5 green:1.0 blue:0.5 alpha:1.0];
-    self.outboundTextField.textColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:0.5 alpha:1.0];
-
+    
     [self updateGUI];
     [self registerForNotifications];
 }

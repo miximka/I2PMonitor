@@ -32,3 +32,6 @@
 "kNetStatusErrorUDPPortInUse" = "UDP port in use";
 "kNetStatusErrorNoActivePeersCheckConnectionAndFirewall" = "No active peers - check connection and firewall";
 "kNetStatusErrorUDPDisabledAndTCPUnset" = "UDP disabled and TCP unset";
+
+"in" = "in";
+"out" = "out";
