@@ -240,6 +240,7 @@
 				81FFF3E11927FB4200D18156 /* RCGraphTextField.m */,
 				815AAE6C1929020A0057C123 /* RCContextSwitchButtonCell.h */,
 				815AAE6D1929020A0057C123 /* RCContextSwitchButtonCell.m */,
+				815AAE631928F4E80057C123 /* Attached Window */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -302,7 +303,6 @@
 				810022781924EF140025273D /* Controller */,
 				81CD62E71920FB3A005A82A4 /* Model */,
 				810022891924F7680025273D /* Views */,
-				815AAE641928F4F90057C123 /* Differ */,
 				812687AA19202666002A0571 /* Supporting Files */,
 				812687D719202802002A0571 /* Resources */,
 			);
@@ -401,14 +401,6 @@
 				81BBC3931928BCDD00752016 /* RCAttachedPanelBackgroundView.m */,
 			);
 			name = "Attached Window";
-			sourceTree = "<group>";
-		};
-		815AAE641928F4F90057C123 /* Differ */ = {
-			isa = PBXGroup;
-			children = (
-				815AAE631928F4E80057C123 /* Attached Window */,
-			);
-			name = Differ;
 			sourceTree = "<group>";
 		};
 		815BDA3F1926277500E518E9 /* Arrow Panel */ = {

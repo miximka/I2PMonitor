@@ -13,6 +13,7 @@
 
 @interface RCAttachedWindow ()
 @property (nonatomic) NSView *contentHolderView;
+@property (nonatomic) BOOL fadeAnimationCompleted;
 @end
 
 //=========================================================================
@@ -41,11 +42,46 @@
 
 //=========================================================================
 
+- (void)fadeOut
+{
+    self.fadeAnimationCompleted = NO;
+
+    [[NSAnimationContext currentContext] setDuration:0.1];
+    __weak RCAttachedWindow *blockSelf = self;
+    [[NSAnimationContext currentContext] setCompletionHandler:^{
+        blockSelf.fadeAnimationCompleted = YES;
+    }];
+    [self.animator setAlphaValue:0];
+    
+    while (!self.fadeAnimationCompleted)
+    {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+    }
+}
+
+//=========================================================================
+#pragma mark Overridden Methods
+//=========================================================================
+
 - (BOOL)canBecomeKeyWindow
 {
     //Allow to become key window to be able to receive windowDidResignKey: notification
     //and dismiss the panel automatically
     return YES;
+}
+
+//=========================================================================
+
+- (void)orderOut:(id)sender
+{
+	//This is a blocking call
+    [self fadeOut];
+	
+	//Order out window. Param is already gone so we dont it here any more...
+	[super orderOut:sender];
+    
+    //Restore alpha value after window has been moved from screen
+    [self setAlphaValue:1.0];
 }
 
 //=========================================================================
