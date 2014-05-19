@@ -11,13 +11,19 @@
 #import <CorePlot/CorePlot.h>
 #import "RCGraphTextField.h"
 #import "RCRouterInfo.h"
+#import "RCBWMeasurement.h"
+#import "RCBWMeasurementBuffer.h"
 
 //=========================================================================
 
+#define GRAPH_VISIBLE_TIME_INTERVAL 60 * 2 //15 mins
+#define GRAPH_IDENTIFIER_INBOUND    @"Inbound"
+#define GRAPH_IDENTIFIER_OUTBOUND   @"Outbound"
+
 @interface RCNetworkStatusViewController () <CPTPlotDataSource>
 @property (nonatomic) CPTXYGraph *graph;
-@property (nonatomic) NSArray *downloadPlotData;
-@property (nonatomic) NSArray *uploadPlotData;
+//@property (nonatomic) NSArray *downloadPlotData;
+//@property (nonatomic) NSArray *uploadPlotData;
 @end
 
 //=========================================================================
@@ -79,103 +85,103 @@
 
 //=========================================================================
 
+- (void)configureSpaceForGraph:(CPTXYGraph *)graph measurementsBuffer:(RCBWMeasurementBuffer *)buffer
+{
+    CGFloat maxBandwidthValue = fmax(buffer.maxInbound, buffer.maxOutbound);
+    
+    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
+
+    NSDate *endDate = [NSDate date];
+    NSDate *startDate = [endDate dateByAddingTimeInterval:-GRAPH_VISIBLE_TIME_INTERVAL];
+    
+    NSTimeInterval startTimestamp = [startDate timeIntervalSince1970];
+    
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(startTimestamp) length:CPTDecimalFromDouble(GRAPH_VISIBLE_TIME_INTERVAL)];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(maxBandwidthValue)];
+    
+    NSLog(@"Start: %f", startTimestamp);
+    NSLog(@"End: %f", startTimestamp + GRAPH_VISIBLE_TIME_INTERVAL);
+    NSLog(@"Max value: %f", maxBandwidthValue);
+}
+
+//=========================================================================
+
 - (void)initializeGraph
 {
-    NSUInteger observedMinutes = 40; //15 mins
-    CGFloat tickTimeInterval = 60; //60 sec
-    NSTimeInterval entireTimeInterval = observedMinutes * tickTimeInterval;
-    CGFloat maxYValue = 100.0; //Kbps
-    
     //Create graph
-    self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
+    CPTXYGraph *graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
+    self.graph = graph;
     
-    self.graph.paddingLeft = 0;
-    self.graph.paddingRight = 0;
-    self.graph.paddingTop = 0;
-    self.graph.paddingBottom = 0;
+    graph.paddingLeft = 0;
+    graph.paddingRight = 0;
+    graph.paddingTop = 0;
+    graph.paddingBottom = 0;
 
+    //Draw border line
     CPTMutableLineStyle *borderLineStyle = [[CPTMutableLineStyle alloc] init];
     borderLineStyle.lineWidth = 1;
     borderLineStyle.lineColor = [CPTColor colorWithComponentRed:0.5 green:0.5 blue:0.5 alpha:0.2];
-    self.graph.plotAreaFrame.borderLineStyle = borderLineStyle;
+    graph.plotAreaFrame.borderLineStyle = borderLineStyle;
     
-    self.graphHostView.hostedGraph = self.graph;
+    //Setup scatter plot space
+    self.graphHostView.hostedGraph = graph;
 
     //Setup scatter plot space
-    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(entireTimeInterval)];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(maxYValue)];
+    [self configureSpaceForGraph:graph measurementsBuffer:[(RCRouter *)self.representedObject measurementsBuffer]];
     
     //Hide Axes
-    self.graph.axisSet = nil;
+    graph.axisSet = nil;
     
-    //Create a plot
+    //Create bandwidth inboud plot
     CPTScatterPlot *downloadPlot = [[CPTScatterPlot alloc] init];
-    downloadPlot.identifier = @"Download";
+    downloadPlot.identifier = GRAPH_IDENTIFIER_INBOUND;
+    downloadPlot.dataSource = self;
     
     CPTMutableLineStyle *lineStyle = [downloadPlot.dataLineStyle mutableCopy];
     lineStyle.lineWidth = 1.5;
     lineStyle.lineColor = [CPTColor colorWithComponentRed:0.4 green:1.0 blue:0.4 alpha:1.0];
     downloadPlot.dataLineStyle = lineStyle;
     
-    downloadPlot.dataSource = self;
-    [self.graph addPlot:downloadPlot];
-    
-    // Put an area gradient under the plot above
+    //Put an area gradient under the plot above
     CPTColor *areaColor = [CPTColor colorWithComponentRed:0.3 green:1.0 blue:0.3 alpha:0.8];
     CPTGradient *areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
     areaGradient.angle = -90.0;
     CPTFill *areaGradientFill = [CPTFill fillWithGradient:areaGradient];
     downloadPlot.areaFill = areaGradientFill;
     downloadPlot.areaBaseValue = CPTDecimalFromDouble(1.75);
-    
-    // Add some data
-    NSMutableArray *newData = [NSMutableArray array];
-    for ( NSUInteger i = 0; i <= observedMinutes; i++ ) {
-        
-        NSTimeInterval x = tickTimeInterval * i;
-        CGFloat y = maxYValue/4 + maxYValue*2/4 * rand() / (double)RAND_MAX;
-        
-        [newData addObject:
-         @{ @(CPTScatterPlotFieldX): @(x),
-            @(CPTScatterPlotFieldY): @(y) }
-         ];
-    }
-    self.downloadPlotData = newData;
-    
-    //Create a plot
-    CPTScatterPlot *uploadPlot = [[CPTScatterPlot alloc] init];
-    uploadPlot.identifier = @"Upload";
-    
-    lineStyle = [lineStyle mutableCopy];
-    lineStyle.lineColor = [CPTColor colorWithComponentRed:1.0 green:0.4 blue:0.4 alpha:1.0];
-    uploadPlot.dataLineStyle = lineStyle;
-    
-    uploadPlot.dataSource = self;
-    [self.graph addPlot:uploadPlot];
-    
-    // Put an area gradient under the plot above
-    areaColor = [CPTColor colorWithComponentRed:1.0 green:0.3 blue:0.3 alpha:0.8];
-    areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
-    areaGradient.angle = -90.0;
-    areaGradientFill = [CPTFill fillWithGradient:areaGradient];
-    uploadPlot.areaFill = areaGradientFill;
-    uploadPlot.areaBaseValue = CPTDecimalFromDouble(1.75);
-    
-    // Add some data
-    newData = [NSMutableArray array];
-    for ( NSUInteger i = 0; i <= observedMinutes; i++ ) {
-        
-        NSTimeInterval x = tickTimeInterval * i;
-        CGFloat y = maxYValue/2 * rand() / (double)RAND_MAX;
-        
-        [newData addObject:
-         @{ @(CPTScatterPlotFieldX): @(x),
-            @(CPTScatterPlotFieldY): @(y) }
-         ];
-    }
-    self.uploadPlotData = newData;
 
+    //Add plot to the graph
+    [graph addPlot:downloadPlot];
+
+//    //Create bandwidth outbound plot
+//    CPTScatterPlot *outboundPlot = [[CPTScatterPlot alloc] init];
+//    outboundPlot.identifier = GRAPH_IDENTIFIER_OUTBOUND;
+//    outboundPlot.dataSource = self;
+//    
+//    lineStyle = [lineStyle mutableCopy];
+//    lineStyle.lineColor = [CPTColor colorWithComponentRed:1.0 green:0.4 blue:0.4 alpha:1.0];
+//    outboundPlot.dataLineStyle = lineStyle;
+//    
+//    //Put an area gradient under the plot above
+//    areaColor = [CPTColor colorWithComponentRed:1.0 green:0.3 blue:0.3 alpha:0.8];
+//    areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
+//    areaGradient.angle = -90.0;
+//    areaGradientFill = [CPTFill fillWithGradient:areaGradient];
+//    outboundPlot.areaFill = areaGradientFill;
+//    outboundPlot.areaBaseValue = CPTDecimalFromDouble(1.75);
+//
+//    [graph addPlot:outboundPlot];
+}
+
+//=========================================================================
+
+- (void)updatePlot
+{
+    CPTXYGraph *graph = self.graph;
+    [self configureSpaceForGraph:graph measurementsBuffer:[(RCRouter *)self.representedObject measurementsBuffer]];
+    
+    [[self.graph plotWithIdentifier:GRAPH_IDENTIFIER_INBOUND] setDataNeedsReloading];
+//    [[self.graph plotWithIdentifier:GRAPH_IDENTIFIER_OUTBOUND] setDataNeedsReloading];
 }
 
 //=========================================================================
@@ -183,7 +189,9 @@
 - (void)updateGUI
 {
     [super updateGUI];
+    
     [self updateStatus];
+    [self updatePlot];
 }
 
 //=========================================================================
@@ -217,34 +225,45 @@
 
 - (NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
-    if ([plot.identifier isEqual:@"Download"])
-    {
-        return self.downloadPlotData.count;
-    }
-    else if ([plot.identifier isEqual:@"Upload"])
-    {
-        return self.uploadPlotData.count;
-    }
-    
-    return 0;
+    RCBWMeasurementBuffer *buffer = [(RCRouter *)self.representedObject measurementsBuffer];
+    return buffer.count;
 }
 
 //=========================================================================
 
 - (NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
-    NSArray *plotData = nil;
-    
-    if ([plot.identifier isEqual:@"Download"])
+    RCBWMeasurementBuffer *buffer = [(RCRouter *)self.representedObject measurementsBuffer];
+
+    if (fieldEnum == CPTScatterPlotFieldX)
     {
-        plotData = self.downloadPlotData;
+        RCBWMeasurement *measurement = [buffer objectAtIndex:index];
+        NSTimeInterval x = [measurement.date timeIntervalSince1970];
+        
+        NSLog(@"X: %f", x);
+        
+        return [NSNumber numberWithFloat:x];
     }
-    else if ([plot.identifier isEqual:@"Upload"])
+    else if (fieldEnum == CPTScatterPlotFieldY)
     {
-        plotData = self.uploadPlotData;
+        RCBWMeasurement *measurement = [buffer objectAtIndex:index];
+        CGFloat bandwidth = 0;
+        
+        if ([plot.identifier isEqual:GRAPH_IDENTIFIER_INBOUND])
+        {
+            bandwidth = measurement.inbound;
+        }
+//        else if ([plot.identifier isEqual:GRAPH_IDENTIFIER_OUTBOUND])
+//        {
+//            bandwidth = measurement.outbound;
+//        }
+
+        NSLog(@"Y: %f", bandwidth);
+
+        return [NSNumber numberWithFloat:bandwidth];
     }
-    
-    return plotData[index][@(fieldEnum)];
+
+    return nil;
 }
 
 //=========================================================================

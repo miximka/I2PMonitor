@@ -17,6 +17,7 @@
 @interface RCMainViewController ()
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) NSTimer *uiUpdateTimer;
+@property (nonatomic) RCViewController *currentWidgetController;
 @end
 
 //=========================================================================
@@ -61,6 +62,8 @@
     [view setFrame:NSMakeRect(0, contentView.bounds.size.height - view.frame.size.height, view.frame.size.width, view.frame.size.height)];
     
     [contentView addSubview:view];
+    
+    self.currentWidgetController = controller;
 }
 
 //=========================================================================
@@ -210,6 +213,7 @@
 - (void)uiUpdateTimerFired:(NSTimer *)timer
 {
     [self updateGUI];
+    [self.currentWidgetController updateGUI];
 }
 
 //=========================================================================

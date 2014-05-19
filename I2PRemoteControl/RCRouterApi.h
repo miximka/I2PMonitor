@@ -19,10 +19,12 @@
 #define PARAM_KEY_ECHO          @"Echo"
 #define PARAM_KEY_ECHO_RESULT   @"Result"
 
-#define METHOD_ROUTER_INFO          @"RouterInfo"
-#define PARAM_KEY_ROUTER_STATUS     @"i2p.router.status"
-#define PARAM_KEY_ROUTER_UPTIME     @"i2p.router.uptime"
-#define PARAM_KEY_ROUTER_VERSION    @"i2p.router.version"
+#define METHOD_ROUTER_INFO                      @"RouterInfo"
+#define PARAM_KEY_ROUTER_STATUS                 @"i2p.router.status"
+#define PARAM_KEY_ROUTER_UPTIME                 @"i2p.router.uptime"
+#define PARAM_KEY_ROUTER_VERSION                @"i2p.router.version"
+#define PARAM_KEY_ROUTER_NET_BW_INBOUND_15S     @"i2p.router.net.bw.inbound.15s"
+#define PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S    @"i2p.router.net.bw.outbound.15s"
 
 @class RCRouterInfo;
 
@@ -31,6 +33,7 @@ typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
     kRouterInfoStatus = 1 << 0,
     kRouterInfoUptime = 1 << 1,
     kRouterInfoVersion = 1 << 2,
+    kRouterNetworkBW15s = 1 << 3, //Inbound & Outbound
 };
 
 //=========================================================================

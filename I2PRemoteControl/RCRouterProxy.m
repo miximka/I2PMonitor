@@ -105,6 +105,12 @@
     if (options & kRouterInfoVersion)
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_VERSION];
 
+    if (options & kRouterNetworkBW15s)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_BW_INBOUND_15S];
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S];
+    }
+
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

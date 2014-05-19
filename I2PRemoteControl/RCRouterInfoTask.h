@@ -7,8 +7,7 @@
 //
 
 #import "RCTask.h"
-
-@class RCRouterInfo;
+#import "RCRouterInfo.h"
 
 typedef void(^RCRouterInfoTaskCompletionHandler)(NSDictionary *responseDict, NSError *error);
 
@@ -16,6 +15,9 @@ typedef void(^RCRouterInfoTaskCompletionHandler)(NSDictionary *responseDict, NSE
 @interface RCRouterInfoTask : RCTask
 //=========================================================================
 
+- (instancetype)initWithIdentifier:(NSString *)identifier options:(CRRouterInfoOptions)options;
+
+@property (nonatomic) CRRouterInfoOptions options;
 @property (nonatomic, copy) RCRouterInfoTaskCompletionHandler completionHandler;
 
 //=========================================================================

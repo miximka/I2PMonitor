@@ -15,13 +15,17 @@
 #import "TKState.h"
 #import "TKEvent.h"
 #import "RCRouterInfo.h"
+#import "RCBWMeasurement.h"
+#import "RCBWMeasurementBuffer.h"
 
 //=========================================================================
 
-#define RETRY_AUTH_DELAY 2 //sec
-#define RETRY_COUNT_INVALIDATE_ROUTER_INFO 3 //times
-#define CLIENT_API_VERSION 1
-#define DEFAULT_PASSWORD @"itoopie"
+#define RETRY_AUTH_DELAY                    2 //sec
+#define RETRY_COUNT_INVALIDATE_ROUTER_INFO  3 //times
+#define MEASUREMENTS_BUFFER_CAPACITY        500 //500 values * 3 sec bw task frequency / 60 sec = ~25 min
+
+#define CLIENT_API_VERSION      1
+#define DEFAULT_PASSWORD        @"itoopie"
 
 #define STATE_ACTIVE            @"Active"
 #define STATE_AUTHENTICATING    @"Authenticating"
@@ -52,6 +56,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @property (nonatomic) BOOL authenticating;
 @property (nonatomic) NSUInteger authRetryCounter;
 @property (nonatomic) RCRouterInfo *routerInfo;
+@property (nonatomic) RCBWMeasurementBuffer *measurementsBuffer;
 @end
 
 //=========================================================================
@@ -63,7 +68,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     self = [super init];
     if (self)
     {
-        //_routerInfo = [RCRouterInfo new];
+        _measurementsBuffer = [[RCBWMeasurementBuffer alloc] initWithCapacity:MEASUREMENTS_BUFFER_CAPACITY];
         _sessionConfig = sessionConfig;
         _authRetryCounter = 0;
     }
@@ -379,11 +384,12 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)updateRouterInfo
 {
-    //Schedule router info update
-    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
-    
+    //Only fetch status, uptime and version values
+    CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion;
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo" options:options];
+
     __weak RCRouter *blockSelf = self;
-    [infoTask setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
         
         if (!error)
         {
@@ -392,7 +398,45 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
         
     }];
 
-    [self.taskManager addTask:infoTask];
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)didUpdateBandwidth:(NSDictionary *)responseDict
+{
+    CGFloat inbound = [[responseDict objectForKey:PARAM_KEY_ROUTER_NET_BW_INBOUND_15S] floatValue];
+    CGFloat outbound = [[responseDict objectForKey:PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S] floatValue];
+    
+    RCBWMeasurement *measurement = [RCBWMeasurement measurementWithDate:[NSDate date]
+                                                                inbound:inbound
+                                                               outbound:outbound];
+    
+    //Append new entry
+    [self.measurementsBuffer addObject:measurement];
+}
+
+//=========================================================================
+
+- (void)addBandwidthUpdateTask
+{
+    //Only fetch status, uptime and version values
+    CRRouterInfoOptions options = kRouterNetworkBW15s;
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"Bandwidth" options:options];
+    task.frequency = 3;
+    task.recurring = YES;
+
+    __weak RCRouter *blockSelf = self;
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf didUpdateBandwidth:responseDict];
+        }
+        
+    }];
+    
+    [self.taskManager addTask:task];
 }
 
 //=========================================================================
@@ -409,9 +453,12 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)addPeriodicTasks
 {
-    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-    echoTask.frequency = 1;
-    [self.taskManager addTask:echoTask];
+    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+    task.frequency = 1;
+    [self.taskManager addTask:task];
+    
+    //Update bandwidth in/out
+    [self addBandwidthUpdateTask];
 }
 
 //=========================================================================
