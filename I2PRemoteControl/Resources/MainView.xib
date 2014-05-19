@@ -48,9 +48,12 @@
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU">
                             <rect key="frame" x="167" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Preferences" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Preferences" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
+                                <connections>
+                                    <action selector="openPreferences:" target="-2" id="rCh-hQ-1NM"/>
+                                </connections>
                             </buttonCell>
                         </button>
                     </subviews>

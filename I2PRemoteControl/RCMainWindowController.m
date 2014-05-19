@@ -11,7 +11,7 @@
 
 //=========================================================================
 
-@interface RCMainWindowController ()
+@interface RCMainWindowController () <RCMainViewControllerDelegate>
 @property (nonatomic) RCMainViewController *mainViewController;
 @end
 
@@ -26,6 +26,7 @@
     NSView *contentHolderView = self.contentHolderView;
     
     RCMainViewController *controller = [[RCMainViewController alloc] initWithNibName:@"MainView" bundle:nil];
+    [controller setDelegate:self];
     self.mainViewController = controller;
     
     NSView *view = controller.view;
@@ -53,6 +54,15 @@
 {
     //Window is about to close, stop updating UI
     [self.mainViewController stopUpdating];
+}
+
+//=========================================================================
+#pragma mark RCMainViewControllerDelegate
+//=========================================================================
+
+- (void)mainViewControllerOpenPreferences:(RCMainViewController *)controller
+{
+    [self.delegate mainWindowControllerOpenPreferences:self];
 }
 
 //=========================================================================

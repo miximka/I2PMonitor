@@ -8,12 +8,20 @@
 
 #import "RCAttachedWindowController.h"
 
+//=========================================================================
+
 @class RCMainViewController;
+@class RCMainWindowController;
+
+@protocol RCMainWindowControllerDelegate <NSObject>
+- (void)mainWindowControllerOpenPreferences:(RCMainWindowController *)controller;
+@end
 
 //=========================================================================
 @interface RCMainWindowController : RCAttachedWindowController <NSWindowDelegate>
 //=========================================================================
 
+@property (nonatomic, weak) id<RCMainWindowControllerDelegate> delegate;
 @property (nonatomic, readonly) RCMainViewController *mainViewController;
 
 //=========================================================================

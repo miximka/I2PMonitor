@@ -9,8 +9,18 @@
 #import <Cocoa/Cocoa.h>
 
 //=========================================================================
+
+@class RCMainViewController;
+
+@protocol RCMainViewControllerDelegate <NSObject>
+- (void)mainViewControllerOpenPreferences:(RCMainViewController *)controller;
+@end
+
+//=========================================================================
 @interface RCMainViewController : NSViewController
 //=========================================================================
+
+@property (nonatomic, weak) id<RCMainViewControllerDelegate> delegate;
 
 @property (nonatomic) IBOutlet NSTextField *hostTextField;
 @property (nonatomic) IBOutlet NSTextField *versionTextField;
@@ -21,6 +31,8 @@
 
 - (void)startUpdating;
 - (void)stopUpdating;
+
+- (IBAction)openPreferences:(id)sender;
 
 //=========================================================================
 #pragma mark Unit Tests

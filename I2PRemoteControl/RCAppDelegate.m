@@ -23,7 +23,7 @@
 
 //=========================================================================
 
-@interface RCAppDelegate () <RCStatusBarViewDelegate>
+@interface RCAppDelegate () <RCStatusBarViewDelegate, RCMainWindowControllerDelegate>
 @property (nonatomic) NSStatusItem *statusBarItem;
 @property (nonatomic) RCRouterManager *routerManager;
 @property (nonatomic) RCPreferencesWindowController *prefsWindowController;
@@ -227,7 +227,7 @@
     //Initialize main window controller
     RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 248, 338) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
     RCMainWindowController *windowController = [[RCMainWindowController alloc] initWithWindow:window];
-    [window setDelegate:windowController];
+    [windowController setDelegate:self];
     self.mainWindowController = windowController;
 
     [self registerForNotifications];
@@ -285,6 +285,15 @@
     {
         [self.mainWindowController.window close];
     }
+}
+
+//=========================================================================
+#pragma mark RCMainWindowControllerDelegate
+//=========================================================================
+
+- (void)mainWindowControllerOpenPreferences:(RCMainWindowController *)controller
+{
+    [self openPreferences:self];
 }
 
 //=========================================================================
