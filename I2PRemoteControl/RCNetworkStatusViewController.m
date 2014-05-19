@@ -16,14 +16,13 @@
 
 //=========================================================================
 
-#define GRAPH_VISIBLE_TIME_INTERVAL 60 * 2 //15 mins
+#define GRAPH_VISIBLE_TIME_INTERVAL 60 * 10 //10 mins
 #define GRAPH_IDENTIFIER_INBOUND    @"Inbound"
 #define GRAPH_IDENTIFIER_OUTBOUND   @"Outbound"
 
 @interface RCNetworkStatusViewController () <CPTPlotDataSource>
 @property (nonatomic) CPTXYGraph *graph;
-//@property (nonatomic) NSArray *downloadPlotData;
-//@property (nonatomic) NSArray *uploadPlotData;
+@property (nonatomic) NSDate *referenceDateInPast;
 @end
 
 //=========================================================================
@@ -91,23 +90,44 @@
     
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
 
-    NSDate *endDate = [NSDate date];
-    NSDate *startDate = [endDate dateByAddingTimeInterval:-GRAPH_VISIBLE_TIME_INTERVAL];
+    NSDate *now = [NSDate date];
+    NSTimeInterval timeIntervalSinceReferenceDate = [now timeIntervalSinceDate:self.referenceDateInPast] - GRAPH_VISIBLE_TIME_INTERVAL;
     
-    NSTimeInterval startTimestamp = [startDate timeIntervalSince1970];
-    
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(startTimestamp) length:CPTDecimalFromDouble(GRAPH_VISIBLE_TIME_INTERVAL)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(timeIntervalSinceReferenceDate) length:CPTDecimalFromDouble(GRAPH_VISIBLE_TIME_INTERVAL)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(maxBandwidthValue)];
+}
+
+//=========================================================================
+
+- (CPTScatterPlot *)initializedPlotWithIdentifier:(NSString *)identifier lineColor:(CPTColor *)lineColor gradientStartColor:(CPTColor *)gradientStartColor
+{
+    //Create bandwidth outbound plot
+    CPTScatterPlot *plot = [[CPTScatterPlot alloc] init];
+    plot.identifier = identifier;
+    plot.dataSource = self;
+
+    CPTMutableLineStyle *lineStyle = [plot.dataLineStyle mutableCopy];
+    lineStyle.lineWidth = 1.5;
+    lineStyle.lineColor = lineColor;
+    plot.dataLineStyle = lineStyle;
+
+    //Put an area gradient under the plot above
+    CPTGradient *areaGradient = [CPTGradient gradientWithBeginningColor:gradientStartColor endingColor:[CPTColor clearColor]];
+    areaGradient.angle = -90.0;
+    CPTFill *areaGradientFill = [CPTFill fillWithGradient:areaGradient];
+    plot.areaFill = areaGradientFill;
+    plot.areaBaseValue = CPTDecimalFromDouble(1.75);
     
-    NSLog(@"Start: %f", startTimestamp);
-    NSLog(@"End: %f", startTimestamp + GRAPH_VISIBLE_TIME_INTERVAL);
-    NSLog(@"Max value: %f", maxBandwidthValue);
+    return plot;
 }
 
 //=========================================================================
 
 - (void)initializeGraph
 {
+    //Define reference date for relative calculations
+    self.referenceDateInPast = [NSDate dateWithTimeIntervalSinceNow:-60*25];
+    
     //Create graph
     CPTXYGraph *graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
     self.graph = graph;
@@ -131,46 +151,22 @@
     
     //Hide Axes
     graph.axisSet = nil;
-    
-    //Create bandwidth inboud plot
-    CPTScatterPlot *downloadPlot = [[CPTScatterPlot alloc] init];
-    downloadPlot.identifier = GRAPH_IDENTIFIER_INBOUND;
-    downloadPlot.dataSource = self;
-    
-    CPTMutableLineStyle *lineStyle = [downloadPlot.dataLineStyle mutableCopy];
-    lineStyle.lineWidth = 1.5;
-    lineStyle.lineColor = [CPTColor colorWithComponentRed:0.4 green:1.0 blue:0.4 alpha:1.0];
-    downloadPlot.dataLineStyle = lineStyle;
-    
-    //Put an area gradient under the plot above
-    CPTColor *areaColor = [CPTColor colorWithComponentRed:0.3 green:1.0 blue:0.3 alpha:0.8];
-    CPTGradient *areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
-    areaGradient.angle = -90.0;
-    CPTFill *areaGradientFill = [CPTFill fillWithGradient:areaGradient];
-    downloadPlot.areaFill = areaGradientFill;
-    downloadPlot.areaBaseValue = CPTDecimalFromDouble(1.75);
+
+    //Create inboud plot
+    CPTScatterPlot *plot = [self initializedPlotWithIdentifier:GRAPH_IDENTIFIER_INBOUND
+                                                     lineColor:[CPTColor colorWithComponentRed:0.4 green:1.0 blue:0.4 alpha:1.0]
+                                            gradientStartColor:[CPTColor colorWithComponentRed:0.3 green:1.0 blue:0.3 alpha:0.8]];
 
     //Add plot to the graph
-    [graph addPlot:downloadPlot];
+    [graph addPlot:plot];
 
-//    //Create bandwidth outbound plot
-//    CPTScatterPlot *outboundPlot = [[CPTScatterPlot alloc] init];
-//    outboundPlot.identifier = GRAPH_IDENTIFIER_OUTBOUND;
-//    outboundPlot.dataSource = self;
-//    
-//    lineStyle = [lineStyle mutableCopy];
-//    lineStyle.lineColor = [CPTColor colorWithComponentRed:1.0 green:0.4 blue:0.4 alpha:1.0];
-//    outboundPlot.dataLineStyle = lineStyle;
-//    
-//    //Put an area gradient under the plot above
-//    areaColor = [CPTColor colorWithComponentRed:1.0 green:0.3 blue:0.3 alpha:0.8];
-//    areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
-//    areaGradient.angle = -90.0;
-//    areaGradientFill = [CPTFill fillWithGradient:areaGradient];
-//    outboundPlot.areaFill = areaGradientFill;
-//    outboundPlot.areaBaseValue = CPTDecimalFromDouble(1.75);
-//
-//    [graph addPlot:outboundPlot];
+    //Create outbound plot
+    plot = [self initializedPlotWithIdentifier:GRAPH_IDENTIFIER_OUTBOUND
+                                     lineColor:[CPTColor colorWithComponentRed:1.0 green:0.4 blue:0.4 alpha:1.0]
+                            gradientStartColor:[CPTColor colorWithComponentRed:1.0 green:0.3 blue:0.3 alpha:0.8]];
+    
+    //Add plot to the graph
+    [graph addPlot:plot];
 }
 
 //=========================================================================
@@ -181,7 +177,7 @@
     [self configureSpaceForGraph:graph measurementsBuffer:[(RCRouter *)self.representedObject measurementsBuffer]];
     
     [[self.graph plotWithIdentifier:GRAPH_IDENTIFIER_INBOUND] setDataNeedsReloading];
-//    [[self.graph plotWithIdentifier:GRAPH_IDENTIFIER_OUTBOUND] setDataNeedsReloading];
+    [[self.graph plotWithIdentifier:GRAPH_IDENTIFIER_OUTBOUND] setDataNeedsReloading];
 }
 
 //=========================================================================
@@ -202,12 +198,12 @@
 {
     [super loadView];
 
+    [self initializeGraph];
+
     self.downloadTextField.textColor = [NSColor colorWithCalibratedRed:0.5 green:1.0 blue:0.5 alpha:1.0];
     self.uploadTextField.textColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:0.5 alpha:1.0];
 
     [self updateGUI];
-    [self initializeGraph];
-    
     [self registerForNotifications];
 }
 
@@ -238,11 +234,9 @@
     if (fieldEnum == CPTScatterPlotFieldX)
     {
         RCBWMeasurement *measurement = [buffer objectAtIndex:index];
-        NSTimeInterval x = [measurement.date timeIntervalSince1970];
+        NSTimeInterval timeIntervalSinceReferenceDate = [measurement.date timeIntervalSinceDate:self.referenceDateInPast];
         
-        NSLog(@"X: %f", x);
-        
-        return [NSNumber numberWithFloat:x];
+        return [NSNumber numberWithFloat:timeIntervalSinceReferenceDate];
     }
     else if (fieldEnum == CPTScatterPlotFieldY)
     {
@@ -253,12 +247,10 @@
         {
             bandwidth = measurement.inbound;
         }
-//        else if ([plot.identifier isEqual:GRAPH_IDENTIFIER_OUTBOUND])
-//        {
-//            bandwidth = measurement.outbound;
-//        }
-
-        NSLog(@"Y: %f", bandwidth);
+        else if ([plot.identifier isEqual:GRAPH_IDENTIFIER_OUTBOUND])
+        {
+            bandwidth = measurement.outbound;
+        }
 
         return [NSNumber numberWithFloat:bandwidth];
     }
