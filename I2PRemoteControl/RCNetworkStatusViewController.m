@@ -16,9 +16,10 @@
 
 //=========================================================================
 
-#define GRAPH_VISIBLE_TIME_INTERVAL 60 * 10 //10 mins
-#define GRAPH_IDENTIFIER_INBOUND    @"Inbound"
-#define GRAPH_IDENTIFIER_OUTBOUND   @"Outbound"
+#define GRAPH_VISIBLE_TIME_INTERVAL         60 * 10 //10 mins
+#define GRAPH_IDENTIFIER_INBOUND            @"Inbound"
+#define GRAPH_IDENTIFIER_OUTBOUND           @"Outbound"
+#define GRAPH_AUTORESIZE_LOW_BW_TRESHOLD    10*1000 //10 KBps
 
 @interface RCNetworkStatusViewController () <CPTPlotDataSource>
 @property (nonatomic) CPTXYGraph *graph;
@@ -86,7 +87,14 @@
 
 - (void)configureSpaceForGraph:(CPTXYGraph *)graph measurementsBuffer:(RCBWMeasurementBuffer *)buffer
 {
+    //Find out max graph Y value
     CGFloat maxBandwidthValue = fmax(buffer.maxInbound, buffer.maxOutbound);
+    
+    if (maxBandwidthValue < GRAPH_AUTORESIZE_LOW_BW_TRESHOLD)
+    {
+        //Max Y value is lower than treshold, use treshold value instead
+        maxBandwidthValue = GRAPH_AUTORESIZE_LOW_BW_TRESHOLD;
+    }
     
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
 
