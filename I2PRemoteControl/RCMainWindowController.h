@@ -14,7 +14,6 @@
 @class RCMainWindowController;
 
 @protocol RCMainWindowControllerDelegate <NSObject>
-- (void)mainWindowControllerOpenPreferences:(RCMainWindowController *)controller;
 @end
 
 //=========================================================================

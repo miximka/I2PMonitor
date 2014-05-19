@@ -180,9 +180,8 @@
 
 //=========================================================================
 
-- (IBAction)openPreferences:(id)sender
+- (IBAction)control:(id)sender
 {
-    [self.delegate mainViewControllerOpenPreferences:self];
 }
 
 //=========================================================================

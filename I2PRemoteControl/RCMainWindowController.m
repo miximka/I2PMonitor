@@ -62,7 +62,6 @@
 
 - (void)mainViewControllerOpenPreferences:(RCMainViewController *)controller
 {
-    [self.delegate mainWindowControllerOpenPreferences:self];
 }
 
 //=========================================================================

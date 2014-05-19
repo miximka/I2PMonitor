@@ -692,6 +692,13 @@
                         <action selector="orderFrontStandardAboutPanel:" target="-3" id="Qmp-AC-gId"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Open Preferences..." id="0la-aa-Ovf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openPreferences:" target="Voe-Tx-rLC" id="YrJ-as-AQB"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Nc6-C1-opU"/>
                 <menuItem title="Quit I2PRemoteControl" id="2re-lU-vpG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

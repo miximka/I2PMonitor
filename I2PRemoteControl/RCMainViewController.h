@@ -13,7 +13,6 @@
 @class RCMainViewController;
 
 @protocol RCMainViewControllerDelegate <NSObject>
-- (void)mainViewControllerOpenPreferences:(RCMainViewController *)controller;
 @end
 
 //=========================================================================
@@ -32,7 +31,7 @@
 - (void)startUpdating;
 - (void)stopUpdating;
 
-- (IBAction)openPreferences:(id)sender;
+- (IBAction)control:(id)sender;
 
 //=========================================================================
 #pragma mark Unit Tests
