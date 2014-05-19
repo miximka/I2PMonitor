@@ -385,7 +385,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (void)updateRouterInfo
 {
     //Only fetch status, uptime and version values
-    CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion;
+    CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion | kRouterNetworkStatus;
     RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo" options:options];
 
     __weak RCRouter *blockSelf = self;

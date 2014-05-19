@@ -111,6 +111,11 @@
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S];
     }
 
+    if (options & kRouterNetworkStatus)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_STATUS];
+    }
+    
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

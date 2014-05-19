@@ -75,12 +75,76 @@
 
 //=========================================================================
 
+- (NSString *)humanReadableStringForNetworkStatus:(RCRouterNetStatus)status
+{
+    NSDictionary *statusToStr = @{
+                                  @(kNetStatusOK) : MyLocalStr(@"kNetStatusOK"),
+                                  @(kNetStatusTesting) : MyLocalStr(@"kNetStatusTesting"),
+                                  @(kNetStatusFirewalled) : MyLocalStr(@"kNetStatusFirewalled"),
+                                  @(kNetStatusHidden) : MyLocalStr(@"kNetStatusHidden"),
+                                  @(kNetStatusWarnFirewalledAndFast) : MyLocalStr(@"kNetStatusWarnFirewalledAndFast"),
+                                  @(kNetStatusWarnFirewalledAndFloodfill) : MyLocalStr(@"kNetStatusWarnFirewalledAndFloodfill"),
+                                  @(kNetStatusWarnFirewalledWithInboundTCP) : MyLocalStr(@"kNetStatusWarnFirewalledWithInboundTCP"),
+                                  @(kNetStatusWarnFirewalledWithUDPDisabled) : MyLocalStr(@"kNetStatusWarnFirewalledWithUDPDisabled"),
+                                  @(kNetStatusErrorI2CP) : MyLocalStr(@"kNetStatusErrorI2CP"),
+                                  @(kNetStatusErrorClockSkew) : MyLocalStr(@"kNetStatusErrorClockSkew"),
+                                  @(kNetStatusErrorPrivateTCPAddress) : MyLocalStr(@"kNetStatusErrorPrivateTCPAddress"),
+                                  @(kNetStatusErrorSymmetricNat) : MyLocalStr(@"kNetStatusErrorSymmetricNat"),
+                                  @(kNetStatusErrorUDPPortInUse) : MyLocalStr(@"kNetStatusErrorUDPPortInUse"),
+                                  @(kNetStatusErrorNoActivePeersCheckConnectionAndFirewall) : MyLocalStr(@"kNetStatusErrorNoActivePeersCheckConnectionAndFirewall"),
+                                  @(kNetStatusErrorUDPDisabledAndTCPUnset) : MyLocalStr(@"kNetStatusErrorUDPDisabledAndTCPUnset"),
+                                  };
+
+    NSString *str = [statusToStr objectForKey:@(status)];
+    return str;
+}
+
+//=========================================================================
+
 - (void)updateStatus
 {
     RCRouter *router = (RCRouter *)self.representedObject;
+
+    //=========================
+    //Update router and network status strings
+    NSString *statusStr = nil;
     
-    NSString *str = router.routerInfo.routerStatus;
-    [self setRouterStatusString:GetValueOrDefaulIfNil(str)];
+    RCRouterNetStatus netStatus = router.routerInfo.routerNetStatus;
+    if (netStatus != kNetStatusOK)
+    {
+        //Network status should appear on screen
+        statusStr = [self humanReadableStringForNetworkStatus:netStatus];
+    }
+
+    NSString *routerStatusStr = router.routerInfo.routerStatus;
+    if (routerStatusStr != nil && routerStatusStr.length > 0)
+    {
+        if (statusStr != nil)
+        {
+            //Append new line character
+            statusStr = [statusStr stringByAppendingString:@"\n"];
+
+            //Append router status string
+            statusStr = [statusStr stringByAppendingString:routerStatusStr];
+        }
+        else
+        {
+            statusStr = routerStatusStr;
+        }
+    }
+    
+    [self setRouterStatusString:GetValueOrDefaulIfNil(statusStr)];
+    
+    //=========================
+    //Update network status icon
+    
+    NSString *imageName = @"NSInfo";
+    if (netStatus > kNetStatusWarnFirewalledAndFast)
+    {
+        imageName = @"Alert";
+    }
+    
+    [self.statusImageView setImage:[NSImage imageNamed:imageName]];
 }
 
 //=========================================================================

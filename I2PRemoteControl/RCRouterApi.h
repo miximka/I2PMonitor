@@ -25,15 +25,17 @@
 #define PARAM_KEY_ROUTER_VERSION                @"i2p.router.version"
 #define PARAM_KEY_ROUTER_NET_BW_INBOUND_15S     @"i2p.router.net.bw.inbound.15s"
 #define PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S    @"i2p.router.net.bw.outbound.15s"
+#define PARAM_KEY_ROUTER_NET_STATUS             @"i2p.router.net.status"
 
 @class RCRouterInfo;
 
 typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
 {
-    kRouterInfoStatus = 1 << 0,
-    kRouterInfoUptime = 1 << 1,
-    kRouterInfoVersion = 1 << 2,
-    kRouterNetworkBW15s = 1 << 3, //Inbound & Outbound
+    kRouterInfoStatus       = 1 << 0,
+    kRouterInfoUptime       = 1 << 1,
+    kRouterInfoVersion      = 1 << 2,
+    kRouterNetworkBW15s     = 1 << 3, //Inbound & Outbound
+    kRouterNetworkStatus    = 1 << 4,
 };
 
 //=========================================================================

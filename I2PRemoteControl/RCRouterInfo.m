@@ -24,6 +24,7 @@
     self = [super init];
     if (self)
     {
+        _routerNetStatus = kNetStatusUnknown;
         [self updateWithResponseDictionary:response];
     }
     return self;
@@ -35,7 +36,6 @@
 {
     self.routerVersion = [response objectForKey:PARAM_KEY_ROUTER_VERSION];
     self.routerStatus = [response objectForKey:PARAM_KEY_ROUTER_STATUS];
-
     
     long uptime = [[response objectForKey:PARAM_KEY_ROUTER_UPTIME] longValue];
 
@@ -44,6 +44,8 @@
     self.estimatedStartupDate = [[NSDate date] dateByAddingTimeInterval:-uptimeInSec];
     
     self.routerUptime = uptime;
+    
+    self.routerNetStatus = [[response objectForKey:PARAM_KEY_ROUTER_NET_STATUS] longValue];
 }
 
 //=========================================================================
