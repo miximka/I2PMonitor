@@ -35,7 +35,7 @@
 #define EVENT_AUTH_FAILED       @"EventAuthFailed"
 #define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
 #define EVENT_RETRY_AUTH        @"EventRetryAuth"
-#define EVENT_ERROR             @"EventError"
+#define EVENT_CONNECTION_ERROR  @"EventConnectionError"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
 
@@ -135,13 +135,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     TKEvent *authErrorEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
     TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
     TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
-    TKEvent *errorEvent = [TKEvent eventWithName:EVENT_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
+    TKEvent *connectionErrorEvent = [TKEvent eventWithName:EVENT_CONNECTION_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
     
     [stateMachine addEvents:@[startEvent,
                               authErrorEvent,
                               authSucceessEvent,
                               retryAuthEvent,
-                              errorEvent]];
+                              connectionErrorEvent]];
     
     //Idle state is the initial state
     [stateMachine setInitialState:[stateMachine stateNamed:@"Idle"]];
@@ -216,11 +216,11 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (BOOL)eventError:(NSError *)error
+- (BOOL)eventConnectionError:(NSError *)error
 {
-    DDLogInfo(@"Error occurred: %@", error);
+    DDLogInfo(@"Connection error occurred: %@", error);
     
-    BOOL success = [self fireEvent:EVENT_ERROR];
+    BOOL success = [self fireEvent:EVENT_CONNECTION_ERROR];
     return success;
 }
 
@@ -453,9 +453,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)addPeriodicTasks
 {
-    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-    task.frequency = 1;
-    [self.taskManager addTask:task];
+//    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+//    task.frequency = 1;
+//    [self.taskManager addTask:task];
     
     //Update bandwidth in/out
     [self addBandwidthUpdateTask];
@@ -476,7 +476,16 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)routerTaskManager:(RCRouterTaskManager *)manager taskDidFail:(RCTask *)task withError:(NSError *)error
 {
-    [self eventError:error];
+    //Analyse error
+    if ([error.domain isEqualToString:NSURLErrorDomain])
+    {
+        //Connection error event
+        [self eventConnectionError:error];
+    }
+    else
+    {
+        DDLogDebug(@"Ignore error: %@", error);
+    }
 }
 
 //=========================================================================

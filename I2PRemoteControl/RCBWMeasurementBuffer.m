@@ -48,6 +48,13 @@
 
 //=========================================================================
 
+- (RCBWMeasurement *)lastObject
+{
+    return [self.buffer lastObject];
+}
+
+//=========================================================================
+
 - (void)findMaxMeasurementIndexes:(NSUInteger *)inboundRef outbound:(NSUInteger *)outboundRef
 {
     NSUInteger inboundIndex = NSNotFound;

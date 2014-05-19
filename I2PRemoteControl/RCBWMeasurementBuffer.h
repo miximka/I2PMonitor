@@ -20,6 +20,7 @@
 
 - (NSUInteger)count;
 - (RCBWMeasurement *)objectAtIndex:(NSUInteger)index;
+- (RCBWMeasurement *)lastObject;
 
 /**
     Adds next measurement to buffer.

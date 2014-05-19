@@ -190,12 +190,36 @@
 
 //=========================================================================
 
+- (void)bandwidthTextField:(NSTextField *)textField setBandwidthValue:(CGFloat)bandwidth
+{
+    NSString *str = [NSByteCountFormatter stringFromByteCount:(long)bandwidth countStyle:NSByteCountFormatterCountStyleBinary];
+    
+    //Append "/s" at the end. This may not work for all locales
+    str = [NSString stringWithFormat:MyLocalStr(@"BandwidthPerSecTemplate"), str];
+    [textField setStringValue:str];
+}
+
+//=========================================================================
+
+- (void)updateBandwidthValues
+{
+    RCBWMeasurementBuffer *buffer = [(RCRouter *)self.representedObject measurementsBuffer];
+    RCBWMeasurement *measurement = buffer.lastObject;
+    
+    //Show the last measured values
+    [self bandwidthTextField:self.inboundTextField setBandwidthValue:measurement.inbound];
+    [self bandwidthTextField:self.outboundTextField setBandwidthValue:measurement.outbound];
+}
+
+//=========================================================================
+
 - (void)updateGUI
 {
     [super updateGUI];
     
     [self updateStatus];
     [self updatePlot];
+    [self updateBandwidthValues];
 }
 
 //=========================================================================
@@ -208,8 +232,8 @@
 
     [self initializeGraph];
 
-    self.downloadTextField.textColor = [NSColor colorWithCalibratedRed:0.5 green:1.0 blue:0.5 alpha:1.0];
-    self.uploadTextField.textColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:0.5 alpha:1.0];
+    self.inboundTextField.textColor = [NSColor colorWithCalibratedRed:0.5 green:1.0 blue:0.5 alpha:1.0];
+    self.outboundTextField.textColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:0.5 alpha:1.0];
 
     [self updateGUI];
     [self registerForNotifications];
