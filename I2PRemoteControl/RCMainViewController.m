@@ -50,19 +50,34 @@
 
 - (void)switchToControllerView:(RCViewController *)controller
 {
-    NSView *contentView = [self contentView];
+    NSView *contentView = self.contentView;
     
-    //Remove previous view
+    //Notify controller the view will be removed from its superview
+    [self.currentWidgetController willMoveToParentViewController:nil];
+    
+    //Remove current content
     for (NSView *each in contentView.subviews)
     {
         [each removeFromSuperview];
     }
+
+    [self.currentWidgetController didMoveToParentViewController:nil];
+
+    //Notify new view controller it will be moved to us
+    [controller willMoveToParentViewController:self];
     
-    NSView *view = controller.view;
-    [view setFrame:NSMakeRect(0, contentView.bounds.size.height - view.frame.size.height, view.frame.size.width, view.frame.size.height)];
+    //Calculate new window frame to match the new size of the content
+    NSView *newView = controller.view;
     
-    [contentView addSubview:view];
-    
+    //Add new view to view hierarchy
+    NSRect newViewFrame = NSMakeRect(0, 0, newView.frame.size.width, newView.frame.size.height);
+    [newView setFrame:newViewFrame];
+    [newView setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
+    [contentView addSubview:newView];
+
+    //Notify new view controller it has been moved
+    [controller didMoveToParentViewController:self];
+
     self.currentWidgetController = controller;
 }
 
@@ -182,6 +197,20 @@
 
 - (IBAction)control:(id)sender
 {
+    
+}
+
+//=========================================================================
+
+- (NSSize)preferredViewSize
+{
+    NSSize mainViewSize = self.view.frame.size;
+    NSSize currentContentViewSize = self.contentView.frame.size;
+    NSSize wishedContentViewSize = self.currentWidgetController.preferredViewSize;
+    
+    mainViewSize.height = mainViewSize.height - currentContentViewSize.height + wishedContentViewSize.height;
+    
+    return mainViewSize;
 }
 
 //=========================================================================

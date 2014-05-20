@@ -21,11 +21,11 @@
             <rect key="frame" x="0.0" y="0.0" width="248" height="359"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y5i-dz-Lb2">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Y5i-dz-Lb2">
                     <rect key="frame" x="0.0" y="70" width="248" height="229"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yh7-lI-gUx">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="yh7-lI-gUx">
                     <rect key="frame" x="0.0" y="1" width="248" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
@@ -57,8 +57,11 @@
                             </buttonCell>
                         </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="aIp-nK-6kg"/>
+                    </constraints>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qe6-Jd-vj9" customClass="RCContentView">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qe6-Jd-vj9" customClass="RCContentView">
                     <rect key="frame" x="0.0" y="298" width="248" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
@@ -99,8 +102,23 @@
                             </textFieldCell>
                         </textField>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="61" id="sUm-VH-gyy"/>
+                    </constraints>
                 </customView>
             </subviews>
+            <constraints>
+                <constraint firstItem="yh7-lI-gUx" firstAttribute="top" secondItem="Y5i-dz-Lb2" secondAttribute="bottom" constant="-1" id="0ZQ-qF-xn7"/>
+                <constraint firstItem="yh7-lI-gUx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="1MM-W0-8ge"/>
+                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="QqQ-pJ-tsi"/>
+                <constraint firstItem="Qe6-Jd-vj9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="SKU-aj-ENV"/>
+                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="bottom" constant="-1" id="cTy-jL-7bu"/>
+                <constraint firstItem="Qe6-Jd-vj9" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="dhA-El-RNa"/>
+                <constraint firstAttribute="trailing" secondItem="Y5i-dz-Lb2" secondAttribute="trailing" id="lOK-B7-biz"/>
+                <constraint firstAttribute="bottom" secondItem="yh7-lI-gUx" secondAttribute="bottom" constant="1" id="lqx-p8-MaS"/>
+                <constraint firstAttribute="trailing" secondItem="yh7-lI-gUx" secondAttribute="trailing" id="lvg-Dp-bsy"/>
+                <constraint firstAttribute="trailing" secondItem="Qe6-Jd-vj9" secondAttribute="trailing" id="nX6-dr-58t"/>
+            </constraints>
         </customView>
     </objects>
     <resources>

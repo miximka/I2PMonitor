@@ -12,6 +12,11 @@
 @interface RCViewController : NSViewController
 //=========================================================================
 
+- (NSSize)preferredViewSize;
+
+- (void)willMoveToParentViewController:(NSViewController *)controller;
+- (void)didMoveToParentViewController:(NSViewController *)controller;
+
 - (void)updateGUI;
 
 //=========================================================================

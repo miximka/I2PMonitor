@@ -29,11 +29,43 @@
     [controller setDelegate:self];
     self.mainViewController = controller;
     
-    NSView *view = controller.view;
-    [view setFrame:NSMakeRect(0, 0, contentHolderView.bounds.size.width, contentHolderView.bounds.size.height)];
-    [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    NSView *controllerView = controller.view;
+
+    //Resize window to match the initial size of the main controller view
+    CGFloat widthDelta = controllerView.frame.size.width - contentHolderView.frame.size.width;
+    CGFloat heightDelta = controllerView.frame.size.height - contentHolderView.frame.size.height;
     
-    [contentHolderView addSubview:view];
+    NSRect windowFrame = self.window.frame;
+    windowFrame.size.width += widthDelta;
+    windowFrame.size.height += heightDelta;
+    windowFrame.origin.y -= heightDelta;
+    [self.window setFrame:windowFrame display:NO];
+
+    //Add controller view to view hierarchy
+    [controllerView setFrame:NSMakeRect(0, 0, controllerView.frame.size.width, contentHolderView.frame.size.height)];
+    
+    [controllerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    [contentHolderView addSubview:controllerView];
+
+    //Resize window again to match the possibly changed size of the main view
+    [self resizeWindowIfNeededDisplay:NO];
+}
+
+//=========================================================================
+
+- (void)resizeWindowIfNeededDisplay:(BOOL)display
+{
+    NSSize preferredViewSize = [self.mainViewController preferredViewSize];
+    
+    CGFloat widthDelta = preferredViewSize.width - self.contentHolderView.frame.size.width;
+    CGFloat heightDelta = preferredViewSize.height - self.contentHolderView.frame.size.height;
+    
+    NSRect windowFrame = self.window.frame;
+    windowFrame.size.width += widthDelta;
+    windowFrame.size.height += heightDelta;
+    windowFrame.origin.y -= heightDelta;
+    
+    [self.window setFrame:windowFrame display:display];
 }
 
 //=========================================================================

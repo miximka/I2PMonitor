@@ -12,6 +12,25 @@
 @implementation RCViewController
 //=========================================================================
 
+- (NSSize)preferredViewSize
+{
+    return self.view.frame.size;
+}
+
+//=========================================================================
+
+- (void)willMoveToParentViewController:(NSViewController *)controller
+{
+}
+
+//=========================================================================
+
+- (void)didMoveToParentViewController:(NSViewController *)controller
+{
+}
+
+//=========================================================================
+
 - (void)updateGUI
 {
 }

@@ -225,7 +225,7 @@
     self.routerManager = routerManager;
 
     //Initialize main window controller
-    RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 248, 359) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
+    RCAttachedWindow *window = [[RCAttachedWindow alloc] initWithContentRect:NSMakeRect(100, 100, 200, 300) styleMask:0 backing:NSBackingStoreBuffered defer:YES];
     RCMainWindowController *windowController = [[RCMainWindowController alloc] initWithWindow:window];
     [windowController setDelegate:self];
     self.mainWindowController = windowController;
