@@ -209,6 +209,7 @@
     NSSize wishedContentViewSize = self.currentWidgetController.preferredViewSize;
     
     mainViewSize.height = mainViewSize.height - currentContentViewSize.height + wishedContentViewSize.height;
+    mainViewSize.width = mainViewSize.width - currentContentViewSize.width + wishedContentViewSize.width;
     
     return mainViewSize;
 }
