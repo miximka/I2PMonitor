@@ -115,6 +115,26 @@
     {
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_STATUS];
     }
+
+    if (options & kRouterNetDBActivePeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS];
+    }
+    
+    if (options & kRouterNetDBFastPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_FAST_PEERS];
+    }
+    
+    if (options & kRouterNetDBHighCapacityPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS];
+    }
+    
+    if (options & kRouterNetDBKnownPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS];
+    }
     
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params

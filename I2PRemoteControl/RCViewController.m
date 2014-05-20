@@ -27,12 +27,40 @@
 
 - (void)didMoveToParentViewController:(NSViewController *)controller
 {
+    if (controller != nil && self.view.window != nil)
+    {
+        [self startUpdatingGUI];
+    }
+    else
+    {
+        [self stopUpdatingGUI];
+    }
 }
 
 //=========================================================================
 
 - (void)updateGUI
 {
+}
+
+//=========================================================================
+
+- (void)startUpdatingGUI
+{
+}
+
+//=========================================================================
+
+- (void)stopUpdatingGUI
+{
+}
+
+//=========================================================================
+
+- (void)setRepresentedObject:(id)object
+{
+    [super setRepresentedObject:object];
+    [self updateGUI];
 }
 
 //=========================================================================

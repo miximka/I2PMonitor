@@ -50,6 +50,10 @@ typedef NS_ENUM(NSInteger, RCRouterNetStatus)
 
 @property (nonatomic) NSString *routerVersion;
 @property (nonatomic) RCRouterNetStatus routerNetStatus;
+@property (nonatomic) long activePeers;
+@property (nonatomic) long fastPeers;
+@property (nonatomic) long highCapacityPeers;
+@property (nonatomic) long knownPeers;
 
 //=========================================================================
 @end

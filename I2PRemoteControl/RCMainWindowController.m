@@ -48,12 +48,12 @@
     [contentHolderView addSubview:controllerView];
 
     //Resize window again to match the possibly changed size of the main view
-    [self resizeWindowIfNeededDisplay:NO];
+    [self resizeWindowIfNeededWithDisplay:NO animate:NO];
 }
 
 //=========================================================================
 
-- (void)resizeWindowIfNeededDisplay:(BOOL)display
+- (void)resizeWindowIfNeededWithDisplay:(BOOL)display animate:(BOOL)animate
 {
     NSSize preferredViewSize = [self.mainViewController preferredViewSize];
     
@@ -65,7 +65,7 @@
     windowFrame.size.height += heightDelta;
     windowFrame.origin.y -= heightDelta;
     
-    [self.window setFrame:windowFrame display:display];
+    [self.window setFrame:windowFrame display:display animate:animate];
 }
 
 //=========================================================================
@@ -92,8 +92,9 @@
 #pragma mark RCMainViewControllerDelegate
 //=========================================================================
 
-- (void)mainViewControllerOpenPreferences:(RCMainViewController *)controller
+- (void)mainViewControllerDidResizeView:(RCMainViewController *)controller
 {
+    [self resizeWindowIfNeededWithDisplay:YES animate:YES];
 }
 
 //=========================================================================

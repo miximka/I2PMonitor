@@ -31,14 +31,11 @@
         _routerProxy = routerProxy;
         _allTasks = [NSMutableArray new];
         
-        _pollTimer = [NSTimer timerWithTimeInterval:POLL_TIME_INTERVAL
-                                             target:self
-                                           selector:@selector(pollTimerFired:)
-                                           userInfo:nil
-                                            repeats:YES];
-        
-        //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
-        [[NSRunLoop currentRunLoop] addTimer:_pollTimer forMode:NSRunLoopCommonModes];
+        _pollTimer = [NSTimer scheduledTimerWithTimeInterval:POLL_TIME_INTERVAL
+                                                      target:self
+                                                    selector:@selector(pollTimerFired:)
+                                                    userInfo:nil
+                                                     repeats:YES];
     }
     return self;
 }
@@ -55,6 +52,19 @@
 -(NSArray *)tasks
 {
     return self.allTasks;
+}
+
+//=========================================================================
+
+- (RCTask *)taskWithIdentifier:(NSString *)identifier
+{
+    for (RCTask *each in self.allTasks)
+    {
+        if ([each.identifier isEqualToString:identifier])
+            return each;
+    }
+    
+    return nil;
 }
 
 //=========================================================================
@@ -78,6 +88,14 @@
     
     [task setParentManager:nil];
     [self.allTasks removeObject:task];
+}
+
+//=========================================================================
+
+- (void)removeTaskWithIdentifier:(NSString *)identifier
+{
+    RCTask *task = [self taskWithIdentifier:identifier];
+    [self removeTask:task];
 }
 
 //=========================================================================

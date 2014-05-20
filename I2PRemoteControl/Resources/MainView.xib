@@ -6,10 +6,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RCMainViewController">
             <connections>
-                <outlet property="congestionButton" destination="sPJ-gR-DJ6" id="JhE-KI-B6n"/>
                 <outlet property="contentView" destination="Y5i-dz-Lb2" id="A47-Kv-6ec"/>
+                <outlet property="controlButton" destination="Cai-O4-ZoU" id="Kvb-hy-Qjx"/>
                 <outlet property="hostTextField" destination="pTW-Fi-TSP" id="g0P-eF-FCk"/>
                 <outlet property="networkButton" destination="d6K-2E-LfO" id="7TF-bR-JLv"/>
+                <outlet property="peersButton" destination="Vo7-5u-SmK" id="gOZ-ud-wcJ"/>
                 <outlet property="uptimeTextField" destination="JeF-EX-LHp" id="RzH-4o-6tW"/>
                 <outlet property="versionTextField" destination="g80-Vc-QRj" id="7c4-y4-3Jt"/>
                 <outlet property="view" destination="c22-O7-iKe" id="o79-2s-Zad"/>
@@ -36,25 +37,31 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="showNetworkInfoView:" target="-2" id="BBI-Vj-99B"/>
+                            </connections>
                         </button>
-                        <button toolTip="I2P Router Congestion Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-gR-DJ6">
+                        <button toolTip="I2P Router Network Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vo7-5u-SmK">
                             <rect key="frame" x="85" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Congestion" bezelStyle="shadowlessSquare" image="Congestion" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ylH-pY-xSx" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Peers" bezelStyle="shadowlessSquare" image="Peers" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwW-cL-k7e" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="showPeersView:" target="-2" id="mf6-O5-yrw"/>
+                            </connections>
                         </button>
                         <button toolTip="Application Preferences" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU">
                             <rect key="frame" x="169" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Control" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Control" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
-                                <connections>
-                                    <action selector="openPreferences:" target="-2" id="rCh-hQ-1NM"/>
-                                </connections>
                             </buttonCell>
+                            <connections>
+                                <action selector="showControlView:" target="-2" id="fj1-SG-69X"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -74,8 +81,8 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g80-Vc-QRj">
-                            <rect key="frame" x="139" y="8" width="101" height="14"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="g80-Vc-QRj">
+                            <rect key="frame" x="207" y="8" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="L9X-OU-k8A">
                                 <font key="font" metaFont="smallSystem"/>
@@ -83,8 +90,8 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTW-Fi-TSP">
-                            <rect key="frame" x="139" y="38" width="101" height="14"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="pTW-Fi-TSP">
+                            <rect key="frame" x="207" y="38" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="3iV-4D-61u">
                                 <font key="font" metaFont="smallSystem"/>
@@ -92,8 +99,8 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JeF-EX-LHp">
-                            <rect key="frame" x="150" y="23" width="90" height="14"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JeF-EX-LHp">
+                            <rect key="frame" x="207" y="23" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="gKU-M2-CzQ">
                                 <font key="font" metaFont="smallSystem"/>
@@ -103,8 +110,11 @@
                         </textField>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="JeF-EX-LHp" firstAttribute="top" secondItem="pTW-Fi-TSP" secondAttribute="bottom" constant="1" id="Kwq-2g-Xfn"/>
                         <constraint firstAttribute="trailing" secondItem="pTW-Fi-TSP" secondAttribute="trailing" constant="12" id="ZOe-lV-MZg"/>
+                        <constraint firstItem="pTW-Fi-TSP" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="9" id="aZs-ho-rVw"/>
                         <constraint firstAttribute="trailing" secondItem="g80-Vc-QRj" secondAttribute="trailing" constant="12" id="nKr-Dn-qhO"/>
+                        <constraint firstItem="g80-Vc-QRj" firstAttribute="top" secondItem="JeF-EX-LHp" secondAttribute="bottom" constant="1" id="qCW-Wq-nIG"/>
                         <constraint firstAttribute="height" constant="61" id="sUm-VH-gyy"/>
                         <constraint firstAttribute="trailing" secondItem="JeF-EX-LHp" secondAttribute="trailing" constant="12" id="zGN-RK-pl0"/>
                     </constraints>
@@ -125,8 +135,8 @@
         </customView>
     </objects>
     <resources>
-        <image name="Congestion" width="50" height="50"/>
-        <image name="Network" width="50" height="50"/>
+        <image name="Network" width="25" height="25"/>
+        <image name="Peers" width="25" height="25"/>
         <image name="Preferences" width="25" height="25"/>
     </resources>
 </document>

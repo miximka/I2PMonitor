@@ -38,11 +38,21 @@
 #define EVENT_CONNECTION_ERROR  @"EventConnectionError"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
+NSString * const RCRouterDidUpdateBandwidthNotification = @"RCRouterDidUpdateBandwidthNotification";
 
 typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     kUpdateRouterInfoType,
 };
+
+static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
+                                                    kRouterInfoUptime |
+                                                    kRouterInfoVersion |
+                                                    kRouterNetworkStatus |
+                                                    kRouterNetDBActivePeers |
+                                                    kRouterNetDBFastPeers |
+                                                    kRouterNetDBHighCapacityPeers |
+                                                    kRouterNetDBKnownPeers;
 
 //=========================================================================
 
@@ -305,7 +315,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     [taskManager setDelegate:self];
     self.taskManager = taskManager;
     
-    [self updateRouterInfo];
+    [self postRouterInfoUpdateTask];
 
     //Schedule periodic tasks
     [self addPeriodicTasks];
@@ -382,11 +392,37 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (void)updateRouterInfo
+- (void)postPeriodicRouterInfoUpdateTask
 {
-    //Only fetch status, uptime and version values
-    CRRouterInfoOptions options = kRouterInfoStatus | kRouterInfoUptime | kRouterInfoVersion | kRouterNetworkStatus;
-    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo" options:options];
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"PeriodicRouterInfo" options:routerInfoTaskOptions];
+    task.recurring = YES;
+    task.frequency = 2;
+    
+    __weak RCRouter *blockSelf = self;
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf didUpdateRouterInfo:responseDict];
+        }
+        
+    }];
+    
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)cancelPeriodicRouterInfoTask
+{
+    [self.taskManager removeTaskWithIdentifier:@"PeriodicRouterInfo"];
+}
+
+//=========================================================================
+
+- (void)postRouterInfoUpdateTask
+{
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"SingleRouterInfo" options:routerInfoTaskOptions];
 
     __weak RCRouter *blockSelf = self;
     [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
@@ -414,6 +450,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     
     //Append new entry
     [self.measurementsBuffer addObject:measurement];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCRouterDidUpdateBandwidthNotification object:self];
 }
 
 //=========================================================================

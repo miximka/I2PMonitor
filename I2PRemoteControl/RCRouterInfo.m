@@ -46,6 +46,10 @@
     self.routerUptime = uptime;
     
     self.routerNetStatus = [[response objectForKey:PARAM_KEY_ROUTER_NET_STATUS] longValue];
+    self.activePeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS] longValue];
+    self.fastPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_FAST_PEERS] longValue];
+    self.highCapacityPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS] longValue];
+    self.knownPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS] longValue];
 }
 
 //=========================================================================

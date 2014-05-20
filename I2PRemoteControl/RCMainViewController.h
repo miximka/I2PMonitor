@@ -13,6 +13,7 @@
 @class RCMainViewController;
 
 @protocol RCMainViewControllerDelegate <NSObject>
+- (void)mainViewControllerDidResizeView:(RCMainViewController *)controller;
 @end
 
 //=========================================================================
@@ -26,12 +27,15 @@
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;
 @property (nonatomic) IBOutlet NSView *contentView;
 @property (nonatomic) IBOutlet NSButton *networkButton;
-@property (nonatomic) IBOutlet NSButton *congestionButton;
+@property (nonatomic) IBOutlet NSButton *peersButton;
+@property (nonatomic) IBOutlet NSButton *controlButton;
 
 - (void)startUpdating;
 - (void)stopUpdating;
 
-- (IBAction)control:(id)sender;
+- (IBAction)showNetworkInfoView:(id)sender;
+- (IBAction)showPeersView:(id)sender;
+- (IBAction)showControlView:(id)sender;
 
 - (NSSize)preferredViewSize;
 

@@ -7,17 +7,19 @@
 //
 
 #import "RCMainViewController.h"
-#import "RCNetworkStatusViewController.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCSessionConfig.h"
+#import "RCNetworkStatusViewController.h"
+#import "RCPeersViewController.h"
 
 //=========================================================================
 
 @interface RCMainViewController ()
-@property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) NSTimer *uiUpdateTimer;
-@property (nonatomic) RCViewController *currentWidgetController;
+@property (nonatomic) RCViewController *currentController;
+@property (nonatomic) RCNetworkStatusViewController *networkViewController;
+@property (nonatomic) RCPeersViewController *peersViewController;
 @end
 
 //=========================================================================
@@ -48,21 +50,24 @@
 
 //=========================================================================
 
-- (void)switchToControllerView:(RCViewController *)controller
+- (void)switchToController:(RCViewController *)controller
 {
+    if (self.currentController == controller)
+        return;
+    
     NSView *contentView = self.contentView;
     
     //Notify controller the view will be removed from its superview
-    [self.currentWidgetController willMoveToParentViewController:nil];
+    [self.currentController willMoveToParentViewController:nil];
     
     //Remove current content
     for (NSView *each in contentView.subviews)
     {
         [each removeFromSuperview];
     }
-
-    [self.currentWidgetController didMoveToParentViewController:nil];
-
+    
+    [self.currentController didMoveToParentViewController:nil];
+    
     //Notify new view controller it will be moved to us
     [controller willMoveToParentViewController:self];
     
@@ -75,10 +80,14 @@
     [newView setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
     [contentView addSubview:newView];
 
+    //Update represented object on the controller
+    [controller setRepresentedObject:self.representedObject];
+
     //Notify new view controller it has been moved
     [controller didMoveToParentViewController:self];
+    self.currentController = controller;
 
-    self.currentWidgetController = controller;
+    [self.delegate mainViewControllerDidResizeView:self];
 }
 
 //=========================================================================
@@ -109,15 +118,11 @@
     RCInvalidateTimer(self.uiUpdateTimer);
     
     //Start periodically update menu entries
-    self.uiUpdateTimer = [NSTimer timerWithTimeInterval:1.0
-                                                 target:self
-                                               selector:@selector(uiUpdateTimerFired:)
-                                               userInfo:nil
-                                                repeats:YES];
-    
-    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
-    [[NSRunLoop currentRunLoop] addTimer:self.uiUpdateTimer
-                                 forMode:NSRunLoopCommonModes];
+    self.uiUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                          target:self
+                                                        selector:@selector(uiUpdateTimerFired:)
+                                                        userInfo:nil
+                                                         repeats:YES];
 }
 
 //=========================================================================
@@ -181,8 +186,11 @@
     DDLogInfo(@"Start updating");
     [self restartUiUpdateTimer];
     
+    //Also notify current content view controller
+    [self.currentController startUpdatingGUI];
+    
     //Immediately trigger router info update
-    [(RCRouter *)self.representedObject updateRouterInfo];
+    [(RCRouter *)self.representedObject postRouterInfoUpdateTask];
 }
 
 //=========================================================================
@@ -191,13 +199,55 @@
 {
     DDLogInfo(@"Stop updating");
     RCInvalidateTimer(self.uiUpdateTimer);
+    
+    //Also notify current content view controller
+    [self.currentController stopUpdatingGUI];
 }
 
 //=========================================================================
 
-- (IBAction)control:(id)sender
+- (RCNetworkStatusViewController *)networkViewController
 {
+    if (_networkViewController == nil)
+    {
+        RCNetworkStatusViewController *controller = [[RCNetworkStatusViewController alloc] initWithNibName:@"Network" bundle:nil];
+        _networkViewController = controller;
+    }
     
+    return _networkViewController;
+}
+
+//=========================================================================
+
+- (RCPeersViewController *)peersViewController
+{
+    if (_peersViewController == nil)
+    {
+        RCPeersViewController *controller = [[RCPeersViewController alloc] initWithNibName:@"Peers" bundle:nil];
+        _peersViewController = controller;
+    }
+    
+    return _peersViewController;
+}
+
+//=========================================================================
+
+- (IBAction)showNetworkInfoView:(id)sender
+{
+    [self switchToController:self.networkViewController];
+}
+
+//=========================================================================
+
+- (IBAction)showPeersView:(id)sender
+{
+    [self switchToController:self.peersViewController];
+}
+
+//=========================================================================
+
+- (IBAction)showControlView:(id)sender
+{
 }
 
 //=========================================================================
@@ -206,7 +256,7 @@
 {
     NSSize mainViewSize = self.view.frame.size;
     NSSize currentContentViewSize = self.contentView.frame.size;
-    NSSize wishedContentViewSize = self.currentWidgetController.preferredViewSize;
+    NSSize wishedContentViewSize = self.currentController.preferredViewSize;
     
     mainViewSize.height = mainViewSize.height - currentContentViewSize.height + wishedContentViewSize.height;
     mainViewSize.width = mainViewSize.width - currentContentViewSize.width + wishedContentViewSize.width;
@@ -221,11 +271,7 @@
 - (void)awakeFromNib
 {
     [self registerForNotifications];
-
-    RCNetworkStatusViewController *networkController = [[RCNetworkStatusViewController alloc] initWithNibName:@"NetworkStatus" bundle:nil];
-    self.networkViewController = networkController;
-    
-    [self switchToControllerView:networkController];
+    [self switchToController:self.networkViewController];
 }
 
 //=========================================================================
@@ -236,8 +282,8 @@
     assert([object isKindOfClass:[RCRouter class]]);
 
     //Also set represented object to network view controller
-    [self.networkViewController setRepresentedObject:object];
-
+    [self.currentController setRepresentedObject:object];
+    
     //Update UI immediately
     [self updateGUI];
 }
@@ -249,7 +295,6 @@
 - (void)uiUpdateTimerFired:(NSTimer *)timer
 {
     [self updateGUI];
-    [self.currentWidgetController updateGUI];
 }
 
 //=========================================================================

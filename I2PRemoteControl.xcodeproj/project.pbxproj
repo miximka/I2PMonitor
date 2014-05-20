@@ -16,6 +16,7 @@
 		810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022851924EFA50025273D /* PreferencesGeneral.xib */; };
 		8100228C1924F77F0025273D /* RCToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100228B1924F77F0025273D /* RCToolbar.m */; };
 		8100229519255FC60025273D /* RCLoginItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100229419255FC60025273D /* RCLoginItemManager.m */; };
+		81154361192BD92700AC1881 /* RCPeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81154360192BD92700AC1881 /* RCPeersViewController.m */; };
 		812687A419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687B019202666002A0571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687AF19202666002A0571 /* main.m */; };
 		812687B719202666002A0571 /* RCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687B619202666002A0571 /* RCAppDelegate.m */; };
@@ -29,14 +30,14 @@
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
 		814F92F81926ADF100635B1C /* RCMainBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92F71926ADF100635B1C /* RCMainBackgroundView.m */; };
 		814F92FB1926B5EE00635B1C /* RCContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92FA1926B5EE00635B1C /* RCContentView.m */; };
-		81581AC619263B6300289DD5 /* NetworkStatus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81581AC519263B6300289DD5 /* NetworkStatus.xib */; };
+		81581AC619263B6300289DD5 /* Network.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81581AC519263B6300289DD5 /* Network.xib */; };
 		81581ACA19263E1900289DD5 /* RCNetworkStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81581AC919263E1900289DD5 /* RCNetworkStatusViewController.m */; };
 		81581AD0192645C200289DD5 /* RCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81581ACF192645C200289DD5 /* RCViewController.m */; };
 		815AAE5E1928D6060057C123 /* RCAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE5D1928D6060057C123 /* RCAttachedWindow.m */; };
 		815AAE621928F2EA0057C123 /* RCMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE611928F2EA0057C123 /* RCMainWindowController.m */; };
 		815AAE661928F8720057C123 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815AAE651928F8720057C123 /* MainView.xib */; };
 		815AAE691928F88B0057C123 /* RCMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE681928F88B0057C123 /* RCMainViewController.m */; };
-		815AAE6B1928FC960057C123 /* CongestionStatus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815AAE6A1928FC960057C123 /* CongestionStatus.xib */; };
+		815AAE6B1928FC960057C123 /* Peers.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815AAE6A1928FC960057C123 /* Peers.xib */; };
 		815AAE6E1929020A0057C123 /* RCContextSwitchButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE6D1929020A0057C123 /* RCContextSwitchButtonCell.m */; };
 		815BDA3B19261E6600E518E9 /* RCStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA3A19261E6600E518E9 /* RCStatusBarView.m */; };
 		815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA411926278600E518E9 /* RCArrowPanel.m */; };
@@ -92,6 +93,8 @@
 		8100228B1924F77F0025273D /* RCToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCToolbar.m; sourceTree = "<group>"; };
 		8100229319255FC60025273D /* RCLoginItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLoginItemManager.h; sourceTree = "<group>"; };
 		8100229419255FC60025273D /* RCLoginItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLoginItemManager.m; sourceTree = "<group>"; };
+		8115435F192BD92700AC1881 /* RCPeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPeersViewController.h; sourceTree = "<group>"; };
+		81154360192BD92700AC1881 /* RCPeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPeersViewController.m; sourceTree = "<group>"; };
 		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687A319202666002A0571 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		812687A619202666002A0571 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -115,7 +118,7 @@
 		814F92F71926ADF100635B1C /* RCMainBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainBackgroundView.m; sourceTree = "<group>"; };
 		814F92F91926B5EE00635B1C /* RCContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContentView.h; sourceTree = "<group>"; };
 		814F92FA1926B5EE00635B1C /* RCContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContentView.m; sourceTree = "<group>"; };
-		81581AC519263B6300289DD5 /* NetworkStatus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkStatus.xib; sourceTree = "<group>"; };
+		81581AC519263B6300289DD5 /* Network.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Network.xib; sourceTree = "<group>"; };
 		81581AC819263E1900289DD5 /* RCNetworkStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNetworkStatusViewController.h; sourceTree = "<group>"; };
 		81581AC919263E1900289DD5 /* RCNetworkStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNetworkStatusViewController.m; sourceTree = "<group>"; };
 		81581ACE192645C200289DD5 /* RCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCViewController.h; sourceTree = "<group>"; };
@@ -127,7 +130,7 @@
 		815AAE651928F8720057C123 /* MainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
 		815AAE671928F88B0057C123 /* RCMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMainViewController.h; sourceTree = "<group>"; };
 		815AAE681928F88B0057C123 /* RCMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainViewController.m; sourceTree = "<group>"; };
-		815AAE6A1928FC960057C123 /* CongestionStatus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongestionStatus.xib; sourceTree = "<group>"; };
+		815AAE6A1928FC960057C123 /* Peers.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Peers.xib; sourceTree = "<group>"; };
 		815AAE6C1929020A0057C123 /* RCContextSwitchButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContextSwitchButtonCell.h; sourceTree = "<group>"; };
 		815AAE6D1929020A0057C123 /* RCContextSwitchButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContextSwitchButtonCell.m; sourceTree = "<group>"; };
 		815BDA3919261E6600E518E9 /* RCStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCStatusBarView.h; sourceTree = "<group>"; };
@@ -343,8 +346,8 @@
 			children = (
 				812687DC19202851002A0571 /* MainMenu.xib */,
 				815AAE651928F8720057C123 /* MainView.xib */,
-				81581AC519263B6300289DD5 /* NetworkStatus.xib */,
-				815AAE6A1928FC960057C123 /* CongestionStatus.xib */,
+				81581AC519263B6300289DD5 /* Network.xib */,
+				815AAE6A1928FC960057C123 /* Peers.xib */,
 				81FFF3DF1927DE1800D18156 /* Preferences */,
 				81EC34811922B4040011D2D8 /* Localizable.strings */,
 				812687BB19202666002A0571 /* Images.xcassets */,
@@ -445,6 +448,8 @@
 				81581ACF192645C200289DD5 /* RCViewController.m */,
 				81581AC819263E1900289DD5 /* RCNetworkStatusViewController.h */,
 				81581AC919263E1900289DD5 /* RCNetworkStatusViewController.m */,
+				8115435F192BD92700AC1881 /* RCPeersViewController.h */,
+				81154360192BD92700AC1881 /* RCPeersViewController.m */,
 			);
 			name = Widgets;
 			sourceTree = "<group>";
@@ -565,10 +570,10 @@
 			files = (
 				81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */,
 				812687BC19202666002A0571 /* Images.xcassets in Resources */,
-				815AAE6B1928FC960057C123 /* CongestionStatus.xib in Resources */,
+				815AAE6B1928FC960057C123 /* Peers.xib in Resources */,
 				812687E41920287F002A0571 /* InfoPlist.strings in Resources */,
 				815AAE661928F8720057C123 /* MainView.xib in Resources */,
-				81581AC619263B6300289DD5 /* NetworkStatus.xib in Resources */,
+				81581AC619263B6300289DD5 /* Network.xib in Resources */,
 				810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */,
 				812687E11920287B002A0571 /* Credits.rtf in Resources */,
 				810022841924EF9D0025273D /* Preferences.xib in Resources */,
@@ -624,6 +629,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81154361192BD92700AC1881 /* RCPeersViewController.m in Sources */,
 				810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */,
 				815BDA451926278600E518E9 /* RCArrowAnimation.m in Sources */,
 				81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */,

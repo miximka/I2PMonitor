@@ -43,6 +43,11 @@
                                              selector:@selector(routerDidUpdateRouterInfo:)
                                                  name:RCRouterDidUpdateRouterInfoNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(routerDidUpdateBandwidth:)
+                                                 name:RCRouterDidUpdateBandwidthNotification
+                                               object:nil];
 }
 
 //=========================================================================
@@ -334,14 +339,6 @@
 }
 
 //=========================================================================
-
-- (void)setRepresentedObject:(id)object
-{
-    [super setRepresentedObject:object];
-    [self updateGUI];
-}
-
-//=========================================================================
 #pragma mark CPTPlotDataSource
 //=========================================================================
 
@@ -389,6 +386,13 @@
 //=========================================================================
 
 - (void)routerDidUpdateRouterInfo:(NSNotification *)notification
+{
+    [self updateGUI];
+}
+
+//=========================================================================
+
+- (void)routerDidUpdateBandwidth:(NSNotification *)notification
 {
     [self updateGUI];
 }
