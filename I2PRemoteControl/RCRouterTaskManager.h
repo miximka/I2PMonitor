@@ -29,8 +29,11 @@
 @property (nonatomic, readonly) RCRouterProxy *routerProxy;
 @property (nonatomic, readonly) NSArray *tasks;
 
+- (RCTask *)taskWithIdentifier:(NSString *)identifier;
+
 - (void)addTask:(RCTask *)task;
 - (void)removeTask:(RCTask *)task;
+- (void)removeTaskWithIdentifier:(NSString *)identifier;
 - (void)removeAllTasks;
 
 //=========================================================================

@@ -14,3 +14,24 @@
 "kMinutesShortAbbr" = "mins";
 "kHoursShortAbbr" = "hours";
 "kDaysShortAbbr" = "days";
+
+"BandwidthPerSecTemplate" = "%@/s";
+
+"kNetStatusOK" = "OK";
+"kNetStatusTesting" = "Testing network...";
+"kNetStatusFirewalled" = "Firewalled";
+"kNetStatusHidden" = "Hidden router";
+"kNetStatusWarnFirewalledAndFast" = "Fast but firewalled";
+"kNetStatusWarnFirewalledAndFloodfill" = "Floodfill but firewalled";
+"kNetStatusWarnFirewalledWithInboundTCP" = "Firewalled with inbound TCP enabled";
+"kNetStatusWarnFirewalledWithUDPDisabled" = "Firewalled with UDP disabled";
+"kNetStatusErrorI2CP" = "Client manager I2CP error - check logs";
+"kNetStatusErrorClockSkew" = "Clock skew";
+"kNetStatusErrorPrivateTCPAddress" = "Private TCP address";
+"kNetStatusErrorSymmetricNat" = "Firewalled by Symmetric NAT";
+"kNetStatusErrorUDPPortInUse" = "UDP port in use";
+"kNetStatusErrorNoActivePeersCheckConnectionAndFirewall" = "No active peers - check connection and firewall";
+"kNetStatusErrorUDPDisabledAndTCPUnset" = "UDP disabled and TCP unset";
+
+"in" = "in";
+"out" = "out";

@@ -8,20 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class RCMenu;
-
 //=========================================================================
-@interface RCAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
+@interface RCAppDelegate : NSObject <NSApplicationDelegate>
 //=========================================================================
 
-@property (assign, nonatomic) IBOutlet NSWindow *window;
-@property (assign, nonatomic) IBOutlet RCMenu *statusBarMenu;
 @property (assign, nonatomic) IBOutlet NSPanel *arrowPanel;
+@property (assign, nonatomic) IBOutlet NSMenu *menu;
 
-- (IBAction)shutdown:(id)sender;
-- (IBAction)restart:(id)sender;
 - (IBAction)openPreferences:(id)sender;
-- (IBAction)quit:(id)sender;
 
 //=========================================================================
 @end

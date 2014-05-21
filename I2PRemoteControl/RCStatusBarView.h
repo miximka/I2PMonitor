@@ -15,10 +15,17 @@ typedef NS_ENUM(NSUInteger, RCStatusBarIconType)
     
 };
 
+@class RCStatusBarView;
+
+@protocol RCStatusBarViewDelegate <NSObject>
+- (void)statusBarViewDidChangeHighlighted:(RCStatusBarView *)view;
+@end
+
 //=========================================================================
 @interface RCStatusBarView : NSImageView
 //=========================================================================
 
+@property (nonatomic, weak) id<RCStatusBarViewDelegate> delegate;
 @property (nonatomic) NSStatusItem *statusItem;
 @property (nonatomic, getter = isHighlighted) BOOL highlighted;
 @property (nonatomic) RCStatusBarIconType iconType;

@@ -9,34 +9,58 @@
 #import "RCViewController.h"
 
 //=========================================================================
-
-@interface RCViewController ()
-@end
-
-//=========================================================================
 @implementation RCViewController
 //=========================================================================
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (NSSize)preferredViewSize
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
+    return self.view.frame.size;
+}
+
+//=========================================================================
+
+- (void)willMoveToParentViewController:(NSViewController *)controller
+{
+}
+
+//=========================================================================
+
+- (void)didMoveToParentViewController:(NSViewController *)controller
+{
+    if (controller != nil && self.view.window != nil)
     {
-        // Initialization code here.
+        [self startUpdatingGUI];
     }
-    return self;
+    else
+    {
+        [self stopUpdatingGUI];
+    }
 }
 
 //=========================================================================
 
-- (void)startUpdating
+- (void)updateGUI
 {
 }
 
 //=========================================================================
 
-- (void)stopUpdating
+- (void)startUpdatingGUI
 {
+}
+
+//=========================================================================
+
+- (void)stopUpdatingGUI
+{
+}
+
+//=========================================================================
+
+- (void)setRepresentedObject:(id)object
+{
+    [super setRepresentedObject:object];
+    [self updateGUI];
 }
 
 //=========================================================================

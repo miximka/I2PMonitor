@@ -19,11 +19,23 @@
 @implementation RCRouterInfo
 //=========================================================================
 
+- (instancetype)initWithResponseDictionary:(NSDictionary *)response
+{
+    self = [super init];
+    if (self)
+    {
+        _routerNetStatus = kNetStatusUnknown;
+        [self updateWithResponseDictionary:response];
+    }
+    return self;
+}
+
+//=========================================================================
+
 - (void)updateWithResponseDictionary:(NSDictionary *)response
 {
     self.routerVersion = [response objectForKey:PARAM_KEY_ROUTER_VERSION];
     self.routerStatus = [response objectForKey:PARAM_KEY_ROUTER_STATUS];
-
     
     long uptime = [[response objectForKey:PARAM_KEY_ROUTER_UPTIME] longValue];
 
@@ -32,6 +44,13 @@
     self.estimatedStartupDate = [[NSDate date] dateByAddingTimeInterval:-uptimeInSec];
     
     self.routerUptime = uptime;
+    
+    self.routerNetStatus = [[response objectForKey:PARAM_KEY_ROUTER_NET_STATUS] longValue];
+    self.activePeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS] longValue];
+    self.fastPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_FAST_PEERS] longValue];
+    self.highCapacityPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS] longValue];
+    self.knownPeers = [[response objectForKey:PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS] longValue];
+    self.participatingTunnels = [[response objectForKey:PARAM_KEY_ROUTER_NET_TUNNELS_PARTICIPATING] longValue];
 }
 
 //=========================================================================

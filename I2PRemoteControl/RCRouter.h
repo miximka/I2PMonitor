@@ -11,8 +11,11 @@
 
 @class RCSessionConfig;
 @class RCRouterInfo;
+@class RCBWMeasurementBuffer;
 
+//Sent when router info is updated
 extern NSString * const RCRouterDidUpdateRouterInfoNotification;
+extern NSString * const RCRouterDidUpdateBandwidthNotification;
 
 //=========================================================================
 @interface RCRouter : NSObject <RCRouterTaskManagerDelegate>
@@ -40,9 +43,20 @@ extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 @property (nonatomic, readonly) RCRouterInfo *routerInfo;
 
 /**
-    Manually schedule router info update task
+    Schedule recurring "router info update" task
  */
-- (void)updateRouterInfo;
+- (void)postPeriodicRouterInfoUpdateTask;
+- (void)cancelPeriodicRouterInfoTask;
+
+/**
+    Schedule non-recurring "router info update" task (i.e. one-shot)
+ */
+- (void)postRouterInfoUpdateTask;
+
+/**
+    Returns buffer containing bandwidth measurements
+ */
+@property (nonatomic, readonly) RCBWMeasurementBuffer *measurementsBuffer;
 
 //=========================================================================
 @end

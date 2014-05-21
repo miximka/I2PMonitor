@@ -17,7 +17,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.type = [NSNumber numberWithInt:RCContentViewNoColor];
+        self.colorType = RCContentViewNoColor;
     }
     return self;
 }
@@ -26,11 +26,11 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    RCContentViewColorType type = [self.type intValue];
+    RCContentViewColorType colorType = self.colorType;
     NSRect bounds = self.bounds;
     CGFloat lineWidth = 1.0;
     
-    if (type != RCContentViewNoColor)
+    if (colorType != RCContentViewNoColor)
     {
         //Draw white line on the top of the view
         NSRect lineRect = NSMakeRect(0, bounds.size.height-lineWidth, bounds.size.width, lineWidth);
@@ -44,15 +44,25 @@
     NSColor *startColor = nil;
     NSColor *endColor = nil;
     
-    if (type == RCContentViewColorGreen)
+    switch (colorType)
     {
-        startColor = [NSColor colorWithCalibratedRed:43.0/255.0 green:254.0/255.0 blue:166.0/255.0 alpha:1.0];
-        endColor = [NSColor colorWithCalibratedRed:188.0/255.0 green:254.0/255.0 blue:83.0/255.0 alpha:1.0];
-    }
-    else if (type == RCContentViewColorRed)
-    {
-        startColor = [NSColor colorWithCalibratedRed:252.0/255.0 green:15.0/255.0 blue:26.0/255.0 alpha:1.0];
-        endColor = [NSColor colorWithCalibratedRed:255.0/255.0 green:205.0/255.0 blue:56.0/255.0 alpha:1.0];
+        case RCContentViewColorGreen:
+            startColor = GREEN_GRADIENT_START_COLOR;
+            endColor = GREEN_GRADIENT_END_COLOR;
+            break;
+
+        case RCContentViewColorRed:
+            startColor = RED_GRADIENT_START_COLOR;
+            endColor = RED_GRADIENT_END_COLOR;
+            break;
+
+        case RCContentViewColorViolet:
+            startColor = VIOLETT_GRADIENT_START_COLOR;
+            endColor = VIOLETT_GRADIENT_END_COLOR;
+            break;
+
+        default:
+            break;
     }
     
     if (startColor != nil && endColor != nil)

@@ -12,8 +12,22 @@
 @interface RCViewController : NSViewController
 //=========================================================================
 
-- (void)startUpdating;
-- (void)stopUpdating;
+- (NSSize)preferredViewSize;
+
+/**
+    Called when receiver is about to be added to parent view controller.
+    Subclasses shoud call super implementation.
+ */
+- (void)willMoveToParentViewController:(NSViewController *)controller;
+- (void)didMoveToParentViewController:(NSViewController *)controller;
+
+- (void)updateGUI;
+
+/**
+    Called to let the receiver know that it can start periodic UI updates, if needed.
+ */
+- (void)startUpdatingGUI;
+- (void)stopUpdatingGUI;
 
 //=========================================================================
 @end

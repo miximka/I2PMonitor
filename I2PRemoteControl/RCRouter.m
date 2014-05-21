@@ -15,13 +15,17 @@
 #import "TKState.h"
 #import "TKEvent.h"
 #import "RCRouterInfo.h"
+#import "RCBWMeasurement.h"
+#import "RCBWMeasurementBuffer.h"
 
 //=========================================================================
 
-#define RETRY_AUTH_DELAY 2 //Sec
+#define RETRY_AUTH_DELAY                    2 //sec
+#define RETRY_COUNT_INVALIDATE_ROUTER_INFO  3 //times
+#define MEASUREMENTS_BUFFER_CAPACITY        500 //500 values * 3 sec bw task frequency / 60 sec = ~25 min
 
-#define CLIENT_API_VERSION 1
-#define DEFAULT_PASSWORD @"itoopie"
+#define CLIENT_API_VERSION      1
+#define DEFAULT_PASSWORD        @"itoopie"
 
 #define STATE_ACTIVE            @"Active"
 #define STATE_AUTHENTICATING    @"Authenticating"
@@ -31,14 +35,25 @@
 #define EVENT_AUTH_FAILED       @"EventAuthFailed"
 #define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
 #define EVENT_RETRY_AUTH        @"EventRetryAuth"
-#define EVENT_ERROR             @"EventError"
+#define EVENT_CONNECTION_ERROR  @"EventConnectionError"
 
 NSString * const RCRouterDidUpdateRouterInfoNotification = @"RCRouterDidUpdateRouterInfoNotification";
+NSString * const RCRouterDidUpdateBandwidthNotification = @"RCRouterDidUpdateBandwidthNotification";
 
 typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 {
     kUpdateRouterInfoType,
 };
+
+static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
+                                                    kRouterInfoUptime |
+                                                    kRouterInfoVersion |
+                                                    kRouterNetworkStatus |
+                                                    kRouterNetDBActivePeers |
+                                                    kRouterNetDBFastPeers |
+                                                    kRouterNetDBHighCapacityPeers |
+                                                    kRouterNetDBKnownPeers |
+                                                    kRouterNetTunnelsParticipating;
 
 //=========================================================================
 
@@ -50,6 +65,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 @property (nonatomic) NSTimer *authRetryTimer;
 @property (nonatomic) BOOL active;
 @property (nonatomic) BOOL authenticating;
+@property (nonatomic) NSUInteger authRetryCounter;
+@property (nonatomic) RCRouterInfo *routerInfo;
+@property (nonatomic) RCBWMeasurementBuffer *measurementsBuffer;
 @end
 
 //=========================================================================
@@ -61,8 +79,9 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     self = [super init];
     if (self)
     {
-        _routerInfo = [RCRouterInfo new];
+        _measurementsBuffer = [[RCBWMeasurementBuffer alloc] initWithCapacity:MEASUREMENTS_BUFFER_CAPACITY];
         _sessionConfig = sessionConfig;
+        _authRetryCounter = 0;
     }
     return self;
 }
@@ -127,13 +146,13 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     TKEvent *authErrorEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
     TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
     TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
-    TKEvent *errorEvent = [TKEvent eventWithName:EVENT_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
+    TKEvent *connectionErrorEvent = [TKEvent eventWithName:EVENT_CONNECTION_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
     
     [stateMachine addEvents:@[startEvent,
                               authErrorEvent,
                               authSucceessEvent,
                               retryAuthEvent,
-                              errorEvent]];
+                              connectionErrorEvent]];
     
     //Idle state is the initial state
     [stateMachine setInitialState:[stateMachine stateNamed:@"Idle"]];
@@ -208,11 +227,11 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 //=========================================================================
 
-- (BOOL)eventError:(NSError *)error
+- (BOOL)eventConnectionError:(NSError *)error
 {
-    DDLogInfo(@"Error occurred: %@", error);
+    DDLogInfo(@"Connection error occurred: %@", error);
     
-    BOOL success = [self fireEvent:EVENT_ERROR];
+    BOOL success = [self fireEvent:EVENT_CONNECTION_ERROR];
     return success;
 }
 
@@ -223,9 +242,23 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     if (error)
     {
         //Authentication failed
+        if (self.authRetryCounter < RETRY_COUNT_INVALIDATE_ROUTER_INFO)
+        {
+            //Increase retry counter
+            self.authRetryCounter++;
+        }
+        else
+        {
+            //We are trying too long, invalidate current router info
+            [self invalidateRouterInfo];
+        }
+        
         [self eventAuthenticationFailedWithError:error];
         return;
     }
+    
+    //Reset retry counter
+    self.authRetryCounter = 0;
     
     //Authentication succeeded
     [self eventAuthenticationSucceeded];
@@ -283,7 +316,7 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
     [taskManager setDelegate:self];
     self.taskManager = taskManager;
     
-    [self updateRouterInfo];
+    [self postRouterInfoUpdateTask];
 
     //Schedule periodic tasks
     [self addPeriodicTasks];
@@ -346,19 +379,54 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 - (void)didUpdateRouterInfo:(NSDictionary *)responseDict
 {
     //Update local router info with one from the task
-    [self.routerInfo updateWithResponseDictionary:responseDict];
+    if (self.routerInfo == nil)
+    {
+        self.routerInfo = [[RCRouterInfo alloc] initWithResponseDictionary:responseDict];
+    }
+    else
+    {
+        [self.routerInfo updateWithResponseDictionary:responseDict];
+    }
+    
     [self notifyDidUpdateRouterInfo];
 }
 
 //=========================================================================
 
-- (void)updateRouterInfo
+- (void)postPeriodicRouterInfoUpdateTask
 {
-    //Schedule router info update
-    RCRouterInfoTask *infoTask = [[RCRouterInfoTask alloc] initWithIdentifier:@"RouterInfo"];
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"PeriodicRouterInfo" options:routerInfoTaskOptions];
+    task.recurring = YES;
+    task.frequency = 2;
     
     __weak RCRouter *blockSelf = self;
-    [infoTask setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf didUpdateRouterInfo:responseDict];
+        }
+        
+    }];
+    
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)cancelPeriodicRouterInfoTask
+{
+    [self.taskManager removeTaskWithIdentifier:@"PeriodicRouterInfo"];
+}
+
+//=========================================================================
+
+- (void)postRouterInfoUpdateTask
+{
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"SingleRouterInfo" options:routerInfoTaskOptions];
+
+    __weak RCRouter *blockSelf = self;
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
         
         if (!error)
         {
@@ -367,16 +435,68 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
         
     }];
 
-    [self.taskManager addTask:infoTask];
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)didUpdateBandwidth:(NSDictionary *)responseDict
+{
+    CGFloat inbound = [[responseDict objectForKey:PARAM_KEY_ROUTER_NET_BW_INBOUND_15S] floatValue];
+    CGFloat outbound = [[responseDict objectForKey:PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S] floatValue];
+    
+    RCBWMeasurement *measurement = [RCBWMeasurement measurementWithDate:[NSDate date]
+                                                                inbound:inbound
+                                                               outbound:outbound];
+    
+    //Append new entry
+    [self.measurementsBuffer addObject:measurement];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCRouterDidUpdateBandwidthNotification object:self];
+}
+
+//=========================================================================
+
+- (void)addBandwidthUpdateTask
+{
+    //Only fetch status, uptime and version values
+    CRRouterInfoOptions options = kRouterNetworkBW15s;
+    RCRouterInfoTask *task = [[RCRouterInfoTask alloc] initWithIdentifier:@"Bandwidth" options:options];
+    task.frequency = 3;
+    task.recurring = YES;
+
+    __weak RCRouter *blockSelf = self;
+    [task setCompletionHandler:^(NSDictionary *responseDict, NSError *error){
+        
+        if (!error)
+        {
+            [blockSelf didUpdateBandwidth:responseDict];
+        }
+        
+    }];
+    
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)invalidateRouterInfo
+{
+    DDLogInfo(@"Invalidating router info");
+    
+    _routerInfo = nil;
+    [self notifyDidUpdateRouterInfo];
 }
 
 //=========================================================================
 
 - (void)addPeriodicTasks
 {
-    RCRouterEchoTask *echoTask = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
-    echoTask.frequency = 1;
-    [self.taskManager addTask:echoTask];
+//    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
+//    task.frequency = 1;
+//    [self.taskManager addTask:task];
+    
+    //Update bandwidth in/out
+    [self addBandwidthUpdateTask];
 }
 
 //=========================================================================
@@ -394,7 +514,16 @@ typedef NS_ENUM(NSUInteger, RCPeriodicTaskType)
 
 - (void)routerTaskManager:(RCRouterTaskManager *)manager taskDidFail:(RCTask *)task withError:(NSError *)error
 {
-    [self eventError:error];
+    //Analyse error
+    if ([error.domain isEqualToString:NSURLErrorDomain])
+    {
+        //Connection error event
+        [self eventConnectionError:error];
+    }
+    else
+    {
+        DDLogDebug(@"Ignore error: %@", error);
+    }
 }
 
 //=========================================================================

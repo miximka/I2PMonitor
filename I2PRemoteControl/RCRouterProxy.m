@@ -105,6 +105,42 @@
     if (options & kRouterInfoVersion)
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_VERSION];
 
+    if (options & kRouterNetworkBW15s)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_BW_INBOUND_15S];
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S];
+    }
+
+    if (options & kRouterNetworkStatus)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_STATUS];
+    }
+
+    if (options & kRouterNetDBActivePeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS];
+    }
+    
+    if (options & kRouterNetDBFastPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_FAST_PEERS];
+    }
+    
+    if (options & kRouterNetDBHighCapacityPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS];
+    }
+    
+    if (options & kRouterNetDBKnownPeers)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS];
+    }
+
+    if (options & kRouterNetTunnelsParticipating)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_TUNNELS_PARTICIPATING];
+    }
+
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

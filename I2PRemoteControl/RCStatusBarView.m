@@ -68,6 +68,22 @@
 }
 
 //=========================================================================
+
+- (void)toggleMenu
+{
+    NSMenu *menu = self.statusItem.menu;
+    [self.statusItem popUpStatusItemMenu:menu];
+}
+
+//=========================================================================
+
+- (void)toggleHighlighted
+{
+    self.highlighted = !self.highlighted;
+    [self.delegate statusBarViewDidChangeHighlighted:self];
+}
+
+//=========================================================================
 #pragma mark Overriden methods
 //=========================================================================
 
@@ -85,8 +101,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [super mouseDown:theEvent];
-    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
-    
+    [self toggleHighlighted];
 }
 
 //=========================================================================
@@ -94,7 +109,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     [super rightMouseDown:theEvent];
-    [self.statusItem popUpStatusItemMenu:self.statusItem.menu];
+    [self toggleMenu];
 }
 
 //=========================================================================

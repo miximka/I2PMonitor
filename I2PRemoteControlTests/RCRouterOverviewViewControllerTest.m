@@ -7,12 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "RCRouterOverviewViewController.h"
+#import "RCNetworkStatusViewController.h"
 
 //=========================================================================
 
 @interface RCRouterOverviewViewControllerTest : XCTestCase
-@property (nonatomic) RCRouterOverviewViewController *testObject;
+@property (nonatomic) RCNetworkStatusViewController *testObject;
 @end
 
 //=========================================================================
@@ -22,7 +22,7 @@
 - (void)setUp
 {
     [super setUp];
-    _testObject = [[RCRouterOverviewViewController alloc] initWithNibName:nil bundle:nil];
+    _testObject = [[RCNetworkStatusViewController alloc] initWithNibName:nil bundle:nil];
 }
 
 //=========================================================================
