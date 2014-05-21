@@ -11,6 +11,7 @@
 //=========================================================================
 
 @class RCMainViewController;
+@class RCTabButton;
 
 @protocol RCMainViewControllerDelegate <NSObject>
 - (void)mainViewControllerDidResizeView:(RCMainViewController *)controller;
@@ -26,9 +27,9 @@
 @property (nonatomic) IBOutlet NSTextField *versionTextField;
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;
 @property (nonatomic) IBOutlet NSView *contentView;
-@property (nonatomic) IBOutlet NSButton *networkButton;
-@property (nonatomic) IBOutlet NSButton *peersButton;
-@property (nonatomic) IBOutlet NSButton *controlButton;
+@property (nonatomic) IBOutlet RCTabButton *networkButton;
+@property (nonatomic) IBOutlet RCTabButton *peersButton;
+@property (nonatomic) IBOutlet RCTabButton *controlButton;
 
 - (void)startUpdating;
 - (void)stopUpdating;

@@ -52,7 +52,8 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
                                                     kRouterNetDBActivePeers |
                                                     kRouterNetDBFastPeers |
                                                     kRouterNetDBHighCapacityPeers |
-                                                    kRouterNetDBKnownPeers;
+                                                    kRouterNetDBKnownPeers |
+                                                    kRouterNetTunnelsParticipating;
 
 //=========================================================================
 

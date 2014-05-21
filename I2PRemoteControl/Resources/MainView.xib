@@ -30,10 +30,10 @@
                     <rect key="frame" x="0.0" y="1" width="250" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button toolTip="I2P Router Network Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6K-2E-LfO">
+                        <button toolTip="I2P Router Network Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6K-2E-LfO" customClass="RCTabButton">
                             <rect key="frame" x="0.0" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Network" bezelStyle="shadowlessSquare" image="Network" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qT5-1D-5ip" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Network" bezelStyle="shadowlessSquare" image="Network" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qT5-1D-5ip" customClass="RCTabButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
@@ -41,10 +41,10 @@
                                 <action selector="showNetworkInfoView:" target="-2" id="BBI-Vj-99B"/>
                             </connections>
                         </button>
-                        <button toolTip="I2P Router Network Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vo7-5u-SmK">
+                        <button toolTip="I2P Router Peers and Tunnels" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vo7-5u-SmK" customClass="RCTabButton">
                             <rect key="frame" x="85" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Peers" bezelStyle="shadowlessSquare" image="Peers" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwW-cL-k7e" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Peers" bezelStyle="shadowlessSquare" image="Peers" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwW-cL-k7e" customClass="RCTabButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
@@ -52,10 +52,10 @@
                                 <action selector="showPeersView:" target="-2" id="mf6-O5-yrw"/>
                             </connections>
                         </button>
-                        <button toolTip="Application Preferences" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU">
+                        <button toolTip="Control I2P Router" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU" customClass="RCTabButton">
                             <rect key="frame" x="169" y="0.0" width="80" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Control" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCContextSwitchButtonCell">
+                            <buttonCell key="cell" type="square" title="Control" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCTabButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>

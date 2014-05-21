@@ -13,6 +13,7 @@
 #import "RCRouterInfo.h"
 #import "RCBWMeasurement.h"
 #import "RCBWMeasurementBuffer.h"
+#import "RCContentView.h"
 
 //=========================================================================
 
@@ -331,6 +332,7 @@
 {
     [super loadView];
 
+    [(RCContentView *)self.view setColorType:RCContentViewColorGreen];
     [self configureLabels];
     [self initializeGraph];
     

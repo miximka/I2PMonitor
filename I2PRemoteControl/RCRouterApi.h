@@ -19,31 +19,33 @@
 #define PARAM_KEY_ECHO          @"Echo"
 #define PARAM_KEY_ECHO_RESULT   @"Result"
 
-#define METHOD_ROUTER_INFO                      @"RouterInfo"
-#define PARAM_KEY_ROUTER_STATUS                 @"i2p.router.status"
-#define PARAM_KEY_ROUTER_UPTIME                 @"i2p.router.uptime"
-#define PARAM_KEY_ROUTER_VERSION                @"i2p.router.version"
-#define PARAM_KEY_ROUTER_NET_BW_INBOUND_15S     @"i2p.router.net.bw.inbound.15s"
-#define PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S    @"i2p.router.net.bw.outbound.15s"
-#define PARAM_KEY_ROUTER_NET_STATUS             @"i2p.router.net.status"
-#define PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS     @"i2p.router.netdb.activepeers"
-#define PARAM_KEY_ROUTER_NETDB_FAST_PEERS       @"i2p.router.netdb.fastpeers"
+#define METHOD_ROUTER_INFO                          @"RouterInfo"
+#define PARAM_KEY_ROUTER_STATUS                     @"i2p.router.status"
+#define PARAM_KEY_ROUTER_UPTIME                     @"i2p.router.uptime"
+#define PARAM_KEY_ROUTER_VERSION                    @"i2p.router.version"
+#define PARAM_KEY_ROUTER_NET_BW_INBOUND_15S         @"i2p.router.net.bw.inbound.15s"
+#define PARAM_KEY_ROUTER_NET_BW_OUTBOUND_15S        @"i2p.router.net.bw.outbound.15s"
+#define PARAM_KEY_ROUTER_NET_STATUS                 @"i2p.router.net.status"
+#define PARAM_KEY_ROUTER_NET_TUNNELS_PARTICIPATING  @"i2p.router.net.tunnels.participating"
+#define PARAM_KEY_ROUTER_NETDB_ACTIVE_PEERS         @"i2p.router.netdb.activepeers"
+#define PARAM_KEY_ROUTER_NETDB_FAST_PEERS           @"i2p.router.netdb.fastpeers"
 #define PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS  @"i2p.router.netdb.highcapacitypeers"
-#define PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS      @"i2p.router.netdb.knownpeers"
+#define PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS          @"i2p.router.netdb.knownpeers"
 
 @class RCRouterInfo;
 
 typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
 {
-    kRouterInfoStatus       = 1 << 0,
-    kRouterInfoUptime       = 1 << 1,
-    kRouterInfoVersion      = 1 << 2,
-    kRouterNetworkBW15s     = 1 << 3, //Inbound & Outbound
-    kRouterNetworkStatus    = 1 << 4,
-    kRouterNetDBActivePeers = 1 << 5,
-    kRouterNetDBFastPeers   = 1 << 6,
+    kRouterInfoStatus               = 1 << 0,
+    kRouterInfoUptime               = 1 << 1,
+    kRouterInfoVersion              = 1 << 2,
+    kRouterNetworkBW15s             = 1 << 3, //Inbound & Outbound
+    kRouterNetworkStatus            = 1 << 4,
+    kRouterNetDBActivePeers         = 1 << 5,
+    kRouterNetDBFastPeers           = 1 << 6,
     kRouterNetDBHighCapacityPeers   = 1 << 7,
-    kRouterNetDBKnownPeers   = 1 << 8,
+    kRouterNetDBKnownPeers          = 1 << 8,
+    kRouterNetTunnelsParticipating  = 1 << 9,
 };
 
 //=========================================================================

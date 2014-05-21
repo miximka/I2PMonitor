@@ -16,6 +16,7 @@
 @property (nonatomic) IBOutlet NSTextField *fastPeersTextField;
 @property (nonatomic) IBOutlet NSTextField *highCapacityPeersTextField;
 @property (nonatomic) IBOutlet NSTextField *knownPeersTextField;
+@property (nonatomic) IBOutlet NSTextField *participatingTunnelsTextField;
 
 //=========================================================================
 @end

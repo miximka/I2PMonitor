@@ -135,7 +135,12 @@
     {
         [params setObject:@"" forKey:PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS];
     }
-    
+
+    if (options & kRouterNetTunnelsParticipating)
+    {
+        [params setObject:@"" forKey:PARAM_KEY_ROUTER_NET_TUNNELS_PARTICIPATING];
+    }
+
     [self.client invokeMethod:METHOD_ROUTER_INFO
                withParameters:params
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

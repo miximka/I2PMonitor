@@ -29,8 +29,7 @@ typedef NS_ENUM(NSUInteger, RCContentViewColorType)
 @interface RCContentView : NSView
 //=========================================================================
 
-//Top line style type (RCContentViewColorType)
-@property (nonatomic) NSNumber *type;
+@property (nonatomic) RCContentViewColorType colorType;
 
 //=========================================================================
 @end

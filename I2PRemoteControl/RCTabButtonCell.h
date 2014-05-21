@@ -1,5 +1,5 @@
 //
-//  RCButtonCell.h
+//  RCTabButtonCell.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 18/05/14.
@@ -7,10 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "RCContentView.h"
 
 //=========================================================================
-@interface RCContextSwitchButtonCell : NSButtonCell
+@interface RCTabButtonCell : NSButtonCell
 //=========================================================================
+
+@property (nonatomic) RCContentViewColorType colorType;
 
 //=========================================================================
 @end

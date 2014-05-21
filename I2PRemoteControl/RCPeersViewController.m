@@ -9,6 +9,7 @@
 #import "RCPeersViewController.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
+#import "RCContentView.h"
 
 //=========================================================================
 
@@ -79,6 +80,7 @@
 {
     [super loadView];
     
+    [(RCContentView *)self.view setColorType:RCContentViewColorRed];
     [self updateGUI];
     [self registerForNotifications];
 }

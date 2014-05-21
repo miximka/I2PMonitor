@@ -12,6 +12,7 @@
 #import "RCSessionConfig.h"
 #import "RCNetworkStatusViewController.h"
 #import "RCPeersViewController.h"
+#import "RCTabButton.h"
 
 //=========================================================================
 
@@ -268,8 +269,14 @@
 #pragma mark Overridden Methods
 //=========================================================================
 
-- (void)awakeFromNib
+- (void)loadView
 {
+    [super loadView];
+    
+    [self.networkButton setColorType:RCContentViewColorGreen];
+    [self.peersButton setColorType:RCContentViewColorRed];
+    [self.controlButton setColorType:RCContentViewColorViolet];
+    
     [self registerForNotifications];
     [self switchToController:self.networkViewController];
 }

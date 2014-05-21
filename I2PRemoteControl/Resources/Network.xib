@@ -137,11 +137,6 @@
                 <constraint firstItem="Hom-6i-oFp" firstAttribute="leading" secondItem="vEV-DW-AU6" secondAttribute="leading" constant="7" id="csT-rZ-HKX"/>
                 <constraint firstItem="EdD-6S-tnE" firstAttribute="top" secondItem="vEV-DW-AU6" secondAttribute="top" constant="129" id="ej0-4Y-MCY"/>
             </constraints>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="type">
-                    <integer key="value" value="1"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
         </customView>
     </objects>
     <resources>

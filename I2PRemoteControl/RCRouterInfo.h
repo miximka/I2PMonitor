@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, RCRouterNetStatus)
 @property (nonatomic) long fastPeers;
 @property (nonatomic) long highCapacityPeers;
 @property (nonatomic) long knownPeers;
+@property (nonatomic) long participatingTunnels;
 
 //=========================================================================
 @end
