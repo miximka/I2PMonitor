@@ -28,7 +28,6 @@
 		812687DA19202851002A0571 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812687DC19202851002A0571 /* MainMenu.xib */; };
 		812687E11920287B002A0571 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 812687E31920287B002A0571 /* Credits.rtf */; };
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
-		812FDD1B192D38C500E22510 /* NSImage+DarkenDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = 812FDD1A192D38C500E22510 /* NSImage+DarkenDraw.m */; };
 		814F92F81926ADF100635B1C /* RCMainBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92F71926ADF100635B1C /* RCMainBackgroundView.m */; };
 		814F92FB1926B5EE00635B1C /* RCContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F92FA1926B5EE00635B1C /* RCContentView.m */; };
 		81581AC619263B6300289DD5 /* Network.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81581AC519263B6300289DD5 /* Network.xib */; };
@@ -118,8 +117,6 @@
 		812687DB19202851002A0571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		812687E21920287B002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		812687E51920287F002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		812FDD19192D38C500E22510 /* NSImage+DarkenDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+DarkenDraw.h"; sourceTree = "<group>"; };
-		812FDD1A192D38C500E22510 /* NSImage+DarkenDraw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+DarkenDraw.m"; sourceTree = "<group>"; };
 		814F92F61926ADF100635B1C /* RCMainBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMainBackgroundView.h; sourceTree = "<group>"; };
 		814F92F71926ADF100635B1C /* RCMainBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainBackgroundView.m; sourceTree = "<group>"; };
 		814F92F91926B5EE00635B1C /* RCContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContentView.h; sourceTree = "<group>"; };
@@ -260,8 +257,6 @@
 				818C26C7192CDDD100D64A62 /* RCTabsControl.m */,
 				818C26C9192D093600D64A62 /* RCTabsControlCell.h */,
 				818C26CA192D093600D64A62 /* RCTabsControlCell.m */,
-				812FDD19192D38C500E22510 /* NSImage+DarkenDraw.h */,
-				812FDD1A192D38C500E22510 /* NSImage+DarkenDraw.m */,
 				815AAE631928F4E80057C123 /* Attached Window */,
 			);
 			name = Views;
@@ -674,7 +669,6 @@
 				81AA262E192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m in Sources */,
 				812687B719202666002A0571 /* RCAppDelegate.m in Sources */,
 				815AAE5E1928D6060057C123 /* RCAttachedWindow.m in Sources */,
-				812FDD1B192D38C500E22510 /* NSImage+DarkenDraw.m in Sources */,
 				815AAE621928F2EA0057C123 /* RCMainWindowController.m in Sources */,
 				817B6F8F192CA64A007FF650 /* RCTabButton.m in Sources */,
 				81AA26251929FE2F00A0C1DD /* RCBWMeasurement.m in Sources */,

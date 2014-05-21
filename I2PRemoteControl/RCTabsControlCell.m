@@ -9,7 +9,6 @@
 #import "RCTabsControlCell.h"
 #import "RCTabsControlCell.h"
 #import "RCContentView.h"
-#import "NSImage+DarkenDraw.h"
 
 //=========================================================================
 
@@ -143,14 +142,35 @@
     if (!image)
         return;
     
+    //Center of the segment
     NSPoint center = NSMakePoint(segmentFrame.origin.x + segmentFrame.size.width/2, segmentFrame.origin.y + segmentFrame.size.height/2);
 
+    //Calculate image frame
     NSSize imageSize = image.size;
     NSPoint imagePoint = NSMakePoint(round(center.x - imageSize.width/2), round(center.y - imageSize.height/2));
     NSRect imageFrame = NSMakeRect(imagePoint.x, imagePoint.y, imageSize.width, imageSize.height);
     
+    //Should draw image darken (i.e. highlighted)?
     BOOL shouldDarken = [self isSegmentHighlighted:segmentIndex];
-    [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 darken:shouldDarken];
+
+    CGFloat fraction = 1.0;
+    if (shouldDarken)
+    {
+        //Draw darken image instead of the original
+        NSImage *darkenImage = [image copy];
+        
+        //Draw transparent dark overlay over the image
+        [darkenImage lockFocus];
+        [[NSColor colorWithCalibratedWhite:0.0 alpha:0.33] setFill];
+        NSRect imageRect = NSMakeRect(0, 0, darkenImage.size.width, darkenImage.size.height);
+        NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
+        [darkenImage unlockFocus];
+        
+        fraction = 0.75;
+        image = darkenImage;
+    }
+    
+    [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
 }
 
 //=========================================================================
