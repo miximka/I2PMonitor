@@ -13,6 +13,8 @@
 #import "RCNetworkStatusViewController.h"
 #import "RCPeersViewController.h"
 #import "RCTabButton.h"
+#import "RCTabsControl.h"
+#import "RCTabsControlCell.h"
 
 //=========================================================================
 
@@ -235,20 +237,33 @@
 
 - (IBAction)showNetworkInfoView:(id)sender
 {
-    [self switchToController:self.networkViewController];
 }
 
 //=========================================================================
 
 - (IBAction)showPeersView:(id)sender
 {
-    [self switchToController:self.peersViewController];
 }
-
 //=========================================================================
 
-- (IBAction)showControlView:(id)sender
+- (IBAction)tabsControlAction:(id)sender
 {
+    switch (self.tabsControl.selectedSegment)
+    {
+        case 0:
+            [self switchToController:self.networkViewController];
+            break;
+
+        case 1:
+            [self switchToController:self.peersViewController];
+            break;
+
+        case 2:
+            break;
+
+        default:
+            break;
+    }
 }
 
 //=========================================================================
@@ -272,6 +287,21 @@
 - (void)loadView
 {
     [super loadView];
+    
+    RCTabsControl *tabsControl = [[RCTabsControl alloc] initWithFrame:self.tabsControlPlaceholderView.bounds];
+    [tabsControl setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    [self.tabsControlPlaceholderView addSubview:tabsControl];
+    [tabsControl setSegmentCount:3];
+    [tabsControl setLabel:@"Network" forSegment:0];
+    [tabsControl setLabel:@"Peers" forSegment:1];
+    [tabsControl setLabel:@"Control" forSegment:2];
+    [tabsControl setImage:[NSImage imageNamed:@"Network"] forSegment:0];
+    [tabsControl setImage:[NSImage imageNamed:@"Peers"] forSegment:1];
+    [tabsControl setImage:[NSImage imageNamed:@"Preferences"] forSegment:2];
+    [tabsControl setAction:@selector(tabsControlAction:)];
+    [tabsControl setTarget:self];
+    [tabsControl setSelectedSegment:0];
+    self.tabsControl = tabsControl;
     
     [self.networkButton setColorType:RCContentViewColorGreen];
     [self.peersButton setColorType:RCContentViewColorRed];

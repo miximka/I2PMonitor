@@ -294,15 +294,11 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 - (void)waitForAuthRetry
 {
-    self.authRetryTimer = [NSTimer timerWithTimeInterval:RETRY_AUTH_DELAY
-                                                  target:self
-                                                selector:@selector(authRetryTimerFired:)
-                                                userInfo:nil
-                                                 repeats:NO];
-    
-    //Add timer manually with NSRunLoopCommonModes to update UI even when menu is opened
-    [[NSRunLoop currentRunLoop] addTimer:self.authRetryTimer
-                                 forMode:NSRunLoopCommonModes];
+    self.authRetryTimer = [NSTimer scheduledTimerWithTimeInterval:RETRY_AUTH_DELAY
+                                                           target:self
+                                                         selector:@selector(authRetryTimerFired:)
+                                                         userInfo:nil
+                                                          repeats:NO];
 }
 
 //=========================================================================

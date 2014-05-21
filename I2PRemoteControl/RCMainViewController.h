@@ -11,6 +11,7 @@
 //=========================================================================
 
 @class RCMainViewController;
+@class RCTabsControl;
 @class RCTabButton;
 
 @protocol RCMainViewControllerDelegate <NSObject>
@@ -30,13 +31,13 @@
 @property (nonatomic) IBOutlet RCTabButton *networkButton;
 @property (nonatomic) IBOutlet RCTabButton *peersButton;
 @property (nonatomic) IBOutlet RCTabButton *controlButton;
+@property (nonatomic) IBOutlet NSView *tabsControlPlaceholderView;
+@property (nonatomic) IBOutlet RCTabsControl *tabsControl;
 
 - (void)startUpdating;
 - (void)stopUpdating;
 
-- (IBAction)showNetworkInfoView:(id)sender;
-- (IBAction)showPeersView:(id)sender;
-- (IBAction)showControlView:(id)sender;
+- (IBAction)tabsControlAction:(id)sender;
 
 - (NSSize)preferredViewSize;
 
