@@ -220,12 +220,11 @@
 		810022781924EF140025273D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				81581AD719264EA200289DD5 /* Status Bar Menu */,
 				815AAE601928F2EA0057C123 /* RCMainWindowController.h */,
 				815AAE611928F2EA0057C123 /* RCMainWindowController.m */,
 				815AAE671928F88B0057C123 /* RCMainViewController.h */,
 				815AAE681928F88B0057C123 /* RCMainViewController.m */,
-				81AA261C192940E300A0C1DD /* Widgets */,
+				81AA261C192940E300A0C1DD /* Tabs */,
 				81581AD819264EB700289DD5 /* Preferences */,
 			);
 			name = Controller;
@@ -376,13 +375,6 @@
 			name = "Router Tasks";
 			sourceTree = "<group>";
 		};
-		81581AD719264EA200289DD5 /* Status Bar Menu */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Status Bar Menu";
-			sourceTree = "<group>";
-		};
 		81581AD819264EB700289DD5 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,7 +436,7 @@
 			name = "RPC Client";
 			sourceTree = "<group>";
 		};
-		81AA261C192940E300A0C1DD /* Widgets */ = {
+		81AA261C192940E300A0C1DD /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
 				81581ACE192645C200289DD5 /* RCViewController.h */,
@@ -454,7 +446,7 @@
 				8115435F192BD92700AC1881 /* RCPeersViewController.h */,
 				81154360192BD92700AC1881 /* RCPeersViewController.m */,
 			);
-			name = Widgets;
+			name = Tabs;
 			sourceTree = "<group>";
 		};
 		81CD62E71920FB3A005A82A4 /* Model */ = {
