@@ -14,7 +14,7 @@
 @interface RCAttachedWindowController : NSWindowController <NSWindowDelegate>
 //=========================================================================
 
-- (NSView *)contentHolderView;
+- (NSView *)contentContainerView;
 
 /**
     Shows window with the top left corner positioned to the the specified coordinate

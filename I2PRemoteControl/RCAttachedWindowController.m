@@ -34,9 +34,9 @@
 
 //=========================================================================
 
-- (NSView *)contentHolderView
+- (NSView *)contentContainerView
 {
-    return [(RCAttachedWindow *)self.window contentHolderView];
+    return [(RCAttachedWindow *)self.window contentContainerView];
 }
 
 //=========================================================================

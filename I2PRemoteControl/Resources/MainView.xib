@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Y5i-dz-Lb2">
-                    <rect key="frame" x="0.0" y="69" width="250" height="230"/>
+                    <rect key="frame" x="0.0" y="70" width="250" height="228"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yh7-lI-gUx">
@@ -35,8 +35,8 @@
                     <rect key="frame" x="0.0" y="298" width="250" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
-                            <rect key="frame" x="8" y="14" width="138" height="35"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
+                            <rect key="frame" x="8" y="14" width="130" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="I2P Router" id="kGs-wr-qIc">
                                 <font key="font" size="29" name="HelveticaNeue-Thin"/>
@@ -76,6 +76,8 @@
                         <constraint firstItem="JeF-EX-LHp" firstAttribute="top" secondItem="pTW-Fi-TSP" secondAttribute="bottom" constant="1" id="Kwq-2g-Xfn"/>
                         <constraint firstAttribute="trailing" secondItem="pTW-Fi-TSP" secondAttribute="trailing" constant="12" id="ZOe-lV-MZg"/>
                         <constraint firstItem="pTW-Fi-TSP" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="9" id="aZs-ho-rVw"/>
+                        <constraint firstItem="32x-qM-oCe" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="12" id="bPX-v0-HHT"/>
+                        <constraint firstItem="32x-qM-oCe" firstAttribute="leading" secondItem="Qe6-Jd-vj9" secondAttribute="leading" constant="10" id="ixO-R6-sQb"/>
                         <constraint firstAttribute="trailing" secondItem="g80-Vc-QRj" secondAttribute="trailing" constant="12" id="nKr-Dn-qhO"/>
                         <constraint firstItem="g80-Vc-QRj" firstAttribute="top" secondItem="JeF-EX-LHp" secondAttribute="bottom" constant="1" id="qCW-Wq-nIG"/>
                         <constraint firstAttribute="height" constant="61" id="sUm-VH-gyy"/>
@@ -84,11 +86,11 @@
                 </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="yh7-lI-gUx" firstAttribute="top" secondItem="Y5i-dz-Lb2" secondAttribute="bottom" constant="-1" id="0ZQ-qF-xn7"/>
+                <constraint firstItem="yh7-lI-gUx" firstAttribute="top" secondItem="Y5i-dz-Lb2" secondAttribute="bottom" id="0ZQ-qF-xn7"/>
                 <constraint firstItem="yh7-lI-gUx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="1MM-W0-8ge"/>
                 <constraint firstItem="Y5i-dz-Lb2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="QqQ-pJ-tsi"/>
                 <constraint firstItem="Qe6-Jd-vj9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="SKU-aj-ENV"/>
-                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="bottom" constant="-1" id="cTy-jL-7bu"/>
+                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="bottom" id="cTy-jL-7bu"/>
                 <constraint firstItem="Qe6-Jd-vj9" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="dhA-El-RNa"/>
                 <constraint firstAttribute="trailing" secondItem="Y5i-dz-Lb2" secondAttribute="trailing" id="lOK-B7-biz"/>
                 <constraint firstAttribute="bottom" secondItem="yh7-lI-gUx" secondAttribute="bottom" id="lqx-p8-MaS"/>

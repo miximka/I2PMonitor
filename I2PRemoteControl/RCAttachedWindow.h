@@ -12,7 +12,7 @@
 @interface RCAttachedWindow : RCBorderlessPanel
 //=========================================================================
 
-@property (nonatomic, readonly) NSView *contentHolderView;
+@property (nonatomic, readonly) NSView *contentContainerView;
 
 //=========================================================================
 @end

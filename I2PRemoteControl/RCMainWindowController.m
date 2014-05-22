@@ -23,7 +23,7 @@
 
 - (void)setupViews
 {
-    NSView *contentHolderView = self.contentHolderView;
+    NSView *containerView = self.contentContainerView;
     
     RCMainViewController *controller = [[RCMainViewController alloc] initWithNibName:@"MainView" bundle:nil];
     [controller setDelegate:self];
@@ -31,24 +31,14 @@
     
     NSView *controllerView = controller.view;
 
-    //Resize window to match the initial size of the main controller view
-    CGFloat widthDelta = controllerView.frame.size.width - contentHolderView.frame.size.width;
-    CGFloat heightDelta = controllerView.frame.size.height - contentHolderView.frame.size.height;
-    
-    NSRect windowFrame = self.window.frame;
-    windowFrame.size.width += widthDelta;
-    windowFrame.size.height += heightDelta;
-    windowFrame.origin.y -= heightDelta;
-    [self.window setFrame:windowFrame display:NO];
-
     //Add controller view to view hierarchy
-    [controllerView setFrame:NSMakeRect(0, 0, controllerView.frame.size.width, contentHolderView.frame.size.height)];
+    [controllerView setFrame:NSMakeRect(0, 0, containerView.frame.size.width, containerView.frame.size.height)];
     
     [controllerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    [contentHolderView addSubview:controllerView];
+    [containerView addSubview:controllerView];
 
     //Resize window again to match the possibly changed size of the main view
-    [self resizeWindowIfNeededWithDisplay:NO animate:NO];
+    //[self resizeWindowIfNeededWithDisplay:NO animate:NO];
 }
 
 //=========================================================================
@@ -57,8 +47,8 @@
 {
     NSSize preferredViewSize = [self.mainViewController preferredViewSize];
     
-    CGFloat widthDelta = preferredViewSize.width - self.contentHolderView.frame.size.width;
-    CGFloat heightDelta = preferredViewSize.height - self.contentHolderView.frame.size.height;
+    CGFloat widthDelta = preferredViewSize.width - self.contentContainerView.frame.size.width;
+    CGFloat heightDelta = preferredViewSize.height - self.contentContainerView.frame.size.height;
     
     NSRect windowFrame = self.window.frame;
     windowFrame.size.width += widthDelta;
