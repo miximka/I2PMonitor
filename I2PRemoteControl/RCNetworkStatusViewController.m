@@ -167,11 +167,19 @@
 
 - (void)bandwidthTextField:(NSTextField *)textField setBandwidthValue:(CGFloat)bandwidth
 {
-    NSString *str = [NSByteCountFormatter stringFromByteCount:(long)bandwidth countStyle:NSByteCountFormatterCountStyleBinary];
+    NSString *str = @"";
+    BOOL showTextField = bandwidth > 0;
     
-    //Append "/s" at the end. This may not work for all locales
-    str = [NSString stringWithFormat:MyLocalStr(@"BandwidthPerSecTemplate"), str];
-    [textField setStringValue:str];
+    if (showTextField)
+    {
+        str = [NSByteCountFormatter stringFromByteCount:(long)bandwidth countStyle:NSByteCountFormatterCountStyleBinary];
+        
+        //Append "/s" at the end. This may not work for all locales
+        str = [NSString stringWithFormat:MyLocalStr(@"BandwidthPerSecTemplate"), str];
+        [textField setStringValue:str];
+    }
+    
+    [textField setHidden:!showTextField];
 }
 
 //=========================================================================

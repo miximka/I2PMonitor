@@ -94,22 +94,6 @@
 }
 
 //=========================================================================
-
-- (void)startUpdatingGUI
-{
-    RCRouter *router = (RCRouter *)self.representedObject;
-    [router postPeriodicRouterInfoUpdateTask];
-}
-
-//=========================================================================
-
-- (void)stopUpdatingGUI
-{
-    RCRouter *router = (RCRouter *)self.representedObject;
-    [router cancelPeriodicRouterInfoTask];
-}
-
-//=========================================================================
 #pragma mark Notifications
 //=========================================================================
 

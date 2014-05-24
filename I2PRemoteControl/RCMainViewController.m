@@ -232,8 +232,10 @@
     if (str == nil)
     {
         //No alert message defined yet, so check router status and show it then
-        
         NSString *routerStatusStr = routerInfo.routerStatus;
+        
+        //Use hardcoded string match. Its bad, but for the moment I don't have better solution.
+        //Actually, the router should deliver some kind of ENUM instead of string values...
         BOOL isAcceptingTunnelsStatus = [routerStatusStr isEqualToString:@"Accepting tunnels"];
         
         if (isAcceptingTunnelsStatus == NO)
@@ -325,8 +327,8 @@
     //Also notify current content view controller
     [self.currentController startUpdatingGUI];
     
-    //Immediately trigger router info update
-    [(RCRouter *)self.representedObject postRouterInfoUpdateTask];
+    //Start periodically update router info
+    [(RCRouter *)self.representedObject postPeriodicRouterInfoUpdateTask];
 }
 
 //=========================================================================
@@ -338,6 +340,9 @@
     
     //Also notify current content view controller
     [self.currentController stopUpdatingGUI];
+
+    //Stop periodically update router info
+    [(RCRouter *)self.representedObject cancelPeriodicRouterInfoTask];
 }
 
 //=========================================================================
