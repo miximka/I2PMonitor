@@ -24,11 +24,12 @@
 #define RETRY_COUNT_INVALIDATE_ROUTER_INFO  3 //times
 #define MEASUREMENTS_BUFFER_CAPACITY        500 //500 values * 3 sec bw task frequency / 60 sec = ~25 min
 
-#define CLIENT_API_VERSION      1
-#define DEFAULT_PASSWORD        @"itoopie"
+#define CLIENT_API_VERSION          1
+#define DEFAULT_PASSWORD            @"itoopie"
 
-#define STATE_ACTIVE            @"Active"
-#define STATE_AUTHENTICATING    @"Authenticating"
+#define STATE_ACTIVE                @"Active"
+#define STATE_AUTHENTICATING        @"Authenticating"
+#define STATE_WAITING_AUTH_RETRY    @"WaitingAuthRetry"
 
 //State Machine Events
 #define EVENT_START             @"EventStart"
@@ -107,7 +108,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
         
     }];
 
-    TKState *waitingAuthRetryState = [TKState stateWithName:@"WaitingAuthRetry"];
+    TKState *waitingAuthRetryState = [TKState stateWithName:STATE_WAITING_AUTH_RETRY];
     [waitingAuthRetryState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
         [self waitForAuthRetry];
@@ -200,6 +201,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 - (BOOL)eventAuthenticationFailedWithError:(NSError *)error
 {
+    _lastError = error;
     DDLogError(@"Authentication failed with error: %@", error);
     
     BOOL success = [self fireEvent:EVENT_AUTH_FAILED];    return success;
@@ -229,8 +231,9 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 - (BOOL)eventConnectionError:(NSError *)error
 {
+    _lastError = error;
     DDLogInfo(@"Connection error occurred: %@", error);
-    
+
     BOOL success = [self fireEvent:EVENT_CONNECTION_ERROR];
     return success;
 }
@@ -477,9 +480,12 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 - (void)invalidateRouterInfo
 {
-    DDLogInfo(@"Invalidating router info");
-    
-    _routerInfo = nil;
+    if (self.routerInfo != nil)
+    {
+        DDLogInfo(@"Invalidating router info");
+        self.routerInfo = nil;
+    }
+
     [self notifyDidUpdateRouterInfo];
 }
 

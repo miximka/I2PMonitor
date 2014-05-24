@@ -15,6 +15,7 @@
 #import "RCTabsControl.h"
 #import "RCTabsControlCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "RCAlertView.h"
 
 //=========================================================================
 
@@ -23,7 +24,7 @@
 @property (nonatomic) RCViewController *currentController;
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) RCPeersViewController *peersViewController;
-@property (nonatomic) BOOL isWarningViewVisible;
+@property (nonatomic) BOOL isAlertViewVisible;
 @end
 
 //=========================================================================
@@ -58,40 +59,6 @@
 {
     if (self.currentController == controller)
         return;
-    
-//    NSView *contentView = self.contentView;
-//    
-//    //Notify controller the view will be removed from its superview
-//    [self.currentController willMoveToParentViewController:nil];
-//    
-//    //Remove current content
-//    for (NSView *each in contentView.subviews)
-//    {
-//        [each removeFromSuperview];
-//    }
-//    
-//    [self.currentController didMoveToParentViewController:nil];
-//    
-//    //Notify new view controller it will be moved to us
-//    [controller willMoveToParentViewController:self];
-//    
-//    //Calculate new window frame to match the new size of the content
-//    NSView *newView = controller.view;
-//    
-//    //Add new view to view hierarchy
-//    NSRect newViewFrame = NSMakeRect(0, 0, newView.frame.size.width, newView.frame.size.height);
-//    [newView setFrame:newViewFrame];
-//    [newView setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
-//    [contentView addSubview:newView];
-//
-//    //Update represented object on the controller
-//    [controller setRepresentedObject:self.representedObject];
-//
-//    //Notify new view controller it has been moved
-//    [controller didMoveToParentViewController:self];
-//    self.currentController = controller;
-//
-//    [self.delegate mainViewControllerDidResizeView:self];
 
     //Notify controller the view will be removed from its superview
     [self.currentController willMoveToParentViewController:nil];
@@ -223,11 +190,129 @@
 
 //=========================================================================
 
+- (NSString *)humanReadableStringForNetworkStatus:(RCRouterNetStatus)status
+{
+    NSDictionary *statusToStr = @{
+                                  @(kNetStatusOK) : MyLocalStr(@"kNetStatusOK"),
+                                  @(kNetStatusTesting) : MyLocalStr(@"kNetStatusTesting"),
+                                  @(kNetStatusFirewalled) : MyLocalStr(@"kNetStatusFirewalled"),
+                                  @(kNetStatusHidden) : MyLocalStr(@"kNetStatusHidden"),
+                                  @(kNetStatusWarnFirewalledAndFast) : MyLocalStr(@"kNetStatusWarnFirewalledAndFast"),
+                                  @(kNetStatusWarnFirewalledAndFloodfill) : MyLocalStr(@"kNetStatusWarnFirewalledAndFloodfill"),
+                                  @(kNetStatusWarnFirewalledWithInboundTCP) : MyLocalStr(@"kNetStatusWarnFirewalledWithInboundTCP"),
+                                  @(kNetStatusWarnFirewalledWithUDPDisabled) : MyLocalStr(@"kNetStatusWarnFirewalledWithUDPDisabled"),
+                                  @(kNetStatusErrorI2CP) : MyLocalStr(@"kNetStatusErrorI2CP"),
+                                  @(kNetStatusErrorClockSkew) : MyLocalStr(@"kNetStatusErrorClockSkew"),
+                                  @(kNetStatusErrorPrivateTCPAddress) : MyLocalStr(@"kNetStatusErrorPrivateTCPAddress"),
+                                  @(kNetStatusErrorSymmetricNat) : MyLocalStr(@"kNetStatusErrorSymmetricNat"),
+                                  @(kNetStatusErrorUDPPortInUse) : MyLocalStr(@"kNetStatusErrorUDPPortInUse"),
+                                  @(kNetStatusErrorNoActivePeersCheckConnectionAndFirewall) : MyLocalStr(@"kNetStatusErrorNoActivePeersCheckConnectionAndFirewall"),
+                                  @(kNetStatusErrorUDPDisabledAndTCPUnset) : MyLocalStr(@"kNetStatusErrorUDPDisabledAndTCPUnset"),
+                                  };
+    
+    NSString *str = [statusToStr objectForKey:@(status)];
+    return str;
+}
+
+//=========================================================================
+
+- (NSString *)routerStatusStringWithRouterInfo:(RCRouterInfo *)routerInfo statusStyle:(NSAlertStyle *)style
+{
+    NSString *str = nil;
+    NSAlertStyle strStyle = NSInformationalAlertStyle;
+    
+    RCRouterNetStatus netStatus = routerInfo.routerNetStatus;
+    if (netStatus != kNetStatusOK)
+    {
+        //Define message and style of the alert
+        str = [self humanReadableStringForNetworkStatus:netStatus];
+        strStyle = NSWarningAlertStyle;
+    }
+    
+    if (str == nil)
+    {
+        //No alert message defined yet, so check router status and show it then
+        
+        NSString *routerStatusStr = routerInfo.routerStatus;
+        BOOL isAcceptingTunnelsStatus = [routerStatusStr isEqualToString:@"Accepting tunnels"];
+        
+        if (isAcceptingTunnelsStatus == NO)
+        {
+            //Append router status string
+            str = routerStatusStr;
+        }
+    }
+    
+    if (style != nil)
+    {
+        *style = strStyle;
+    }
+    
+    return str;
+}
+
+//=========================================================================
+
+- (NSString *)descriptionForRouterError:(NSError *)error
+{
+    NSString *str = nil;
+    
+    if ([error.domain isEqualToString:NSURLErrorDomain])
+    {
+        NSDictionary *errorMap = @{
+                                   @(NSURLErrorCannotConnectToHost) : MyLocalStr(@"RCErrorCantConnectToRouter"),
+                                   @(kCFURLErrorTimedOut) : MyLocalStr(@"RCErrorConnectionTimeout")
+                                   };
+        
+        str = [errorMap objectForKey:[NSNumber numberWithInteger:error.code]];
+    }
+    
+    if (str == nil)
+    {
+        //Fallback to default error message
+        str = error.localizedDescription;
+    }
+    
+    return str;
+}
+
+//=========================================================================
+
+- (void)updateAlert
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    RCRouterInfo *routerInfo = router.routerInfo;
+
+    NSAlertStyle style = NSInformationalAlertStyle;
+    NSString *message = nil;
+    
+    if (routerInfo != nil)
+    {
+        message = [self routerStatusStringWithRouterInfo:routerInfo statusStyle:&style];
+    }
+    else
+    {
+        //There are no router info yet. Check if router is connected
+        NSError *error = router.lastError;
+        
+        if (error != nil)
+        {
+            style = NSWarningAlertStyle;
+            message = [self descriptionForRouterError:error];
+        }
+    }
+    
+    [self setAlertMessage:message style:style];
+}
+
+//=========================================================================
+
 - (void)updateGUI
 {
     [self updateHost];
     [self updateVersion];
     [self updateUptime];
+    [self updateAlert];
 }
 
 //=========================================================================
@@ -295,12 +380,35 @@
 
 //=========================================================================
 
-- (void)toggleWarningView:(BOOL)animate
+- (void)setAlertMessage:(NSString *)message style:(NSAlertStyle)style
+{
+    //Update message
+    [self.alertView setMessage:message];
+    [self.alertView setAlertStyle:style];
+
+    //Show or hide warning view
+    BOOL shouldShow = message != nil && message.length > 0;
+    [self showAlert:shouldShow animate:YES];
+}
+
+//=========================================================================
+
+- (void)showAlert:(BOOL)flag animate:(BOOL)animate
+{
+    if (flag == self.isAlertViewVisible)
+        return;
+
+    [self toggleAlertView:animate];
+}
+
+//=========================================================================
+
+- (void)toggleAlertView:(BOOL)animate
 {
     //Toggle warning view visibility
-    CGFloat heightDelta = self.warningView.frame.size.height;
+    CGFloat heightDelta = self.alertView.frame.size.height;
     
-    if (self.isWarningViewVisible)
+    if (self.isAlertViewVisible)
     {
         heightDelta = -heightDelta;
     }
@@ -322,17 +430,7 @@
         self.headerViewHeightConstraint.constant += heightDelta;
     }
     
-    self.isWarningViewVisible = !self.isWarningViewVisible;
-}
-
-//=========================================================================
-
-- (void)showWarningView:(BOOL)flag animate:(BOOL)animate
-{
-    if (flag == self.isWarningViewVisible)
-        return;
-
-    [self toggleWarningView:animate];
+    self.isAlertViewVisible = !self.isAlertViewVisible;
 }
 
 //=========================================================================
@@ -362,7 +460,7 @@
 - (void)addWarningView
 {
     //Warning view is positioned within header view below the bottom edge so it does not get rendered and remains hidden until header view is resized
-    NSView *warningView = self.warningView;
+    NSView *warningView = self.alertView;
     [warningView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.headerView addSubview:warningView];
     

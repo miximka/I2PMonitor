@@ -35,3 +35,6 @@
 
 "in" = "in";
 "out" = "out";
+
+"RCErrorCantConnectToRouter" = "Can't connect to router";
+"RCErrorConnectionTimeout" = "Connection to router timed out";

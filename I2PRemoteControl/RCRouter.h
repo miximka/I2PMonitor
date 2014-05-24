@@ -32,6 +32,11 @@ extern NSString * const RCRouterDidUpdateBandwidthNotification;
 @property (nonatomic, readonly) BOOL authenticating;
 
 /**
+    Constains last error occurred during communication with router
+ */
+@property (nonatomic, readonly) NSError *lastError;
+
+/**
     Entry point. Authenticates with router and starts updating data.
  */
 - (void)start;

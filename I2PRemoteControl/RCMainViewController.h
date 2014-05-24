@@ -12,6 +12,7 @@
 
 @class RCMainViewController;
 @class RCTabsControl;
+@class RCAlertView;
 
 @protocol RCMainViewControllerDelegate <NSObject>
 @end
@@ -22,7 +23,7 @@
 
 //Outlets
 @property (nonatomic) IBOutlet NSView *headerView;
-@property (nonatomic) IBOutlet NSView *warningView;
+@property (nonatomic) IBOutlet RCAlertView *alertView;
 @property (nonatomic) IBOutlet NSTextField *hostTextField;
 @property (nonatomic) IBOutlet NSTextField *versionTextField;
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;

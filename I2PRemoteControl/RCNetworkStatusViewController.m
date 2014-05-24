@@ -60,101 +60,6 @@
 
 //=========================================================================
 
-- (void)setRouterStatusString:(NSString *)string
-{
-    //Check whether the string fits into one line
-    NSDictionary *attributes = @{ NSFontAttributeName : self.singleLineStatusTextField.font };
-    NSAttributedString *attributedStr = [[NSAttributedString alloc] initWithString:string attributes:attributes];
-    
-    NSSize textFieldSize = self.singleLineStatusTextField.frame.size;
-    NSRect boundingRect = [attributedStr boundingRectWithSize:textFieldSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine];
-    
-    //Decide to use single or multiline text field
-    BOOL fitsIntoOneLine = textFieldSize.height >= boundingRect.size.height;
-
-    [self.singleLineStatusTextField setHidden:!fitsIntoOneLine];
-    [self.multiLineStatusTextField setHidden:fitsIntoOneLine];
-    
-    [self.singleLineStatusTextField setStringValue:string];
-    [self.multiLineStatusTextField setStringValue:string];
-}
-
-//=========================================================================
-
-- (NSString *)humanReadableStringForNetworkStatus:(RCRouterNetStatus)status
-{
-    NSDictionary *statusToStr = @{
-                                  @(kNetStatusOK) : MyLocalStr(@"kNetStatusOK"),
-                                  @(kNetStatusTesting) : MyLocalStr(@"kNetStatusTesting"),
-                                  @(kNetStatusFirewalled) : MyLocalStr(@"kNetStatusFirewalled"),
-                                  @(kNetStatusHidden) : MyLocalStr(@"kNetStatusHidden"),
-                                  @(kNetStatusWarnFirewalledAndFast) : MyLocalStr(@"kNetStatusWarnFirewalledAndFast"),
-                                  @(kNetStatusWarnFirewalledAndFloodfill) : MyLocalStr(@"kNetStatusWarnFirewalledAndFloodfill"),
-                                  @(kNetStatusWarnFirewalledWithInboundTCP) : MyLocalStr(@"kNetStatusWarnFirewalledWithInboundTCP"),
-                                  @(kNetStatusWarnFirewalledWithUDPDisabled) : MyLocalStr(@"kNetStatusWarnFirewalledWithUDPDisabled"),
-                                  @(kNetStatusErrorI2CP) : MyLocalStr(@"kNetStatusErrorI2CP"),
-                                  @(kNetStatusErrorClockSkew) : MyLocalStr(@"kNetStatusErrorClockSkew"),
-                                  @(kNetStatusErrorPrivateTCPAddress) : MyLocalStr(@"kNetStatusErrorPrivateTCPAddress"),
-                                  @(kNetStatusErrorSymmetricNat) : MyLocalStr(@"kNetStatusErrorSymmetricNat"),
-                                  @(kNetStatusErrorUDPPortInUse) : MyLocalStr(@"kNetStatusErrorUDPPortInUse"),
-                                  @(kNetStatusErrorNoActivePeersCheckConnectionAndFirewall) : MyLocalStr(@"kNetStatusErrorNoActivePeersCheckConnectionAndFirewall"),
-                                  @(kNetStatusErrorUDPDisabledAndTCPUnset) : MyLocalStr(@"kNetStatusErrorUDPDisabledAndTCPUnset"),
-                                  };
-
-    NSString *str = [statusToStr objectForKey:@(status)];
-    return str;
-}
-
-//=========================================================================
-
-- (void)updateStatus
-{
-    RCRouter *router = (RCRouter *)self.representedObject;
-
-    //=========================
-    //Update router and network status strings
-    NSString *statusStr = nil;
-    
-    RCRouterNetStatus netStatus = router.routerInfo.routerNetStatus;
-    if (netStatus != kNetStatusOK)
-    {
-        //Network status should appear on screen
-        statusStr = [self humanReadableStringForNetworkStatus:netStatus];
-    }
-
-    NSString *routerStatusStr = router.routerInfo.routerStatus;
-    if (routerStatusStr != nil && routerStatusStr.length > 0)
-    {
-        if (statusStr != nil)
-        {
-            //Append new line character
-            statusStr = [statusStr stringByAppendingString:@"\n"];
-
-            //Append router status string
-            statusStr = [statusStr stringByAppendingString:routerStatusStr];
-        }
-        else
-        {
-            statusStr = routerStatusStr;
-        }
-    }
-    
-    [self setRouterStatusString:GetValueOrDefaulIfNil(statusStr)];
-    
-    //=========================
-    //Update network status icon
-    
-    NSString *imageName = @"NSInfo";
-    if (netStatus > kNetStatusWarnFirewalledAndFast)
-    {
-        imageName = @"Alert";
-    }
-    
-    [self.statusImageView setImage:[NSImage imageNamed:imageName]];
-}
-
-//=========================================================================
-
 - (void)configureSpaceForGraph:(CPTXYGraph *)graph measurementsBuffer:(RCBWMeasurementBuffer *)buffer
 {
     //Find out max graph Y value
@@ -287,7 +192,6 @@
 {
     [super updateGUI];
     
-    [self updateStatus];
     [self updatePlot];
     [self updateBandwidthValues];
 }

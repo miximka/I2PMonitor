@@ -18,9 +18,6 @@
 @property (nonatomic, assign) IBOutlet CPTGraphHostingView *graphHostView;
 @property (nonatomic) IBOutlet RCGraphTextField *inboundTextField;
 @property (nonatomic) IBOutlet RCGraphTextField *outboundTextField;
-@property (nonatomic) IBOutlet NSImageView *statusImageView;
-@property (nonatomic) IBOutlet NSTextField *singleLineStatusTextField;
-@property (nonatomic) IBOutlet NSTextField *multiLineStatusTextField;
 @property (nonatomic) IBOutlet NSTextField *inOutTextField;
 
 //=========================================================================
