@@ -60,7 +60,7 @@
 		81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E51920FB2F005A82A4 /* RCRouterManager.m */; };
 		81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCSessionConfig.m */; };
 		81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62EF1921093C005A82A4 /* RCRouterProxy.m */; };
-		81E99BBB1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E99BBA1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m */; };
+		81E99BBB1924059B00D7B1B0 /* RCMainViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */; };
 		81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81EC34811922B4040011D2D8 /* Localizable.strings */; };
 		81FFF3E21927FB4200D18156 /* RCGraphTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 81FFF3E11927FB4200D18156 /* RCGraphTextField.m */; };
 		A8D6809BEF0648D9A70F6BD2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4CED1204DC40EC8CB7F0DA /* libPods.a */; };
@@ -181,7 +181,7 @@
 		81CD62EE1921093C005A82A4 /* RCRouterProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterProxy.h; sourceTree = "<group>"; };
 		81CD62EF1921093C005A82A4 /* RCRouterProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterProxy.m; sourceTree = "<group>"; };
 		81CD62F5192118BC005A82A4 /* RCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCLogging.h; sourceTree = "<group>"; };
-		81E99BBA1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterOverviewViewControllerTest.m; sourceTree = "<group>"; };
+		81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainViewControllerTest.m; sourceTree = "<group>"; };
 		81EC34801922B4040011D2D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81FFF3E01927FB4200D18156 /* RCGraphTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCGraphTextField.h; sourceTree = "<group>"; };
 		81FFF3E11927FB4200D18156 /* RCGraphTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCGraphTextField.m; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				812687CD19202666002A0571 /* I2PRemoteControlTests.m */,
-				81E99BBA1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m */,
+				81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */,
 				812687C819202666002A0571 /* Supporting Files */,
 			);
 			path = I2PRemoteControlTests;
@@ -679,7 +679,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				812687CE19202666002A0571 /* I2PRemoteControlTests.m in Sources */,
-				81E99BBB1924059B00D7B1B0 /* RCRouterOverviewViewControllerTest.m in Sources */,
+				81E99BBB1924059B00D7B1B0 /* RCMainViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
