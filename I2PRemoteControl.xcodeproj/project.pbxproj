@@ -38,11 +38,9 @@
 		815AAE661928F8720057C123 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815AAE651928F8720057C123 /* MainView.xib */; };
 		815AAE691928F88B0057C123 /* RCMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE681928F88B0057C123 /* RCMainViewController.m */; };
 		815AAE6B1928FC960057C123 /* Peers.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815AAE6A1928FC960057C123 /* Peers.xib */; };
-		815AAE6E1929020A0057C123 /* RCTabButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 815AAE6D1929020A0057C123 /* RCTabButtonCell.m */; };
 		815BDA3B19261E6600E518E9 /* RCStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA3A19261E6600E518E9 /* RCStatusBarView.m */; };
 		815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA411926278600E518E9 /* RCArrowPanel.m */; };
 		815BDA451926278600E518E9 /* RCArrowAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 815BDA431926278600E518E9 /* RCArrowAnimation.m */; };
-		817B6F8F192CA64A007FF650 /* RCTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 817B6F8E192CA64A007FF650 /* RCTabButton.m */; };
 		818C26C8192CDDD100D64A62 /* RCTabsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 818C26C7192CDDD100D64A62 /* RCTabsControl.m */; };
 		818C26CB192D093600D64A62 /* RCTabsControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 818C26CA192D093600D64A62 /* RCTabsControlCell.m */; };
 		8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC001921518200759F92 /* RCJsonRpcClient.m */; };
@@ -134,16 +132,12 @@
 		815AAE671928F88B0057C123 /* RCMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMainViewController.h; sourceTree = "<group>"; };
 		815AAE681928F88B0057C123 /* RCMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainViewController.m; sourceTree = "<group>"; };
 		815AAE6A1928FC960057C123 /* Peers.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Peers.xib; sourceTree = "<group>"; };
-		815AAE6C1929020A0057C123 /* RCTabButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTabButtonCell.h; sourceTree = "<group>"; };
-		815AAE6D1929020A0057C123 /* RCTabButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTabButtonCell.m; sourceTree = "<group>"; };
 		815BDA3919261E6600E518E9 /* RCStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCStatusBarView.h; sourceTree = "<group>"; };
 		815BDA3A19261E6600E518E9 /* RCStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCStatusBarView.m; sourceTree = "<group>"; };
 		815BDA401926278600E518E9 /* RCArrowPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCArrowPanel.h; sourceTree = "<group>"; };
 		815BDA411926278600E518E9 /* RCArrowPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCArrowPanel.m; sourceTree = "<group>"; };
 		815BDA421926278600E518E9 /* RCArrowAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCArrowAnimation.h; sourceTree = "<group>"; };
 		815BDA431926278600E518E9 /* RCArrowAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCArrowAnimation.m; sourceTree = "<group>"; };
-		817B6F8D192CA64A007FF650 /* RCTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTabButton.h; sourceTree = "<group>"; };
-		817B6F8E192CA64A007FF650 /* RCTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTabButton.m; sourceTree = "<group>"; };
 		818C26C6192CDDD100D64A62 /* RCTabsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTabsControl.h; sourceTree = "<group>"; };
 		818C26C7192CDDD100D64A62 /* RCTabsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTabsControl.m; sourceTree = "<group>"; };
 		818C26C9192D093600D64A62 /* RCTabsControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTabsControlCell.h; sourceTree = "<group>"; };
@@ -249,10 +243,6 @@
 				814F92FA1926B5EE00635B1C /* RCContentView.m */,
 				81FFF3E01927FB4200D18156 /* RCGraphTextField.h */,
 				81FFF3E11927FB4200D18156 /* RCGraphTextField.m */,
-				817B6F8D192CA64A007FF650 /* RCTabButton.h */,
-				817B6F8E192CA64A007FF650 /* RCTabButton.m */,
-				815AAE6C1929020A0057C123 /* RCTabButtonCell.h */,
-				815AAE6D1929020A0057C123 /* RCTabButtonCell.m */,
 				818C26C6192CDDD100D64A62 /* RCTabsControl.h */,
 				818C26C7192CDDD100D64A62 /* RCTabsControl.m */,
 				818C26C9192D093600D64A62 /* RCTabsControlCell.h */,
@@ -670,9 +660,7 @@
 				812687B719202666002A0571 /* RCAppDelegate.m in Sources */,
 				815AAE5E1928D6060057C123 /* RCAttachedWindow.m in Sources */,
 				815AAE621928F2EA0057C123 /* RCMainWindowController.m in Sources */,
-				817B6F8F192CA64A007FF650 /* RCTabButton.m in Sources */,
 				81AA26251929FE2F00A0C1DD /* RCBWMeasurement.m in Sources */,
-				815AAE6E1929020A0057C123 /* RCTabButtonCell.m in Sources */,
 				81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */,
 				815AAE691928F88B0057C123 /* RCMainViewController.m in Sources */,
 				8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */,

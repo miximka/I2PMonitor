@@ -12,9 +12,9 @@
 #import "RCSessionConfig.h"
 #import "RCNetworkStatusViewController.h"
 #import "RCPeersViewController.h"
-#import "RCTabButton.h"
 #import "RCTabsControl.h"
 #import "RCTabsControlCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 //=========================================================================
 
@@ -23,6 +23,7 @@
 @property (nonatomic) RCViewController *currentController;
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) RCPeersViewController *peersViewController;
+@property (nonatomic) BOOL isWarningViewVisible;
 @end
 
 //=========================================================================
@@ -53,44 +54,91 @@
 
 //=========================================================================
 
-- (void)switchToController:(RCViewController *)controller
+- (void)switchToController:(RCViewController *)controller animate:(BOOL)animate
 {
     if (self.currentController == controller)
         return;
     
-    NSView *contentView = self.contentView;
-    
+//    NSView *contentView = self.contentView;
+//    
+//    //Notify controller the view will be removed from its superview
+//    [self.currentController willMoveToParentViewController:nil];
+//    
+//    //Remove current content
+//    for (NSView *each in contentView.subviews)
+//    {
+//        [each removeFromSuperview];
+//    }
+//    
+//    [self.currentController didMoveToParentViewController:nil];
+//    
+//    //Notify new view controller it will be moved to us
+//    [controller willMoveToParentViewController:self];
+//    
+//    //Calculate new window frame to match the new size of the content
+//    NSView *newView = controller.view;
+//    
+//    //Add new view to view hierarchy
+//    NSRect newViewFrame = NSMakeRect(0, 0, newView.frame.size.width, newView.frame.size.height);
+//    [newView setFrame:newViewFrame];
+//    [newView setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
+//    [contentView addSubview:newView];
+//
+//    //Update represented object on the controller
+//    [controller setRepresentedObject:self.representedObject];
+//
+//    //Notify new view controller it has been moved
+//    [controller didMoveToParentViewController:self];
+//    self.currentController = controller;
+//
+//    [self.delegate mainViewControllerDidResizeView:self];
+
     //Notify controller the view will be removed from its superview
     [self.currentController willMoveToParentViewController:nil];
-    
-    //Remove current content
-    for (NSView *each in contentView.subviews)
-    {
-        [each removeFromSuperview];
-    }
-    
-    [self.currentController didMoveToParentViewController:nil];
-    
-    //Notify new view controller it will be moved to us
-    [controller willMoveToParentViewController:self];
-    
-    //Calculate new window frame to match the new size of the content
-    NSView *newView = controller.view;
-    
-    //Add new view to view hierarchy
-    NSRect newViewFrame = NSMakeRect(0, 0, newView.frame.size.width, newView.frame.size.height);
-    [newView setFrame:newViewFrame];
-    [newView setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
-    [contentView addSubview:newView];
 
-    //Update represented object on the controller
+    //Remove current view
+    [self.currentController.view removeFromSuperview];
+
+    [self.currentController didMoveToParentViewController:nil];
+
+    //Notify new view controller it will be moved in
+    [controller willMoveToParentViewController:self];
+
+    //Calculate new window frame to match the new size of the content
+    NSView *view = controller.view;
+
+    //Add view to the view hierarchy
+    [self.contentContainerView addSubview:view];
+    [view setAutoresizingMask:NSViewMaxXMargin | NSViewMaxYMargin];
+    
+    //Update represented object of the controller
     [controller setRepresentedObject:self.representedObject];
 
     //Notify new view controller it has been moved
     [controller didMoveToParentViewController:self];
+
     self.currentController = controller;
 
-    [self.delegate mainViewControllerDidResizeView:self];
+    //Apply "content container view" size change
+    if (animate)
+    {
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            
+            CAMediaTimingFunction *func = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            [context setTimingFunction:func];
+            [context setDuration:0.2];
+            
+            self.contentContainerViewHeightConstraint.animator.constant = view.frame.size.height;
+            self.contentContainerViewWidthConstraint.animator.constant = view.frame.size.width;
+            
+        } completionHandler:^{
+        }];
+    }
+    else
+    {
+        self.contentContainerViewHeightConstraint.constant = view.frame.size.height;
+        self.contentContainerViewWidthConstraint.constant = view.frame.size.width;
+    }
 }
 
 //=========================================================================
@@ -244,6 +292,49 @@
 - (IBAction)showPeersView:(id)sender
 {
 }
+
+//=========================================================================
+
+- (void)toggleWarningView:(BOOL)animate
+{
+    //Toggle warning view visibility
+    CGFloat heightDelta = self.warningView.frame.size.height;
+    
+    if (self.isWarningViewVisible)
+    {
+        heightDelta = -heightDelta;
+    }
+    
+    if (animate)
+    {
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            
+            CAMediaTimingFunction *func = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            [context setTimingFunction:func];
+            [context setDuration:0.2];
+            self.headerViewHeightConstraint.animator.constant += heightDelta;
+            
+        } completionHandler:^{
+        }];
+    }
+    else
+    {
+        self.headerViewHeightConstraint.constant += heightDelta;
+    }
+    
+    self.isWarningViewVisible = !self.isWarningViewVisible;
+}
+
+//=========================================================================
+
+- (void)showWarningView:(BOOL)flag animate:(BOOL)animate
+{
+    if (flag == self.isWarningViewVisible)
+        return;
+
+    [self toggleWarningView:animate];
+}
+
 //=========================================================================
 
 - (IBAction)tabsControlAction:(id)sender
@@ -251,11 +342,11 @@
     switch (self.tabsControl.selectedSegment)
     {
         case 0:
-            [self switchToController:self.networkViewController];
+            [self switchToController:self.networkViewController animate:YES];
             break;
 
         case 1:
-            [self switchToController:self.peersViewController];
+            [self switchToController:self.peersViewController animate:YES];
             break;
 
         case 2:
@@ -268,26 +359,24 @@
 
 //=========================================================================
 
-- (NSSize)preferredViewSize
+- (void)addWarningView
 {
-    NSSize mainViewSize = self.view.frame.size;
-    NSSize currentContentViewSize = self.contentView.frame.size;
-    NSSize wishedContentViewSize = self.currentController.preferredViewSize;
+    //Warning view is positioned within header view below the bottom edge so it does not get rendered and remains hidden until header view is resized
+    NSView *warningView = self.warningView;
+    [warningView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.headerView addSubview:warningView];
     
-    mainViewSize.height = mainViewSize.height - currentContentViewSize.height + wishedContentViewSize.height;
-    mainViewSize.width = mainViewSize.width - currentContentViewSize.width + wishedContentViewSize.width;
-    
-    return mainViewSize;
+    //Add constraints
+    [self.headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[warningView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningView)]];
+    NSString *verticalConstraintFormat = [NSString stringWithFormat:@"V:|-%i-[warningView(%i)]", (int)self.headerView.frame.size.height, (int)warningView.frame.size.height];
+    [self.headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalConstraintFormat options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningView)]];
 }
 
 //=========================================================================
-#pragma mark Overridden Methods
-//=========================================================================
 
-- (void)loadView
+- (void)addTabsControlView
 {
-    [super loadView];
-    
+    //Add and configure tabs control
     RCTabsControl *tabsControl = [[RCTabsControl alloc] initWithFrame:self.tabsControlPlaceholderView.bounds];
     [tabsControl setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     [self.tabsControlPlaceholderView addSubview:tabsControl];
@@ -302,13 +391,25 @@
     [tabsControl setTarget:self];
     [tabsControl setSelectedSegment:0];
     self.tabsControl = tabsControl;
+}
+
+//=========================================================================
+#pragma mark Overridden Methods
+//=========================================================================
+
+- (void)loadView
+{
+    [super loadView];
+
+    //Configure GUI
+    [self addWarningView];
+    [self addTabsControlView];
     
-    [self.networkButton setColorType:RCContentViewColorGreen];
-    [self.peersButton setColorType:RCContentViewColorRed];
-    [self.controlButton setColorType:RCContentViewColorViolet];
+    //Switch to default tab
+    [self switchToController:self.networkViewController animate:NO];
     
+    //Register for notifications
     [self registerForNotifications];
-    [self switchToController:self.networkViewController];
 }
 
 //=========================================================================

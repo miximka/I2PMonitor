@@ -30,32 +30,15 @@
     self.mainViewController = controller;
     
     NSView *controllerView = controller.view;
-
-    //Add controller view to view hierarchy
-    [controllerView setFrame:NSMakeRect(0, 0, containerView.frame.size.width, containerView.frame.size.height)];
     
-    [controllerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    //Turn off translation of autoresiting mask as we will use constraints
+    [controllerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
     [containerView addSubview:controllerView];
-
-    //Resize window again to match the possibly changed size of the main view
-    //[self resizeWindowIfNeededWithDisplay:NO animate:NO];
-}
-
-//=========================================================================
-
-- (void)resizeWindowIfNeededWithDisplay:(BOOL)display animate:(BOOL)animate
-{
-    NSSize preferredViewSize = [self.mainViewController preferredViewSize];
     
-    CGFloat widthDelta = preferredViewSize.width - self.contentContainerView.frame.size.width;
-    CGFloat heightDelta = preferredViewSize.height - self.contentContainerView.frame.size.height;
-    
-    NSRect windowFrame = self.window.frame;
-    windowFrame.size.width += widthDelta;
-    windowFrame.size.height += heightDelta;
-    windowFrame.origin.y -= heightDelta;
-    
-    [self.window setFrame:windowFrame display:display animate:animate];
+    //Add constraints to let controller view match the size of the superview
+    [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[controllerView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controllerView)]];
+    [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[controllerView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controllerView)]];
 }
 
 //=========================================================================
@@ -81,11 +64,6 @@
 //=========================================================================
 #pragma mark RCMainViewControllerDelegate
 //=========================================================================
-
-- (void)mainViewControllerDidResizeView:(RCMainViewController *)controller
-{
-    [self resizeWindowIfNeededWithDisplay:YES animate:YES];
-}
 
 //=========================================================================
 @end
