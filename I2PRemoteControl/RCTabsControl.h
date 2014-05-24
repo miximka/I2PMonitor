@@ -1,5 +1,5 @@
 //
-//  RCTabButton.h
+//  RCTabsControl.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 21/05/14.
@@ -7,14 +7,22 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "RCContentView.h"
 
 //=========================================================================
-@interface RCTabButton : NSButton
+@interface RCTabsControl : NSControl
 //=========================================================================
 
-- (RCContentViewColorType)colorType;
-- (void)setColorType:(RCContentViewColorType)colorType;
+- (void)setSegmentCount:(NSInteger)count;
+- (NSInteger)segmentCount;
+
+- (void)setSelectedSegment:(NSInteger)selectedSegment;
+- (NSInteger)selectedSegment;
+
+- (void)setLabel:(NSString *)label forSegment:(NSInteger)segment;
+- (NSString *)labelForSegment:(NSInteger)segment;
+
+- (void)setImage:(NSImage *)image forSegment:(NSInteger)segment;
+- (NSImage *)imageForSegment:(NSInteger)segment;
 
 //=========================================================================
 @end

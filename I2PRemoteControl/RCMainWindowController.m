@@ -23,49 +23,22 @@
 
 - (void)setupViews
 {
-    NSView *contentHolderView = self.contentHolderView;
+    NSView *containerView = self.contentContainerView;
     
     RCMainViewController *controller = [[RCMainViewController alloc] initWithNibName:@"MainView" bundle:nil];
     [controller setDelegate:self];
     self.mainViewController = controller;
     
     NSView *controllerView = controller.view;
-
-    //Resize window to match the initial size of the main controller view
-    CGFloat widthDelta = controllerView.frame.size.width - contentHolderView.frame.size.width;
-    CGFloat heightDelta = controllerView.frame.size.height - contentHolderView.frame.size.height;
     
-    NSRect windowFrame = self.window.frame;
-    windowFrame.size.width += widthDelta;
-    windowFrame.size.height += heightDelta;
-    windowFrame.origin.y -= heightDelta;
-    [self.window setFrame:windowFrame display:NO];
-
-    //Add controller view to view hierarchy
-    [controllerView setFrame:NSMakeRect(0, 0, controllerView.frame.size.width, contentHolderView.frame.size.height)];
+    //Turn off translation of autoresiting mask as we will use constraints
+    [controllerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    [controllerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    [contentHolderView addSubview:controllerView];
-
-    //Resize window again to match the possibly changed size of the main view
-    [self resizeWindowIfNeededWithDisplay:NO animate:NO];
-}
-
-//=========================================================================
-
-- (void)resizeWindowIfNeededWithDisplay:(BOOL)display animate:(BOOL)animate
-{
-    NSSize preferredViewSize = [self.mainViewController preferredViewSize];
+    [containerView addSubview:controllerView];
     
-    CGFloat widthDelta = preferredViewSize.width - self.contentHolderView.frame.size.width;
-    CGFloat heightDelta = preferredViewSize.height - self.contentHolderView.frame.size.height;
-    
-    NSRect windowFrame = self.window.frame;
-    windowFrame.size.width += widthDelta;
-    windowFrame.size.height += heightDelta;
-    windowFrame.origin.y -= heightDelta;
-    
-    [self.window setFrame:windowFrame display:display animate:animate];
+    //Add constraints to let controller view match the size of the superview
+    [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[controllerView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controllerView)]];
+    [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[controllerView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controllerView)]];
 }
 
 //=========================================================================
@@ -91,11 +64,6 @@
 //=========================================================================
 #pragma mark RCMainViewControllerDelegate
 //=========================================================================
-
-- (void)mainViewControllerDidResizeView:(RCMainViewController *)controller
-{
-    [self resizeWindowIfNeededWithDisplay:YES animate:YES];
-}
 
 //=========================================================================
 @end

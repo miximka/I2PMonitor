@@ -6,74 +6,46 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RCMainViewController">
             <connections>
-                <outlet property="contentView" destination="Y5i-dz-Lb2" id="A47-Kv-6ec"/>
-                <outlet property="controlButton" destination="Cai-O4-ZoU" id="Kvb-hy-Qjx"/>
+                <outlet property="contentContainerView" destination="Y5i-dz-Lb2" id="yrE-qh-UML"/>
+                <outlet property="contentContainerViewHeightConstraint" destination="RXz-ry-lV3" id="4es-DV-jyM"/>
+                <outlet property="contentContainerViewWidthConstraint" destination="j0q-RA-7bL" id="yeR-Bv-weJ"/>
+                <outlet property="headerView" destination="Qe6-Jd-vj9" id="Lvf-D7-Ye4"/>
+                <outlet property="headerViewHeightConstraint" destination="sUm-VH-gyy" id="xJf-M9-Xjw"/>
                 <outlet property="hostTextField" destination="pTW-Fi-TSP" id="g0P-eF-FCk"/>
-                <outlet property="networkButton" destination="d6K-2E-LfO" id="7TF-bR-JLv"/>
-                <outlet property="peersButton" destination="Vo7-5u-SmK" id="gOZ-ud-wcJ"/>
+                <outlet property="tabsControlPlaceholderView" destination="yh7-lI-gUx" id="bYK-Bs-ePD"/>
                 <outlet property="uptimeTextField" destination="JeF-EX-LHp" id="RzH-4o-6tW"/>
                 <outlet property="versionTextField" destination="g80-Vc-QRj" id="7c4-y4-3Jt"/>
                 <outlet property="view" destination="c22-O7-iKe" id="o79-2s-Zad"/>
+                <outlet property="warningView" destination="wfK-eI-L1T" id="is3-vF-Mcf"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <customView id="c22-O7-iKe" customClass="RCMainBackgroundView">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="359"/>
+            <rect key="frame" x="0.0" y="0.0" width="250" height="330"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Y5i-dz-Lb2">
-                    <rect key="frame" x="0.0" y="70" width="250" height="229"/>
+                    <rect key="frame" x="0.0" y="70" width="250" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="RXz-ry-lV3"/>
+                        <constraint firstAttribute="width" constant="250" id="j0q-RA-7bL"/>
+                    </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yh7-lI-gUx">
-                    <rect key="frame" x="0.0" y="1" width="250" height="70"/>
+                    <rect key="frame" x="0.0" y="0.0" width="250" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button toolTip="I2P Router Network Info" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6K-2E-LfO" customClass="RCTabButton">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="70"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Network" bezelStyle="shadowlessSquare" image="Network" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qT5-1D-5ip" customClass="RCTabButtonCell">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="showNetworkInfoView:" target="-2" id="BBI-Vj-99B"/>
-                            </connections>
-                        </button>
-                        <button toolTip="I2P Router Peers and Tunnels" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vo7-5u-SmK" customClass="RCTabButton">
-                            <rect key="frame" x="85" y="0.0" width="80" height="70"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Peers" bezelStyle="shadowlessSquare" image="Peers" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwW-cL-k7e" customClass="RCTabButtonCell">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="showPeersView:" target="-2" id="mf6-O5-yrw"/>
-                            </connections>
-                        </button>
-                        <button toolTip="Control I2P Router" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cai-O4-ZoU" customClass="RCTabButton">
-                            <rect key="frame" x="169" y="0.0" width="80" height="70"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" title="Control" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="above" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XFM-g5-3pE" customClass="RCTabButtonCell">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="showControlView:" target="-2" id="fj1-SG-69X"/>
-                            </connections>
-                        </button>
-                    </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="70" id="aIp-nK-6kg"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qe6-Jd-vj9" customClass="RCContentView">
-                    <rect key="frame" x="0.0" y="298" width="250" height="61"/>
+                    <rect key="frame" x="0.0" y="270" width="250" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
-                            <rect key="frame" x="8" y="14" width="138" height="35"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
+                            <rect key="frame" x="8" y="13" width="130" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="I2P Router" id="kGs-wr-qIc">
                                 <font key="font" size="29" name="HelveticaNeue-Thin"/>
@@ -82,7 +54,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="g80-Vc-QRj">
-                            <rect key="frame" x="207" y="8" width="33" height="14"/>
+                            <rect key="frame" x="207" y="7" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="L9X-OU-k8A">
                                 <font key="font" metaFont="smallSystem"/>
@@ -91,7 +63,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="pTW-Fi-TSP">
-                            <rect key="frame" x="207" y="38" width="33" height="14"/>
+                            <rect key="frame" x="207" y="37" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="3iV-4D-61u">
                                 <font key="font" metaFont="smallSystem"/>
@@ -100,7 +72,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JeF-EX-LHp">
-                            <rect key="frame" x="207" y="23" width="33" height="14"/>
+                            <rect key="frame" x="207" y="22" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="gKU-M2-CzQ">
                                 <font key="font" metaFont="smallSystem"/>
@@ -113,30 +85,49 @@
                         <constraint firstItem="JeF-EX-LHp" firstAttribute="top" secondItem="pTW-Fi-TSP" secondAttribute="bottom" constant="1" id="Kwq-2g-Xfn"/>
                         <constraint firstAttribute="trailing" secondItem="pTW-Fi-TSP" secondAttribute="trailing" constant="12" id="ZOe-lV-MZg"/>
                         <constraint firstItem="pTW-Fi-TSP" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="9" id="aZs-ho-rVw"/>
+                        <constraint firstItem="32x-qM-oCe" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="12" id="bPX-v0-HHT"/>
+                        <constraint firstItem="32x-qM-oCe" firstAttribute="leading" secondItem="Qe6-Jd-vj9" secondAttribute="leading" constant="10" id="ixO-R6-sQb"/>
                         <constraint firstAttribute="trailing" secondItem="g80-Vc-QRj" secondAttribute="trailing" constant="12" id="nKr-Dn-qhO"/>
                         <constraint firstItem="g80-Vc-QRj" firstAttribute="top" secondItem="JeF-EX-LHp" secondAttribute="bottom" constant="1" id="qCW-Wq-nIG"/>
-                        <constraint firstAttribute="height" constant="61" id="sUm-VH-gyy"/>
+                        <constraint firstAttribute="height" constant="60" id="sUm-VH-gyy"/>
                         <constraint firstAttribute="trailing" secondItem="JeF-EX-LHp" secondAttribute="trailing" constant="12" id="zGN-RK-pl0"/>
                     </constraints>
                 </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="yh7-lI-gUx" firstAttribute="top" secondItem="Y5i-dz-Lb2" secondAttribute="bottom" constant="-1" id="0ZQ-qF-xn7"/>
+                <constraint firstItem="yh7-lI-gUx" firstAttribute="top" secondItem="Y5i-dz-Lb2" secondAttribute="bottom" id="0ZQ-qF-xn7"/>
                 <constraint firstItem="yh7-lI-gUx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="1MM-W0-8ge"/>
                 <constraint firstItem="Y5i-dz-Lb2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="QqQ-pJ-tsi"/>
                 <constraint firstItem="Qe6-Jd-vj9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="SKU-aj-ENV"/>
-                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="bottom" constant="-1" id="cTy-jL-7bu"/>
+                <constraint firstItem="Y5i-dz-Lb2" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="bottom" id="cTy-jL-7bu"/>
                 <constraint firstItem="Qe6-Jd-vj9" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="dhA-El-RNa"/>
                 <constraint firstAttribute="trailing" secondItem="Y5i-dz-Lb2" secondAttribute="trailing" id="lOK-B7-biz"/>
-                <constraint firstAttribute="bottom" secondItem="yh7-lI-gUx" secondAttribute="bottom" constant="1" id="lqx-p8-MaS"/>
+                <constraint firstAttribute="bottom" secondItem="yh7-lI-gUx" secondAttribute="bottom" id="lqx-p8-MaS"/>
                 <constraint firstAttribute="trailing" secondItem="yh7-lI-gUx" secondAttribute="trailing" id="lvg-Dp-bsy"/>
                 <constraint firstAttribute="trailing" secondItem="Qe6-Jd-vj9" secondAttribute="trailing" id="nX6-dr-58t"/>
             </constraints>
         </customView>
+        <customView id="wfK-eI-L1T">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="47"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-35-yRW">
+                    <rect key="frame" x="5" y="7" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Oi1-P1-1Sl"/>
+                        <constraint firstAttribute="height" constant="40" id="TKl-I4-4Hm"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSCaution" id="1Eh-36-KcD"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="UJ9-35-yRW" firstAttribute="leading" secondItem="wfK-eI-L1T" secondAttribute="leading" constant="5" id="J3k-E6-Ttk"/>
+                <constraint firstItem="UJ9-35-yRW" firstAttribute="top" secondItem="wfK-eI-L1T" secondAttribute="top" id="MBg-qX-eFl"/>
+            </constraints>
+        </customView>
     </objects>
     <resources>
-        <image name="Network" width="25" height="25"/>
-        <image name="Peers" width="25" height="25"/>
-        <image name="Preferences" width="25" height="25"/>
+        <image name="NSCaution" width="32" height="32"/>
     </resources>
 </document>

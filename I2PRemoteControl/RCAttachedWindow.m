@@ -12,7 +12,7 @@
 //=========================================================================
 
 @interface RCAttachedWindow ()
-@property (nonatomic) NSView *contentHolderView;
+@property (nonatomic) NSView *contentContainerView;
 @property (nonatomic) BOOL fadeAnimationCompleted;
 @end
 
@@ -30,11 +30,11 @@
         [self setContentView:bgView];
         
         //Add view which will work as a content view
-        NSView *contentHolderView = [[NSView alloc] initWithFrame:[self.contentView bounds]];
-        [contentHolderView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-        [bgView addSubview:contentHolderView];
+        NSView *contentContainerView = [[NSView alloc] initWithFrame:[self.contentView bounds]];
+        [contentContainerView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        [bgView addSubview:contentContainerView];
         
-        self.contentHolderView = contentHolderView;
+        self.contentContainerView = contentContainerView;
     }
     
     return self;

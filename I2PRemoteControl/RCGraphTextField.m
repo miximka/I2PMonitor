@@ -18,6 +18,7 @@
     if (self)
     {
         // Initialization code here.
+        [self setWantsLayer:YES];
     }
     return self;
 }
@@ -33,9 +34,11 @@
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.8];
+    [self setWantsLayer:YES];
+    
+    self.backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
     self.drawsBackground = YES;
-    self.layer.cornerRadius = 3.0;
+    self.layer.cornerRadius = 5.0;
 }
 
 //=========================================================================

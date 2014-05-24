@@ -11,34 +11,41 @@
 //=========================================================================
 
 @class RCMainViewController;
-@class RCTabButton;
+@class RCTabsControl;
 
 @protocol RCMainViewControllerDelegate <NSObject>
-- (void)mainViewControllerDidResizeView:(RCMainViewController *)controller;
 @end
 
 //=========================================================================
 @interface RCMainViewController : NSViewController
 //=========================================================================
 
-@property (nonatomic, weak) id<RCMainViewControllerDelegate> delegate;
-
+//Outlets
+@property (nonatomic) IBOutlet NSView *headerView;
+@property (nonatomic) IBOutlet NSView *warningView;
 @property (nonatomic) IBOutlet NSTextField *hostTextField;
 @property (nonatomic) IBOutlet NSTextField *versionTextField;
 @property (nonatomic) IBOutlet NSTextField *uptimeTextField;
-@property (nonatomic) IBOutlet NSView *contentView;
-@property (nonatomic) IBOutlet RCTabButton *networkButton;
-@property (nonatomic) IBOutlet RCTabButton *peersButton;
-@property (nonatomic) IBOutlet RCTabButton *controlButton;
+@property (nonatomic) IBOutlet NSView *contentContainerView;
+@property (nonatomic) IBOutlet NSView *tabsControlPlaceholderView;
+@property (nonatomic) IBOutlet RCTabsControl *tabsControl;
+@property (nonatomic) IBOutlet NSLayoutConstraint *headerViewHeightConstraint;
+@property (nonatomic) IBOutlet NSLayoutConstraint *contentContainerViewHeightConstraint;
+@property (nonatomic) IBOutlet NSLayoutConstraint *contentContainerViewWidthConstraint;
 
+//Delegate
+@property (nonatomic, weak) id<RCMainViewControllerDelegate> delegate;
+
+/**
+    Starts periodic UI updates
+ */
 - (void)startUpdating;
 - (void)stopUpdating;
 
-- (IBAction)showNetworkInfoView:(id)sender;
-- (IBAction)showPeersView:(id)sender;
-- (IBAction)showControlView:(id)sender;
-
-- (NSSize)preferredViewSize;
+/**
+    Called when tabs control is clicked
+ */
+- (IBAction)tabsControlAction:(id)sender;
 
 //=========================================================================
 #pragma mark Unit Tests
