@@ -23,7 +23,7 @@
         self.securityPolicy.allowInvalidCertificates = YES;
 
         //Don't wait too long for a response. We better retry.
-        self.requestSerializer.timeoutInterval = 5;
+        //self.requestSerializer.timeoutInterval = 10;
         
         NSSet *acceptableContentTypes = self.responseSerializer.acceptableContentTypes;
         if (![acceptableContentTypes containsObject:@"application/json"])
