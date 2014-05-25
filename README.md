@@ -3,7 +3,8 @@ I2PRemoteControl
 
 Remote control application for I2P router for Mac OS X
 
-![alt tag](https://raw.github.com/miximka/I2PRemoteControl/master/Docs/Screenshot.png)
+![alt tag](https://raw.github.com/miximka/I2PRemoteControl/master/Docs/ScreenshotNetwork.png)
+![alt tag](https://raw.github.com/miximka/I2PRemoteControl/master/Docs/ScreenshotPeers.png)
 
 Prerequisites
 ================

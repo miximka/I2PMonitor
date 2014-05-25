@@ -45,7 +45,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
-                            <rect key="frame" x="8" y="13" width="130" height="35"/>
+                            <rect key="frame" x="8" y="14" width="130" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="I2P Router" id="kGs-wr-qIc">
                                 <font key="font" size="29" name="HelveticaNeue-Thin"/>
@@ -54,7 +54,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="g80-Vc-QRj">
-                            <rect key="frame" x="207" y="7" width="33" height="14"/>
+                            <rect key="frame" x="207" y="5" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="L9X-OU-k8A">
                                 <font key="font" metaFont="smallSystem"/>
@@ -72,7 +72,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JeF-EX-LHp">
-                            <rect key="frame" x="207" y="22" width="33" height="14"/>
+                            <rect key="frame" x="207" y="21" width="33" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="gKU-M2-CzQ">
                                 <font key="font" metaFont="smallSystem"/>
@@ -82,13 +82,13 @@
                         </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="JeF-EX-LHp" firstAttribute="top" secondItem="pTW-Fi-TSP" secondAttribute="bottom" constant="1" id="Kwq-2g-Xfn"/>
+                        <constraint firstItem="JeF-EX-LHp" firstAttribute="top" secondItem="pTW-Fi-TSP" secondAttribute="bottom" constant="2" id="Kwq-2g-Xfn"/>
                         <constraint firstAttribute="trailing" secondItem="pTW-Fi-TSP" secondAttribute="trailing" constant="12" id="ZOe-lV-MZg"/>
                         <constraint firstItem="pTW-Fi-TSP" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="9" id="aZs-ho-rVw"/>
-                        <constraint firstItem="32x-qM-oCe" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="12" id="bPX-v0-HHT"/>
+                        <constraint firstItem="32x-qM-oCe" firstAttribute="top" secondItem="Qe6-Jd-vj9" secondAttribute="top" constant="11" id="bPX-v0-HHT"/>
                         <constraint firstItem="32x-qM-oCe" firstAttribute="leading" secondItem="Qe6-Jd-vj9" secondAttribute="leading" constant="10" id="ixO-R6-sQb"/>
                         <constraint firstAttribute="trailing" secondItem="g80-Vc-QRj" secondAttribute="trailing" constant="12" id="nKr-Dn-qhO"/>
-                        <constraint firstItem="g80-Vc-QRj" firstAttribute="top" secondItem="JeF-EX-LHp" secondAttribute="bottom" constant="1" id="qCW-Wq-nIG"/>
+                        <constraint firstItem="g80-Vc-QRj" firstAttribute="top" secondItem="JeF-EX-LHp" secondAttribute="bottom" constant="2" id="qCW-Wq-nIG"/>
                         <constraint firstAttribute="height" constant="60" id="sUm-VH-gyy"/>
                         <constraint firstAttribute="trailing" secondItem="JeF-EX-LHp" secondAttribute="trailing" constant="12" id="zGN-RK-pl0"/>
                     </constraints>
