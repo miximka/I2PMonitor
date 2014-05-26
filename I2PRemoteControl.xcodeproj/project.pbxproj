@@ -16,7 +16,7 @@
 		810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810022851924EFA50025273D /* PreferencesGeneral.xib */; };
 		8100228C1924F77F0025273D /* RCToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100228B1924F77F0025273D /* RCToolbar.m */; };
 		8100229519255FC60025273D /* RCLoginItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100229419255FC60025273D /* RCLoginItemManager.m */; };
-		811432BF1930D0F30028BF64 /* RCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 811432BE1930D0F30028BF64 /* RCAlertView.m */; };
+		811432BF1930D0F30028BF64 /* RCNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 811432BE1930D0F30028BF64 /* RCNotificationView.m */; };
 		81154361192BD92700AC1881 /* RCPeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81154360192BD92700AC1881 /* RCPeersViewController.m */; };
 		812687A419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687B019202666002A0571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687AF19202666002A0571 /* main.m */; };
@@ -95,8 +95,8 @@
 		8100228B1924F77F0025273D /* RCToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCToolbar.m; sourceTree = "<group>"; };
 		8100229319255FC60025273D /* RCLoginItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLoginItemManager.h; sourceTree = "<group>"; };
 		8100229419255FC60025273D /* RCLoginItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLoginItemManager.m; sourceTree = "<group>"; };
-		811432BD1930D0F30028BF64 /* RCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCAlertView.h; sourceTree = "<group>"; };
-		811432BE1930D0F30028BF64 /* RCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCAlertView.m; sourceTree = "<group>"; };
+		811432BD1930D0F30028BF64 /* RCNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNotificationView.h; sourceTree = "<group>"; };
+		811432BE1930D0F30028BF64 /* RCNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNotificationView.m; sourceTree = "<group>"; };
 		8115435F192BD92700AC1881 /* RCPeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPeersViewController.h; sourceTree = "<group>"; };
 		81154360192BD92700AC1881 /* RCPeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPeersViewController.m; sourceTree = "<group>"; };
 		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,8 +250,8 @@
 				818C26C7192CDDD100D64A62 /* RCTabsControl.m */,
 				818C26C9192D093600D64A62 /* RCTabsControlCell.h */,
 				818C26CA192D093600D64A62 /* RCTabsControlCell.m */,
-				811432BD1930D0F30028BF64 /* RCAlertView.h */,
-				811432BE1930D0F30028BF64 /* RCAlertView.m */,
+				811432BD1930D0F30028BF64 /* RCNotificationView.h */,
+				811432BE1930D0F30028BF64 /* RCNotificationView.m */,
 				815AAE631928F4E80057C123 /* Attached Window */,
 			);
 			name = Views;
@@ -639,7 +639,7 @@
 				815BDA3B19261E6600E518E9 /* RCStatusBarView.m in Sources */,
 				810022771924E09A0025273D /* RCPreferences.m in Sources */,
 				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
-				811432BF1930D0F30028BF64 /* RCAlertView.m in Sources */,
+				811432BF1930D0F30028BF64 /* RCNotificationView.m in Sources */,
 				81BBC38C1928A54A00752016 /* RCBorderlessPanel.m in Sources */,
 				81BBC3911928B68900752016 /* RCAttachedWindowController.m in Sources */,
 				818C26C8192CDDD100D64A62 /* RCTabsControl.m in Sources */,

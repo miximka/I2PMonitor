@@ -15,7 +15,8 @@
 #import "RCTabsControl.h"
 #import "RCTabsControlCell.h"
 #import <QuartzCore/QuartzCore.h>
-#import "RCAlertView.h"
+#import "RCNotificationView.h"
+#import "RCPreferences.h"
 
 //=========================================================================
 
@@ -24,7 +25,7 @@
 @property (nonatomic) RCViewController *currentController;
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) RCPeersViewController *peersViewController;
-@property (nonatomic) BOOL isAlertViewVisible;
+@property (nonatomic) BOOL isNotificationViewVisible;
 @end
 
 //=========================================================================
@@ -224,14 +225,14 @@
     RCRouterNetStatus netStatus = routerInfo.routerNetStatus;
     if (netStatus != kNetStatusOK)
     {
-        //Define message and style of the alert
+        //Define message and style of the notification
         str = [self humanReadableStringForNetworkStatus:netStatus];
         strStyle = NSWarningAlertStyle;
     }
     
     if (str == nil)
     {
-        //No alert message defined yet, so check router status and show it then
+        //No notification message defined yet, so check router status and show it then
         NSString *routerStatusStr = routerInfo.routerStatus;
         
         //Use hardcoded string match. Its bad, but for the moment I don't have better solution.
@@ -280,7 +281,7 @@
 
 //=========================================================================
 
-- (void)updateAlert
+- (void)updateNotificationView
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     RCRouterInfo *routerInfo = router.routerInfo;
@@ -304,7 +305,29 @@
         }
     }
     
-    [self setAlertMessage:message style:style];
+    [self setNotificationMessage:message style:style];
+}
+
+//=========================================================================
+
+- (void)setNotificationMessage:(NSString *)message style:(NSAlertStyle)style
+{
+    //Update message
+    [self.notificationView setMessage:message];
+    [self.notificationView setNotificationStyle:style];
+    
+    //Show or hide warning view
+    BOOL isMsgOK = message != nil && message.length > 0;
+    
+    BOOL isStyleOK = YES;
+    if ([RCPrefs showNotificationsType] == kRouterShowOnlyImportantNotificationsType)
+    {
+        //Only allow important notifications
+        isStyleOK = style == NSWarningAlertStyle || style == NSCriticalAlertStyle;
+    }
+    
+    BOOL shouldShow = isMsgOK && isStyleOK;
+    [self showNotification:shouldShow animate:YES];
 }
 
 //=========================================================================
@@ -314,7 +337,7 @@
     [self updateHost];
     [self updateVersion];
     [self updateUptime];
-    [self updateAlert];
+    [self updateNotificationView];
 }
 
 //=========================================================================
@@ -385,35 +408,22 @@
 
 //=========================================================================
 
-- (void)setAlertMessage:(NSString *)message style:(NSAlertStyle)style
+- (void)showNotification:(BOOL)flag animate:(BOOL)animate
 {
-    //Update message
-    [self.alertView setMessage:message];
-    [self.alertView setAlertStyle:style];
-
-    //Show or hide warning view
-    BOOL shouldShow = message != nil && message.length > 0;
-    [self showAlert:shouldShow animate:YES];
-}
-
-//=========================================================================
-
-- (void)showAlert:(BOOL)flag animate:(BOOL)animate
-{
-    if (flag == self.isAlertViewVisible)
+    if (flag == self.isNotificationViewVisible)
         return;
 
-    [self toggleAlertView:animate];
+    [self toggleNotificationView:animate];
 }
 
 //=========================================================================
 
-- (void)toggleAlertView:(BOOL)animate
+- (void)toggleNotificationView:(BOOL)animate
 {
     //Toggle warning view visibility
-    CGFloat heightDelta = self.alertView.frame.size.height;
+    CGFloat heightDelta = self.notificationView.frame.size.height;
     
-    if (self.isAlertViewVisible)
+    if (self.isNotificationViewVisible)
     {
         heightDelta = -heightDelta;
     }
@@ -435,7 +445,7 @@
         self.headerViewHeightConstraint.constant += heightDelta;
     }
     
-    self.isAlertViewVisible = !self.isAlertViewVisible;
+    self.isNotificationViewVisible = !self.isNotificationViewVisible;
 }
 
 //=========================================================================
@@ -465,7 +475,7 @@
 - (void)addWarningView
 {
     //Warning view is positioned within header view below the bottom edge so it does not get rendered and remains hidden until header view is resized
-    NSView *warningView = self.alertView;
+    NSView *warningView = self.notificationView;
     [warningView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.headerView addSubview:warningView];
     

@@ -6,13 +6,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RCMainViewController">
             <connections>
-                <outlet property="alertView" destination="wfK-eI-L1T" id="Sby-aK-rJX"/>
                 <outlet property="contentContainerView" destination="Y5i-dz-Lb2" id="yrE-qh-UML"/>
                 <outlet property="contentContainerViewHeightConstraint" destination="RXz-ry-lV3" id="4es-DV-jyM"/>
                 <outlet property="contentContainerViewWidthConstraint" destination="j0q-RA-7bL" id="yeR-Bv-weJ"/>
                 <outlet property="headerView" destination="Qe6-Jd-vj9" id="Lvf-D7-Ye4"/>
                 <outlet property="headerViewHeightConstraint" destination="sUm-VH-gyy" id="xJf-M9-Xjw"/>
                 <outlet property="hostTextField" destination="pTW-Fi-TSP" id="g0P-eF-FCk"/>
+                <outlet property="notificationView" destination="wfK-eI-L1T" id="PNj-2i-yCO"/>
                 <outlet property="tabsControlPlaceholderView" destination="yh7-lI-gUx" id="bYK-Bs-ePD"/>
                 <outlet property="uptimeTextField" destination="JeF-EX-LHp" id="RzH-4o-6tW"/>
                 <outlet property="versionTextField" destination="g80-Vc-QRj" id="7c4-y4-3Jt"/>
@@ -107,7 +107,7 @@
                 <constraint firstAttribute="trailing" secondItem="Qe6-Jd-vj9" secondAttribute="trailing" id="nX6-dr-58t"/>
             </constraints>
         </customView>
-        <customView id="wfK-eI-L1T" customClass="RCAlertView">
+        <customView id="wfK-eI-L1T" customClass="RCNotificationView">
             <rect key="frame" x="0.0" y="0.0" width="250" height="47"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>

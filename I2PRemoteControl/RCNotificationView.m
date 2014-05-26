@@ -1,26 +1,26 @@
 //
-//  RCAlertView.m
+//  RCNotificationView.m
 //  I2PRemoteControl
 //
 //  Created by miximka on 24/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCAlertView.h"
+#import "RCNotificationView.h"
 
 
 //=========================================================================
 
-@interface RCAlertView ()
+@interface RCNotificationView ()
 @property (nonatomic) NSAlertStyle style;
 @property (nonatomic) NSString *stringValue;
 @end
 
 //=========================================================================
-@implementation RCAlertView
+@implementation RCNotificationView
 //=========================================================================
 
-- (void)setAlertStyle:(NSAlertStyle)style
+- (void)setNotificationStyle:(NSAlertStyle)style
 {
     _style = style;
 
@@ -35,7 +35,7 @@
 
 //=========================================================================
 
-- (NSAlertStyle)alertStyle
+- (NSAlertStyle)notificationStyle
 {
     return _style;
 }

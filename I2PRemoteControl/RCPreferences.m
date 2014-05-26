@@ -37,6 +37,7 @@ static RCPreferences* _sharedPrefs;
                                  [NSNumber numberWithUnsignedInteger:7650], PREFS_KEY_ROUTER_PORT,
                                  [NSNumber numberWithBool:YES], PREFS_KEY_FIRST_START,
                                  [NSNumber numberWithBool:NO], PREFS_KEY_START_ON_SYSTEM_STARTUP,
+                                 [NSNumber numberWithInteger:kRouterShowOnlyImportantNotificationsType], PREFS_KEY_SHOW_NOTIFICATION_TYPE,
 								 nil];
 	
     [defaults registerDefaults:appDefaults];
@@ -99,6 +100,20 @@ static RCPreferences* _sharedPrefs;
 	
 	//Add or remove item immediately
 	[self syncLoginItemPrefs];
+}
+
+//=========================================================================
+
+- (RCRouterShowNotificationsType)showNotificationsType
+{
+    return [self integerForKey:PREFS_KEY_SHOW_NOTIFICATION_TYPE];
+}
+
+//=========================================================================
+
+- (void)setShowNotificationsType:(RCRouterShowNotificationsType)type
+{
+    [self setInteger:type forKey:PREFS_KEY_SHOW_NOTIFICATION_TYPE];
 }
 
 //=========================================================================

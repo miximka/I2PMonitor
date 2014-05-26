@@ -18,11 +18,13 @@
 @property (nonatomic, assign) IBOutlet NSTextField *hostTextField;
 @property (nonatomic, assign) IBOutlet NSTextField *portTextField;
 @property (nonatomic, assign) IBOutlet NSImageView *connectionStatusImageView;
+@property (nonatomic, assign) IBOutlet NSMatrix *notificationsMatrix;
 
 @property (nonatomic) RCRouterManager *routerManager;
 
 - (IBAction)startOnSystemStartup:(id)sender;
 - (IBAction)resetToDefaults:(id)sender;
+- (IBAction)setShowRouterNotificationType:(id)sender;
 
 //=========================================================================
 @end

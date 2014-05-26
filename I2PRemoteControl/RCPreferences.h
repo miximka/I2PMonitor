@@ -14,6 +14,13 @@
 #define PREFS_KEY_ROUTER_PORT               @"RouterPort"
 #define PREFS_KEY_FIRST_START               @"FirstStart"
 #define PREFS_KEY_START_ON_SYSTEM_STARTUP   @"StartOnSystemStartup"
+#define PREFS_KEY_SHOW_NOTIFICATION_TYPE    @"ShowNotificationType"
+
+typedef NS_ENUM(NSUInteger, RCRouterShowNotificationsType)
+{
+    kRouterShowAllNotificationsType             = 0,
+    kRouterShowOnlyImportantNotificationsType   = 1,
+};
 
 //=========================================================================
 @interface RCPreferences : RCApplicationPreferences
@@ -32,6 +39,9 @@
 
 - (BOOL)startOnSystemStartup;
 - (void)setStartOnSystemStartup:(BOOL)flag;
+
+- (RCRouterShowNotificationsType)showNotificationsType;
+- (void)setShowNotificationsType:(RCRouterShowNotificationsType)type;
 
 //=========================================================================
 @end

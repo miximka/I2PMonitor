@@ -68,6 +68,13 @@
 
 //=========================================================================
 
+- (IBAction)setShowRouterNotificationType:(id)sender
+{
+    [RCPrefs setShowNotificationsType:[(NSButtonCell *)self.notificationsMatrix.selectedCell tag]];
+}
+
+//=========================================================================
+
 - (void)updateConnectionStatus
 {
     RCRouter *router = self.router;
@@ -142,6 +149,7 @@
     
     [self.startOnSystemStartupButton setState:[RCPrefs startOnSystemStartup]];
     [self loadDefaultValuesForHostAndPort];
+    [self.notificationsMatrix selectCellWithTag:[RCPrefs showNotificationsType]];
 }
 
 //=========================================================================
