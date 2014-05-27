@@ -38,3 +38,6 @@
 
 "RCErrorCantConnectToRouter" = "Can't connect to router";
 "RCErrorConnectionTimeout" = "Connection to router timed out";
+
+"Restart" = "Restart Router";
+"Shutdown" = "Shutdown";

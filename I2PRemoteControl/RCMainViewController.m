@@ -17,6 +17,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RCNotificationView.h"
 #import "RCPreferences.h"
+#import "RCControlViewController.h"
 
 //=========================================================================
 
@@ -25,6 +26,7 @@
 @property (nonatomic) RCViewController *currentController;
 @property (nonatomic) RCNetworkStatusViewController *networkViewController;
 @property (nonatomic) RCPeersViewController *peersViewController;
+@property (nonatomic) RCControlViewController *controlViewController;
 @property (nonatomic) BOOL isNotificationViewVisible;
 @end
 
@@ -396,6 +398,19 @@
 
 //=========================================================================
 
+- (RCControlViewController *)controlViewController
+{
+    if (_controlViewController == nil)
+    {
+        RCControlViewController *controller = [[RCControlViewController alloc] initWithNibName:@"Control" bundle:nil];
+        _controlViewController = controller;
+    }
+    
+    return _controlViewController;
+}
+
+//=========================================================================
+
 - (IBAction)showNetworkInfoView:(id)sender
 {
 }
@@ -452,21 +467,29 @@
 
 - (IBAction)tabsControlAction:(id)sender
 {
+    RCViewController *controller = nil;
+    
     switch (self.tabsControl.selectedSegment)
     {
         case 0:
-            [self switchToController:self.networkViewController animate:YES];
+            controller = self.networkViewController;
             break;
 
         case 1:
-            [self switchToController:self.peersViewController animate:YES];
+            controller = self.peersViewController;
             break;
 
         case 2:
+            controller = self.controlViewController;
             break;
 
         default:
             break;
+    }
+
+    if (controller != nil)
+    {
+        [self switchToController:controller animate:YES];
     }
 }
 

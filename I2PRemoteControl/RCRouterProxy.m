@@ -157,5 +157,55 @@
 }
 
 //=========================================================================
+
+- (void)routerManagerWithAction:(RCRouterManagerAction)action success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.token forKey:PARAM_KEY_TOKEN];
+    NSString *actionKey = nil;
+    
+    switch (action)
+    {
+        case kRouterManagerRestartGraceful:
+            actionKey = PARAM_KEY_RESTART_GRACEFUL;
+            break;
+
+        case kRouterManagerRestart:
+            actionKey = PARAM_KEY_RESTART;
+            break;
+
+        case kRouterManagerShutdownGraceful:
+            actionKey = PARAM_KEY_SHUTDOWN_GRACEFUL;
+            break;
+
+        case kRouterManagerShutdown:
+            actionKey = PARAM_KEY_SHUTDOWN;
+            break;
+
+        default:
+            break;
+    }
+    
+    if (actionKey != nil)
+    {
+        [params setObject:@"" forKey:actionKey];
+    }
+    
+    [self.client invokeMethod:METHOD_ROUTER_MANAGER
+               withParameters:params
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          
+                          assert([responseObject isKindOfClass:[NSDictionary class]]);
+                          success(responseObject);
+                          
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          
+                          failure(error);
+                          
+                      }];
+
+}
+
+//=========================================================================
 @end
 //=========================================================================

@@ -17,11 +17,25 @@
 extern NSString * const RCRouterDidUpdateRouterInfoNotification;
 extern NSString * const RCRouterDidUpdateBandwidthNotification;
 
+typedef NS_ENUM(NSInteger, RCRouterLifecycleStatus)
+{
+    kRouterLifecycleUnknownStatus               = -1,
+    kRouterLifecycleActive                      = 0,
+    kRouterLifecycleRestartingGracefully        = 1,
+    kRouterLifecycleRestartingHard              = 2,
+    kRouterLifecycleShuttingDownGracefully      = 3,
+    kRouterLifecycleShuttingDownHard            = 4,
+};
+
 //=========================================================================
 @interface RCRouter : NSObject <RCRouterTaskManagerDelegate>
 //=========================================================================
 
 - (instancetype)initWithSessionConfig:(RCSessionConfig *)sessionConfig;
+
+//=========================================================================
+#pragma mark Router Connection Handling
+//=========================================================================
 
 @property (nonatomic, readonly) RCSessionConfig *sessionConfig;
 
@@ -37,13 +51,17 @@ extern NSString * const RCRouterDidUpdateBandwidthNotification;
 @property (nonatomic, readonly) NSError *lastError;
 
 /**
-    Entry point. Authenticates with router and starts updating data.
+    Entry point. Opens connection to remote router and starts updating data.
  */
 - (void)start;
 - (void)terminate;
 
+//=========================================================================
+#pragma mark Router Info
+//=========================================================================
+
 /**
-    Contains basic infos (router version, uptime, status)
+    Router basic infos (router version, uptime, status)
  */
 @property (nonatomic, readonly) RCRouterInfo *routerInfo;
 
@@ -59,9 +77,20 @@ extern NSString * const RCRouterDidUpdateBandwidthNotification;
 - (void)postRouterInfoUpdateTask;
 
 /**
-    Returns buffer containing bandwidth measurements
+    Bandwidth measurements buffer
  */
 @property (nonatomic, readonly) RCBWMeasurementBuffer *measurementsBuffer;
+
+/**
+    Current router lifecycle status
+ */
+@property (nonatomic, readonly) RCRouterLifecycleStatus lifecycleStatus;
+
+/**
+    Posts router restart task
+ */
+- (void)restartRouterGracefully:(BOOL)gracefully;
+- (void)shutdownRouterGracefully:(BOOL)gracefully;
 
 //=========================================================================
 @end

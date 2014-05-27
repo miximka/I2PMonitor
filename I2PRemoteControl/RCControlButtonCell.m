@@ -1,0 +1,77 @@
+//
+//  RCControlButtonCell.m
+//  I2PRemoteControl
+//
+//  Created by miximka on 26/05/14.
+//  Copyright (c) 2014 miximka. All rights reserved.
+//
+
+#import "RCControlButtonCell.h"
+
+#define CUSTOM_TITLE_BOTTOM_PADDING 2
+
+//=========================================================================
+@implementation RCControlButtonCell
+//=========================================================================
+
+- (void)customSetTitle:(NSString *)title color:(NSColor *)color
+{
+    //Title font
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
+
+    //Title color
+    [attributes setObject:color forKey:NSForegroundColorAttributeName];
+
+    //title alignment
+    NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:title attributes:attributes];
+    [attributedStr setAlignment:self.alignment range:NSMakeRange(0, title.length)];
+    
+    [self setAttributedTitle:attributedStr];
+}
+
+//=========================================================================
+#pragma mark Overridden Methods
+//=========================================================================
+
+- (void)drawBezelWithFrame:(NSRect)frame inView:(NSView *)controlView
+{
+    NSColor *color = [NSColor colorWithCalibratedWhite:1.0 alpha:0.8];
+
+    if (self.isHighlighted || !self.isEnabled)
+    {
+        color = [NSColor colorWithCalibratedWhite:1.0 alpha:0.5];
+    }
+    
+    [color setStroke];
+    
+    CGFloat lineWidth = 1.0;
+    NSRect strokeRect = NSInsetRect(frame, lineWidth/2, lineWidth/2);
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:strokeRect];
+    [path setLineWidth:lineWidth];
+    [path stroke];
+}
+
+//=========================================================================
+
+- (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
+{
+    NSSize cellSize = controlView.frame.size;
+    
+    //Center of the cell
+    NSPoint center = NSMakePoint(cellSize.width/2, cellSize.height/2);
+    
+    //Calculate title bounding rect
+    NSRect titleBoundingRect = [title boundingRectWithSize:cellSize options:NSStringDrawingUsesFontLeading];
+
+    //Calculate title frame
+    NSRect titleFrame = NSMakeRect(center.x - titleBoundingRect.size.width/2, center.y + titleBoundingRect.origin.y + titleBoundingRect.size.height/2 - CUSTOM_TITLE_BOTTOM_PADDING, titleBoundingRect.size.width, titleBoundingRect.size.height);
+
+    //Draw title
+    [title drawWithRect:titleFrame options:0];
+    
+    return titleFrame;
+}
+
+//=========================================================================
+@end
+//=========================================================================

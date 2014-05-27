@@ -17,6 +17,7 @@
 #import "RCRouterInfo.h"
 #import "RCBWMeasurement.h"
 #import "RCBWMeasurementBuffer.h"
+#import "RCRouterManagerTask.h"
 
 //=========================================================================
 
@@ -69,6 +70,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 @property (nonatomic) NSUInteger authRetryCounter;
 @property (nonatomic) RCRouterInfo *routerInfo;
 @property (nonatomic) RCBWMeasurementBuffer *measurementsBuffer;
+@property (nonatomic) RCRouterLifecycleStatus lifecycleStatus;
 @end
 
 //=========================================================================
@@ -80,6 +82,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     self = [super init];
     if (self)
     {
+        _lifecycleStatus = kRouterLifecycleUnknownStatus;
         _measurementsBuffer = [[RCBWMeasurementBuffer alloc] initWithCapacity:MEASUREMENTS_BUFFER_CAPACITY];
         _sessionConfig = sessionConfig;
         _authRetryCounter = 0;
@@ -125,12 +128,16 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     [activeState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
         [self setActive:YES];
+        self.lifecycleStatus = kRouterLifecycleActive;
+
         [self startActivity];
         
     }];
     [activeState setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
         
         [self setActive:NO];
+        self.lifecycleStatus = kRouterLifecycleUnknownStatus;
+
         [self stopActivity];
         
     }];
@@ -326,7 +333,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 - (void)stopActivity
 {
     DDLogInfo(@"Stop polling router");
-    
+
     //Remove remaining tasks from manager
     [self.taskManager removeAllTasks];
     self.taskManager = nil;
@@ -408,7 +415,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
         
     }];
     
-    [self.taskManager addTask:task];
+    [self postTask:task];
 }
 
 //=========================================================================
@@ -434,7 +441,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
         
     }];
 
-    [self.taskManager addTask:task];
+    [self postTask:task];
 }
 
 //=========================================================================
@@ -472,8 +479,8 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
         }
         
     }];
-    
-    [self.taskManager addTask:task];
+
+    [self postTask:task];
 }
 
 //=========================================================================
@@ -495,10 +502,63 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 {
 //    RCRouterEchoTask *task = [[RCRouterEchoTask alloc] initWithIdentifier:@"Echo"];
 //    task.frequency = 1;
-//    [self.taskManager addTask:task];
+//    [self postTask:task];
     
     //Update bandwidth in/out
     [self addBandwidthUpdateTask];
+}
+
+//=========================================================================
+
+- (void)postTask:(RCTask *)task
+{
+    [self.taskManager addTask:task];
+}
+
+//=========================================================================
+
+- (void)restartRouterGracefully:(BOOL)gracefully
+{
+    RCRouterManagerAction action = kRouterManagerRestart;
+    if (gracefully)
+    {
+        action = kRouterManagerRestartGraceful;
+    }
+    
+    RCRouterManagerTask *task = [[RCRouterManagerTask alloc] initWithIdentifier:@"RestartRouter" action:action];
+    [self postTask:task];
+    
+    if (gracefully)
+    {
+        self.lifecycleStatus = kRouterLifecycleRestartingGracefully;
+    }
+    else
+    {
+        self.lifecycleStatus = kRouterLifecycleRestartingHard;
+    }
+}
+
+//=========================================================================
+
+- (void)shutdownRouterGracefully:(BOOL)gracefully
+{
+    RCRouterManagerAction action = kRouterManagerShutdown;
+    if (gracefully)
+    {
+        action = kRouterManagerShutdownGraceful;
+    }
+    
+    RCRouterManagerTask *task = [[RCRouterManagerTask alloc] initWithIdentifier:@"ShutdownRouter" action:action];
+    [self postTask:task];
+
+    if (gracefully)
+    {
+        self.lifecycleStatus = kRouterLifecycleShuttingDownGracefully;
+    }
+    else
+    {
+        self.lifecycleStatus = kRouterLifecycleShuttingDownHard;
+    }
 }
 
 //=========================================================================

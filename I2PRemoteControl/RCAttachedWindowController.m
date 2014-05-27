@@ -43,10 +43,12 @@
 
 - (void)showWindowAtPoint:(NSPoint)point
 {
-    NSPoint panelPoint = point;
-    panelPoint.y -= self.window.frame.size.height;
-    
     [self showWindow:self];
+
+    NSPoint panelPoint = point;
+    CGFloat panelHeight = self.window.frame.size.height;
+    
+    panelPoint.y -= panelHeight;
     [self.window setFrameOrigin:panelPoint];
 }
 

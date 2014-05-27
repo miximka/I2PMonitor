@@ -32,6 +32,12 @@
 #define PARAM_KEY_ROUTER_NETDB_HIGH_CAPACITY_PEERS  @"i2p.router.netdb.highcapacitypeers"
 #define PARAM_KEY_ROUTER_NETDB_KNOWN_PEERS          @"i2p.router.netdb.knownpeers"
 
+#define METHOD_ROUTER_MANAGER       @"RouterManager"
+#define PARAM_KEY_RESTART           @"Restart"
+#define PARAM_KEY_RESTART_GRACEFUL  @"RestartGraceful"
+#define PARAM_KEY_SHUTDOWN          @"Shutdown"
+#define PARAM_KEY_SHUTDOWN_GRACEFUL @"ShutdownGraceful"
+
 @class RCRouterInfo;
 
 typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
@@ -46,6 +52,14 @@ typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
     kRouterNetDBHighCapacityPeers   = 1 << 7,
     kRouterNetDBKnownPeers          = 1 << 8,
     kRouterNetTunnelsParticipating  = 1 << 9,
+};
+
+typedef NS_ENUM(NSUInteger, RCRouterManagerAction)
+{
+    kRouterManagerRestartGraceful = 0,
+    kRouterManagerRestart,
+    kRouterManagerShutdownGraceful,
+    kRouterManagerShutdown,
 };
 
 //=========================================================================
@@ -69,6 +83,12 @@ typedef NS_OPTIONS(NSUInteger, CRRouterInfoOptions)
     RouterInfo – Fetches basic information about the I2P router. Uptime, version etc.
  */
 - (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure;
+
+/**
+    RouterManager – Manages I2P router restart/shutdown.
+    @param action Router action to execute.
+ */
+- (void)routerManagerWithAction:(RCRouterManagerAction)action success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure;
 
 //=========================================================================
 @end
