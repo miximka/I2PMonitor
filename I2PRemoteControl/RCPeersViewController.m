@@ -60,17 +60,31 @@
 {
     RCRouterInfo *routerInfo = [(RCRouter *)self.representedObject routerInfo];
     
-    NSString *str = [NSString stringWithFormat:@"%lu", routerInfo.activePeers];
-    [self.activePeersTextField setStringValue:GetValueOrDefaulIfNil(str)];
-    
-    str = [NSString stringWithFormat:@"%lu", routerInfo.fastPeers];
-    [self.fastPeersTextField setStringValue:GetValueOrDefaulIfNil(str)];
-    
-    str = [NSString stringWithFormat:@"%lu", routerInfo.highCapacityPeers];
-    [self.highCapacityPeersTextField setStringValue:GetValueOrDefaulIfNil(str)];
+    if (routerInfo != nil)
+    {
+        NSString *str = [NSString stringWithFormat:@"%lu", routerInfo.activePeers];
+        [self.activePeersTextField setStringValue:str];
+        
+        str = [NSString stringWithFormat:@"%lu", routerInfo.fastPeers];
+        [self.fastPeersTextField setStringValue:str];
+        
+        str = [NSString stringWithFormat:@"%lu", routerInfo.highCapacityPeers];
+        [self.highCapacityPeersTextField setStringValue:str];
+        
+        str = [NSString stringWithFormat:@"%lu", routerInfo.knownPeers];
+        [self.knownPeersTextField setStringValue:str];
 
-    str = [NSString stringWithFormat:@"%lu", routerInfo.knownPeers];
-    [self.knownPeersTextField setStringValue:GetValueOrDefaulIfNil(str)];
+        str = [NSString stringWithFormat:@"%lu", routerInfo.participatingTunnels];
+        [self.participatingTunnelsTextField setStringValue:nil];
+    }
+    else
+    {
+        [self.activePeersTextField setStringValue:nil];
+        [self.fastPeersTextField setStringValue:nil];
+        [self.highCapacityPeersTextField setStringValue:nil];
+        [self.knownPeersTextField setStringValue:nil];
+        [self.participatingTunnelsTextField setStringValue:nil];
+    }
 }
 
 //=========================================================================

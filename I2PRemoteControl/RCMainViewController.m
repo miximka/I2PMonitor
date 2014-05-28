@@ -10,7 +10,7 @@
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
 #import "RCSessionConfig.h"
-#import "RCNetworkStatusViewController.h"
+#import "RCNetworkViewController.h"
 #import "RCPeersViewController.h"
 #import "RCTabsControl.h"
 #import "RCTabsControlCell.h"
@@ -24,7 +24,7 @@
 @interface RCMainViewController ()
 @property (nonatomic) NSTimer *uiUpdateTimer;
 @property (nonatomic) RCViewController *currentController;
-@property (nonatomic) RCNetworkStatusViewController *networkViewController;
+@property (nonatomic) RCNetworkViewController *networkViewController;
 @property (nonatomic) RCPeersViewController *peersViewController;
 @property (nonatomic) RCControlViewController *controlViewController;
 @property (nonatomic) BOOL isNotificationViewVisible;
@@ -118,7 +118,7 @@
     RCRouter *router = (RCRouter *)self.representedObject;
     
     NSString *str = router.sessionConfig.host;
-    [self.hostTextField setStringValue:GetValueOrDefaulIfNil(str)];
+    [self.hostTextField setStringValue:str];
 }
 
 //=========================================================================
@@ -128,7 +128,7 @@
     RCRouter *router = (RCRouter *)self.representedObject;
     
     NSString *str = router.routerInfo.routerVersion;
-    [self.versionTextField setStringValue:GetValueOrDefaulIfNil(str)];
+    [self.versionTextField setStringValue:str];
 }
 
 //=========================================================================
@@ -188,7 +188,7 @@
     {
         str = [self uptimeStringForInterval:uptime];
     }
-    [self.uptimeTextField setStringValue:GetValueOrDefaulIfNil(str)];
+    [self.uptimeTextField setStringValue:str];
 }
 
 //=========================================================================
@@ -372,11 +372,11 @@
 
 //=========================================================================
 
-- (RCNetworkStatusViewController *)networkViewController
+- (RCNetworkViewController *)networkViewController
 {
     if (_networkViewController == nil)
     {
-        RCNetworkStatusViewController *controller = [[RCNetworkStatusViewController alloc] initWithNibName:@"Network" bundle:nil];
+        RCNetworkViewController *controller = [[RCNetworkViewController alloc] initWithNibName:@"Network" bundle:nil];
         _networkViewController = controller;
     }
     

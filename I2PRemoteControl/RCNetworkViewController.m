@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCNetworkStatusViewController.h"
+#import "RCNetworkViewController.h"
 #import "RCRouter.h"
 #import <CorePlot/CorePlot.h>
 #import "RCGraphTextField.h"
@@ -14,6 +14,7 @@
 #import "RCBWMeasurement.h"
 #import "RCBWMeasurementBuffer.h"
 #import "RCContentView.h"
+#import "RCValueTextField.h"
 
 //=========================================================================
 
@@ -22,13 +23,13 @@
 #define GRAPH_IDENTIFIER_OUTBOUND           @"Outbound"
 #define GRAPH_AUTORESIZE_LOW_BW_TRESHOLD    10*1000 //10 KBps
 
-@interface RCNetworkStatusViewController () <CPTPlotDataSource>
+@interface RCNetworkViewController () <CPTPlotDataSource>
 @property (nonatomic) CPTXYGraph *graph;
 @property (nonatomic) NSDate *referenceDateInPast;
 @end
 
 //=========================================================================
-@implementation RCNetworkStatusViewController
+@implementation RCNetworkViewController
 //=========================================================================
 
 - (void)dealloc
@@ -196,12 +197,22 @@
 
 //=========================================================================
 
+- (void)updateUsage
+{
+    //I2PControl plugin does not provide usage information yet.
+    [self.inboundTotalTextField setStringValue:nil];
+    [self.outboundTotalTextField setStringValue:nil];
+}
+
+//=========================================================================
+
 - (void)updateGUI
 {
     [super updateGUI];
     
     [self updatePlot];
     [self updateBandwidthValues];
+    [self updateUsage];
 }
 
 //=========================================================================
@@ -234,6 +245,9 @@
     [completeStr setAlignment:NSRightTextAlignment range:NSMakeRange(0, completeStr.length)];
     
     [self.inOutTextField setAttributedStringValue:completeStr];
+    
+    [self.inboundTotalTextField setNilPlaceholder:@"---"];
+    [self.outboundTotalTextField setNilPlaceholder:@"---"];
 }
 
 //=========================================================================

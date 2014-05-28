@@ -16,7 +16,7 @@
 #import "RCPreferencesWindowController.h"
 #import "RCRouterManager.h"
 #import "RCStatusBarView.h"
-#import "RCNetworkStatusViewController.h"
+#import "RCNetworkViewController.h"
 #import "RCAttachedWindow.h"
 #import "RCMainWindowController.h"
 #import "RCMainViewController.h"
