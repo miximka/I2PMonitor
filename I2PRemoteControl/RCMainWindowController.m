@@ -11,7 +11,7 @@
 
 //=========================================================================
 
-@interface RCMainWindowController () <RCMainViewControllerDelegate>
+@interface RCMainWindowController ()
 @property (nonatomic) RCMainViewController *mainViewController;
 @end
 
@@ -26,7 +26,6 @@
     NSView *containerView = self.contentContainerView;
     
     RCMainViewController *controller = [[RCMainViewController alloc] initWithNibName:@"MainView" bundle:nil];
-    [controller setDelegate:self];
     self.mainViewController = controller;
     
     NSView *controllerView = controller.view;
@@ -49,6 +48,8 @@
     
     //Window is about to open, start updating UI
     [self.mainViewController startUpdating];
+    
+    [self.window makeKeyAndOrderFront:self];
 }
 
 //=========================================================================
@@ -60,10 +61,6 @@
     //Window is about to close, stop updating UI
     [self.mainViewController stopUpdating];
 }
-
-//=========================================================================
-#pragma mark RCMainViewControllerDelegate
-//=========================================================================
 
 //=========================================================================
 @end

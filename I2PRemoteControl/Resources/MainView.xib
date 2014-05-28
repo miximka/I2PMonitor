@@ -9,6 +9,7 @@
                 <outlet property="contentContainerView" destination="Y5i-dz-Lb2" id="yrE-qh-UML"/>
                 <outlet property="contentContainerViewHeightConstraint" destination="RXz-ry-lV3" id="4es-DV-jyM"/>
                 <outlet property="contentContainerViewWidthConstraint" destination="j0q-RA-7bL" id="yeR-Bv-weJ"/>
+                <outlet property="headerTitleTextField" destination="32x-qM-oCe" id="O4u-Q7-QyQ"/>
                 <outlet property="headerView" destination="Qe6-Jd-vj9" id="Lvf-D7-Ye4"/>
                 <outlet property="headerViewHeightConstraint" destination="sUm-VH-gyy" id="xJf-M9-Xjw"/>
                 <outlet property="hostTextField" destination="pTW-Fi-TSP" id="g0P-eF-FCk"/>
@@ -44,7 +45,7 @@
                     <rect key="frame" x="0.0" y="270" width="250" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="32x-qM-oCe" customClass="RCLinkTextField">
                             <rect key="frame" x="8" y="14" width="130" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="I2P Router" id="kGs-wr-qIc">

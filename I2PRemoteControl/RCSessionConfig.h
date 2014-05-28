@@ -17,6 +17,12 @@
 @property (nonatomic) NSString *host;
 @property (nonatomic) NSUInteger port;
 
+/**
+    Console (i.e. WebUI) port 7657
+    Hardcoded at the moment, as I2PControl plugin does not provide this information
+ */
+@property (nonatomic, readonly) NSUInteger consolePort;
+
 //=========================================================================
 @end
 //=========================================================================

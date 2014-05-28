@@ -56,6 +56,7 @@
 		8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC1D1922085300759F92 /* RCRouterTaskManager.m */; };
 		8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC221922108F00759F92 /* RCRouterEchoTask.m */; };
 		8194CC26192256FB00759F92 /* RCRouterInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC25192256FB00759F92 /* RCRouterInfo.m */; };
+		819B7E5D1936012300DF166F /* RCLinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 819B7E5C1936012300DF166F /* RCLinkTextField.m */; };
 		81AA26251929FE2F00A0C1DD /* RCBWMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AA26241929FE2F00A0C1DD /* RCBWMeasurement.m */; };
 		81AA262E192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AA262D192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m */; };
 		81BBC38C1928A54A00752016 /* RCBorderlessPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BBC38B1928A54A00752016 /* RCBorderlessPanel.m */; };
@@ -176,6 +177,8 @@
 		8194CC221922108F00759F92 /* RCRouterEchoTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterEchoTask.m; sourceTree = "<group>"; };
 		8194CC24192256FB00759F92 /* RCRouterInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterInfo.h; sourceTree = "<group>"; };
 		8194CC25192256FB00759F92 /* RCRouterInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterInfo.m; sourceTree = "<group>"; };
+		819B7E5B1936012300DF166F /* RCLinkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLinkTextField.h; sourceTree = "<group>"; };
+		819B7E5C1936012300DF166F /* RCLinkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLinkTextField.m; sourceTree = "<group>"; };
 		81AA26231929FE2F00A0C1DD /* RCBWMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCBWMeasurement.h; sourceTree = "<group>"; };
 		81AA26241929FE2F00A0C1DD /* RCBWMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCBWMeasurement.m; sourceTree = "<group>"; };
 		81AA262C192A0ECE00A0C1DD /* RCBWMeasurementBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCBWMeasurementBuffer.h; sourceTree = "<group>"; };
@@ -275,6 +278,8 @@
 				817A81EF1933ECF60010F7CD /* RCControlButtonCell.m */,
 				81C5E68F1935EA8200D5E8C8 /* RCValueTextField.h */,
 				81C5E6901935EA8200D5E8C8 /* RCValueTextField.m */,
+				819B7E5B1936012300DF166F /* RCLinkTextField.h */,
+				819B7E5C1936012300DF166F /* RCLinkTextField.m */,
 				815AAE631928F4E80057C123 /* Attached Window */,
 			);
 			name = Views;
@@ -669,6 +674,7 @@
 				810022771924E09A0025273D /* RCPreferences.m in Sources */,
 				8194CC231922108F00759F92 /* RCRouterEchoTask.m in Sources */,
 				811432BF1930D0F30028BF64 /* RCNotificationView.m in Sources */,
+				819B7E5D1936012300DF166F /* RCLinkTextField.m in Sources */,
 				81BBC38C1928A54A00752016 /* RCBorderlessPanel.m in Sources */,
 				81BBC3911928B68900752016 /* RCAttachedWindowController.m in Sources */,
 				818C26C8192CDDD100D64A62 /* RCTabsControl.m in Sources */,

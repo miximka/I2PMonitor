@@ -18,6 +18,7 @@
 #import "RCNotificationView.h"
 #import "RCPreferences.h"
 #import "RCControlViewController.h"
+#import "RCLinkTextField.h"
 
 //=========================================================================
 
@@ -544,6 +545,19 @@
     //Switch to default tab
     [self switchToController:self.networkViewController animate:NO];
     
+//    [self.headerTitleTextField setAllowsEditingTextAttributes:YES];
+//    [self.headerTitleTextField setSelectable:YES];
+//    
+//    NSAttributedString *attrStr = self.headerTitleTextField.attributedStringValue;
+//    
+//    //Append URL
+//    NSMutableAttributedString *mutableAttrStr = [attrStr mutableCopy];
+//    [mutableAttrStr addAttribute:NSLinkAttributeName
+//                           value:[NSURL URLWithString:@"127.0.0.1"]
+//                           range:NSMakeRange(0, attrStr.length)];
+//    
+//    [self.headerTitleTextField setAttributedStringValue:mutableAttrStr];
+    
     //Register for notifications
     [self registerForNotifications];
 }
@@ -553,10 +567,16 @@
 - (void)setRepresentedObject:(id)object
 {
     [super setRepresentedObject:object];
-    assert([object isKindOfClass:[RCRouter class]]);
 
+    RCRouter *router = (RCRouter *)object;
+    assert([router isKindOfClass:[RCRouter class]]);
+    
     //Also set represented object to network view controller
-    [self.currentController setRepresentedObject:object];
+    [self.currentController setRepresentedObject:router];
+    
+    //Update WebUI url
+    NSString *consoleUrlStr = [NSString stringWithFormat:@"http://%@:%lu", router.sessionConfig.host, router.sessionConfig.consolePort];
+    [self.headerTitleTextField setURL:[NSURL URLWithString:consoleUrlStr]];
     
     //Update UI immediately
     [self updateGUI];

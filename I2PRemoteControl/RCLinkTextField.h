@@ -1,30 +1,18 @@
 //
-//  RCSessionConfig.m
+//  RCClickableTextField.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 12/05/14.
+//  Created by miximka on 28/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCSessionConfig.h"
-
-#define DEFAULT_WEBUI_CONSOLE_PORT 7657
+#import <Cocoa/Cocoa.h>
 
 //=========================================================================
-@implementation RCSessionConfig
+@interface RCLinkTextField : NSTextField
 //=========================================================================
 
-- (instancetype)initWithHost:(NSString *)host port:(NSUInteger)port
-{
-    self = [super init];
-    if (self)
-    {
-        _host = host;
-        _port = port;
-        _consolePort = DEFAULT_WEBUI_CONSOLE_PORT;
-    }
-    return self;
-}
+@property (nonatomic) NSURL *URL;
 
 //=========================================================================
 @end
