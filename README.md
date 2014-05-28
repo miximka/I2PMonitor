@@ -10,12 +10,12 @@ Features
 ================
 
 1. Monitor and control your i2p router (local or remote):
-- Router uptime and version indication
-- Current bandwidth usage monitoring
-- Traffic usage monitoring (todo)
-- Provides overview to peers and tunnels
-- Restart or shutdown your router gracefully or instantly
-- Router status indication (informational notifications and warnings)
+	- Router uptime and version indication
+	- Current bandwidth usage monitoring
+	- Traffic usage monitoring (todo)
+	- Provides overview to peers and tunnels
+	- Restart or shutdown your router gracefully or instantly
+	- Router status indication (informational notifications and warnings)
 2. Access the web console with only one click
 3. Seamless integration into Mac OS X system bar
 4. Autostart with user login
