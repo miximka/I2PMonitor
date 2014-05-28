@@ -540,6 +540,13 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
+- (void)cancelRestart
+{
+    DDLogError(@"Cancel restart is not supported yet");
+}
+
+//=========================================================================
+
 - (void)shutdownRouterGracefully:(BOOL)gracefully
 {
     RCRouterManagerAction action = kRouterManagerShutdown;
@@ -559,6 +566,13 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     {
         self.lifecycleStatus = kRouterLifecycleShuttingDownHard;
     }
+}
+
+//=========================================================================
+
+- (void)cancelShutdown
+{
+    DDLogError(@"Cancel shutdown is not supported yet");
 }
 
 //=========================================================================

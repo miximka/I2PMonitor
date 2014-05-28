@@ -1,5 +1,6 @@
-- Add “Restart/Shutdown” buttons to control tab (Also add “Cancel Shutdown/Restart” button and show remaining time until complete shutdown)
 - Add possibility to start local router from within the app. Add “Start” button to the control tab.
 - Add button to control tab to open WebConsole
 - Add hotkey to open WebConsole
 - Add a single zero bandwidth measurement when connection to the router gets lost or restored back to let the zero bandwidth values appear on the plot for that period of time.
+- Implement Cancel Restart/Shutdown as soon as I2PControl plugin supports this
+- Show timer until restart/shutdown in control tab or in a notification view

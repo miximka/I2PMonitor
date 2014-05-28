@@ -39,5 +39,9 @@
 "RCErrorCantConnectToRouter" = "Can't connect to router";
 "RCErrorConnectionTimeout" = "Connection to router timed out";
 
-"Restart" = "Restart Router";
+"Restart" = "Restart";
 "Shutdown" = "Shutdown";
+"RestartImmediately" = "Restart Immediately";
+"ShutdownImmediately" = "Shutdown Immediately";
+"CancelRestart" = "Cancel Restart";
+"CancelShutdown" = "Cancel Shutdown";

@@ -14,11 +14,15 @@
 @interface RCControlViewController : RCViewController
 //=========================================================================
 
-@property (nonatomic, weak) IBOutlet RCControlButton *restartButton;
-@property (nonatomic, weak) IBOutlet RCControlButton *shutdownButton;
+@property (nonatomic, weak) IBOutlet RCControlButton *actionButton1;
+@property (nonatomic, weak) IBOutlet RCControlButton *actionButton2;
 
-- (IBAction)restart:(id)sender;
-- (IBAction)shutdown:(id)sender;
+- (IBAction)restartGracefully:(id)sender;
+- (IBAction)restartImmediately:(id)sender;
+- (IBAction)shutdownGracefully:(id)sender;
+- (IBAction)shutdownImmediately:(id)sender;
+- (IBAction)cancelRestart:(id)sender;
+- (IBAction)cancelShutdown:(id)sender;
 
 //=========================================================================
 @end

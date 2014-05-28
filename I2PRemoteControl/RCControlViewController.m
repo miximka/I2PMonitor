@@ -22,34 +22,89 @@
 @implementation RCControlViewController
 //=========================================================================
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Initialization code here.
-    }
-    return self;
-}
-
-//=========================================================================
-
 - (void)updateButtons
 {
     RCRouter *router = (RCRouter *)self.representedObject;
 
-    BOOL enableButtons = YES;
-    if (router.lifecycleStatus == kRouterLifecycleUnknownStatus)
+    BOOL enableButton1 = NO;
+    NSString *button1Title = nil;
+    NSString *button1ImageName = nil;
+
+    BOOL enableButton2 = NO;
+    NSString *button2Title = nil;
+    NSString *button2ImageName = nil;
+    
+    SEL action1 = nil;
+    SEL action2 = nil;
+    
+    switch (router.lifecycleStatus)
     {
-        enableButtons = NO;
-    }
-    else
-    {
-        //TODO: Check other states
+        case kRouterLifecycleActive:
+            enableButton1 = YES;
+            button1Title = MyLocalStr(@"Restart");
+            button1ImageName = @"Restart";
+            action1 = @selector(restartGracefully:);
+            enableButton2 = YES;
+            button2Title = MyLocalStr(@"Shutdown");
+            button2ImageName = @"Shutdown";
+            action2 = @selector(shutdownGracefully:);
+            break;
+            
+        case kRouterLifecycleRestartingGracefully:
+            enableButton1 = YES;
+            button1Title = MyLocalStr(@"RestartImmediately");
+            button1ImageName = @"Restart";
+            action1 = @selector(restartImmediately:);
+            enableButton2 = NO; //I2PControl plugin does not support cancelation yet
+            button2Title = MyLocalStr(@"CancelRestart");
+            button2ImageName = @"Cancel";
+            action2 = @selector(cancelRestart:);
+            break;
+
+        case kRouterLifecycleShuttingDownGracefully:
+            enableButton1 = YES;
+            button1Title = MyLocalStr(@"ShutdownImmediately");
+            button1ImageName = @"Shutdown";
+            action1 = @selector(shutdownImmediately:);
+            enableButton2 = NO; //I2PControl plugin does not support cancelation yet
+            button2Title = MyLocalStr(@"CancelShutdown");
+            button2ImageName = @"Cancel";
+            action2 = @selector(cancelShutdown:);
+            break;
+
+        case kRouterLifecycleRestartingHard:
+        case kRouterLifecycleShuttingDownHard:
+        case kRouterLifecycleUnknownStatus:
+        default:
+            button1ImageName = @"Restart";
+            button1Title = MyLocalStr(@"Restart");
+            button2ImageName = @"Shutdown";
+            button2Title = MyLocalStr(@"Shutdown");
+            break;
     }
 
-    [self.restartButton setEnabled:enableButtons];
-    [self.shutdownButton setEnabled:enableButtons];
+    [self.actionButton1 setAction:action1];
+    [self.actionButton2 setAction:action2];
+    
+    [self.actionButton1 setEnabled:enableButton1];
+    [self.actionButton2 setEnabled:enableButton2];
+    
+    [self.actionButton1 setImage:[NSImage imageNamed:button1ImageName]];
+    [self.actionButton2 setImage:[NSImage imageNamed:button2ImageName]];
+    
+    [self.view layoutSubtreeIfNeeded];
+
+    //Animate buttons frame change
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        [context setAllowsImplicitAnimation:YES];
+        
+        [self.actionButton1 customSetTitle:button1Title color:[NSColor whiteColor]];
+        [self.actionButton2 customSetTitle:button2Title color:[NSColor whiteColor]];
+        
+        [self.view layoutSubtreeIfNeeded];
+        
+    } completionHandler:^{
+    }];
 }
 
 //=========================================================================
@@ -57,12 +112,16 @@
 - (void)updateGUI
 {
     [super updateGUI];
+    
+    [self.actionButton1 setTarget:self];
+    [self.actionButton2 setTarget:self];
+    
     [self updateButtons];
 }
 
 //=========================================================================
 
-- (IBAction)restart:(id)sender
+- (IBAction)restartGracefully:(id)sender
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     [router restartRouterGracefully:YES];
@@ -70,10 +129,42 @@
 
 //=========================================================================
 
-- (IBAction)shutdown:(id)sender
+- (IBAction)restartImmediately:(id)sender
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    [router restartRouterGracefully:NO];
+}
+
+//=========================================================================
+
+- (IBAction)shutdownGracefully:(id)sender
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     [router shutdownRouterGracefully:YES];
+}
+
+//=========================================================================
+
+- (IBAction)shutdownImmediately:(id)sender
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    [router shutdownRouterGracefully:NO];
+}
+
+//=========================================================================
+
+- (IBAction)cancelRestart:(id)sender
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    [router cancelRestart];
+}
+
+//=========================================================================
+
+- (IBAction)cancelShutdown:(id)sender
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    [router cancelShutdown];
 }
 
 //=========================================================================
@@ -85,10 +176,6 @@
     [super loadView];
     
     [(RCContentView *)self.view setColorType:RCContentViewColorViolet];
-
-    NSColor *textColor = [NSColor whiteColor];
-    [self.restartButton customSetTitle:MyLocalStr(@"Restart") color:textColor];
-    [self.shutdownButton customSetTitle:MyLocalStr(@"Shutdown") color:textColor];
 
     [self updateGUI];
 }

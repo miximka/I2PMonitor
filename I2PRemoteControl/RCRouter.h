@@ -90,7 +90,10 @@ typedef NS_ENUM(NSInteger, RCRouterLifecycleStatus)
     Posts router restart task
  */
 - (void)restartRouterGracefully:(BOOL)gracefully;
+- (void)cancelRestart;
+
 - (void)shutdownRouterGracefully:(BOOL)gracefully;
+- (void)cancelShutdown;
 
 //=========================================================================
 @end

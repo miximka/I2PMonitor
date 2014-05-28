@@ -6,8 +6,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RCControlViewController">
             <connections>
-                <outlet property="restartButton" destination="1Bp-Kj-VmZ" id="pNh-fv-zfu"/>
-                <outlet property="shutdownButton" destination="9nR-0P-Lfp" id="DPF-UR-s9y"/>
+                <outlet property="actionButton1" destination="1Bp-Kj-VmZ" id="mmG-hC-gto"/>
+                <outlet property="actionButton2" destination="9nR-0P-Lfp" id="YLP-YF-pTd"/>
                 <outlet property="view" destination="pfx-4Z-fFJ" id="k5F-eZ-PQp"/>
             </connections>
         </customObject>
@@ -17,38 +17,44 @@
             <rect key="frame" x="0.0" y="0.0" width="250" height="206"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uP-fj-3vb">
-                    <rect key="frame" x="8" y="172" width="118" height="25"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uP-fj-3vb">
+                    <rect key="frame" x="8" y="173" width="114" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Control" id="x3l-xu-yaV">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Management" id="x3l-xu-yaV">
                         <font key="font" size="20" name="HelveticaNeue-Thin"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Bp-Kj-VmZ" customClass="RCControlButton">
-                    <rect key="frame" x="34" y="132" width="183" height="32"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="1Bp-Kj-VmZ" customClass="RCControlButton">
+                    <rect key="frame" x="51" y="133" width="150" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="cef-Vz-D4o"/>
+                    </constraints>
                     <buttonCell key="cell" type="square" title="Restart" alternateTitle="Restart" bezelStyle="shadowlessSquare" image="Restart" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yzo-fB-SIj" customClass="RCControlButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="14" name="HelveticaNeue-Medium"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="restart:" target="-2" id="7Ud-VP-Wle"/>
-                    </connections>
                 </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9nR-0P-Lfp" customClass="RCControlButton">
-                    <rect key="frame" x="34" y="90" width="183" height="32"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="9nR-0P-Lfp" customClass="RCControlButton">
+                    <rect key="frame" x="51" y="92" width="149" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" title="Shutdown" bezelStyle="shadowlessSquare" image="Shutdown" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6E9-Jq-13m" customClass="RCControlButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="14" name="HelveticaNeue-Medium"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="shutdown:" target="-2" id="4dE-55-tT9"/>
-                    </connections>
                 </button>
             </subviews>
+            <constraints>
+                <constraint firstItem="1Bp-Kj-VmZ" firstAttribute="width" secondItem="9nR-0P-Lfp" secondAttribute="width" id="1D5-CW-fcb"/>
+                <constraint firstAttribute="centerX" secondItem="1Bp-Kj-VmZ" secondAttribute="centerX" constant="-0.5" id="DHw-a7-E80"/>
+                <constraint firstItem="8uP-fj-3vb" firstAttribute="leading" secondItem="pfx-4Z-fFJ" secondAttribute="leading" constant="10" id="WYc-TF-Fa5"/>
+                <constraint firstItem="8uP-fj-3vb" firstAttribute="top" secondItem="pfx-4Z-fFJ" secondAttribute="top" constant="9" id="WqO-Vk-Bj0"/>
+                <constraint firstItem="9nR-0P-Lfp" firstAttribute="top" secondItem="1Bp-Kj-VmZ" secondAttribute="bottom" constant="10" id="Wsf-PQ-R03"/>
+                <constraint firstAttribute="centerX" secondItem="9nR-0P-Lfp" secondAttribute="centerX" constant="-0.5" id="pvZ-Jh-E2E"/>
+                <constraint firstItem="1Bp-Kj-VmZ" firstAttribute="top" secondItem="pfx-4Z-fFJ" secondAttribute="top" constant="42" id="yXP-K1-wKd"/>
+            </constraints>
         </customView>
     </objects>
     <resources>
