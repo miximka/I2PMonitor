@@ -16,6 +16,7 @@
 @class RCLinkTextField;
 
 @protocol RCMainViewControllerDelegate <NSObject>
+- (void)mainViewControllerShouldDismissWindow:(RCMainViewController *)controller;
 @end
 
 //=========================================================================

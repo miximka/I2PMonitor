@@ -19,6 +19,20 @@
 @implementation RCLinkTextField
 //=========================================================================
 
+- (id<RCLinkTextFieldDelegate>)delegate
+{
+    return (id<RCLinkTextFieldDelegate>)[super delegate];
+}
+
+//=========================================================================
+
+- (void)setDelegate:(id<NSTextFieldDelegate>)anObject
+{
+    [super setDelegate:anObject];
+}
+
+//=========================================================================
+
 - (void)registerTrackingRect
 {
     [self removeTrackingRect:self.trackingRect];
@@ -105,7 +119,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [[NSWorkspace sharedWorkspace] openURL:self.URL];
+    [self.delegate clickableTextFieldMouseDown:self];
 }
 
 //=========================================================================

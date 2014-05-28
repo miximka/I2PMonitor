@@ -197,6 +197,14 @@
 }
 
 //=========================================================================
+
+- (void)dismissMainWindow
+{
+    [[self statusBarItemView] setHighlighted:NO];
+    [self.mainWindowController.window close];
+}
+
+//=========================================================================
 #pragma mark NSApplicationDelegate
 //=========================================================================
 
@@ -265,8 +273,7 @@
     if (object == self.mainWindowController.window)
     {
         //Close window
-        [[self statusBarItemView] setHighlighted:NO];
-        [self.mainWindowController.window close];
+        [self dismissMainWindow];
     }
 }
 
@@ -283,8 +290,17 @@
     }
     else
     {
-        [self.mainWindowController.window close];
+        [self dismissMainWindow];
     }
+}
+
+//=========================================================================
+#pragma mark RCMainWindowControllerDelegate
+//=========================================================================
+
+- (void)mainWindowControllerShouldDismissWindow:(RCMainWindowController *)controller
+{
+    [self dismissMainWindow];
 }
 
 //=========================================================================

@@ -8,11 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class RCLinkTextField;
+
+@protocol RCLinkTextFieldDelegate <NSTextFieldDelegate>
+- (void)clickableTextFieldMouseDown:(RCLinkTextField *)textField;
+@end
+
 //=========================================================================
 @interface RCLinkTextField : NSTextField
 //=========================================================================
 
-@property (nonatomic) NSURL *URL;
+- (id<RCLinkTextFieldDelegate>)delegate;
+- (void)setDelegate:(id<NSTextFieldDelegate>)anObject;
 
 //=========================================================================
 @end

@@ -53,6 +53,9 @@
                                 <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="FWc-u2-r6s"/>
+                            </connections>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="g80-Vc-QRj" customClass="RCValueTextField">
                             <rect key="frame" x="207" y="5" width="33" height="14"/>

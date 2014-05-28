@@ -14,6 +14,7 @@
 @class RCMainWindowController;
 
 @protocol RCMainWindowControllerDelegate <NSObject>
+- (void)mainWindowControllerShouldDismissWindow:(RCMainWindowController *)controller;
 @end
 
 //=========================================================================

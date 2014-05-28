@@ -22,7 +22,7 @@
 
 //=========================================================================
 
-@interface RCMainViewController ()
+@interface RCMainViewController () <RCLinkTextFieldDelegate>
 @property (nonatomic) NSTimer *uiUpdateTimer;
 @property (nonatomic) RCViewController *currentController;
 @property (nonatomic) RCNetworkViewController *networkViewController;
@@ -545,19 +545,6 @@
     //Switch to default tab
     [self switchToController:self.networkViewController animate:NO];
     
-//    [self.headerTitleTextField setAllowsEditingTextAttributes:YES];
-//    [self.headerTitleTextField setSelectable:YES];
-//    
-//    NSAttributedString *attrStr = self.headerTitleTextField.attributedStringValue;
-//    
-//    //Append URL
-//    NSMutableAttributedString *mutableAttrStr = [attrStr mutableCopy];
-//    [mutableAttrStr addAttribute:NSLinkAttributeName
-//                           value:[NSURL URLWithString:@"127.0.0.1"]
-//                           range:NSMakeRange(0, attrStr.length)];
-//    
-//    [self.headerTitleTextField setAttributedStringValue:mutableAttrStr];
-    
     //Register for notifications
     [self registerForNotifications];
 }
@@ -573,10 +560,6 @@
     
     //Also set represented object to network view controller
     [self.currentController setRepresentedObject:router];
-    
-    //Update WebUI url
-    NSString *consoleUrlStr = [NSString stringWithFormat:@"http://%@:%lu", router.sessionConfig.host, router.sessionConfig.consolePort];
-    [self.headerTitleTextField setURL:[NSURL URLWithString:consoleUrlStr]];
     
     //Update UI immediately
     [self updateGUI];
@@ -598,6 +581,24 @@
 - (void)routerDidUpdateRouterInfo:(NSNotification *)notification
 {
     [self updateGUI];
+}
+
+//=========================================================================
+#pragma mark RCLinkTextFieldDelegate
+//=========================================================================
+
+- (void)clickableTextFieldMouseDown:(RCLinkTextField *)textField
+{
+    RCRouter *router = (RCRouter *)self.representedObject;
+    
+    //Update WebUI url
+    NSString *consoleUrlStr = [NSString stringWithFormat:@"http://%@:%lu", router.sessionConfig.host, router.sessionConfig.consolePort];
+    NSURL *consoleURL = [NSURL URLWithString:consoleUrlStr];
+    
+    [[NSWorkspace sharedWorkspace] openURL:consoleURL];
+    
+    //Also dismiss window immediately
+    [self.delegate mainViewControllerShouldDismissWindow:self];
 }
 
 //=========================================================================
