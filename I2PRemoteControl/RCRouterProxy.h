@@ -13,10 +13,10 @@
 @interface RCRouterProxy : NSObject <RCRouterApi>
 //=========================================================================
 
-- (instancetype)initWithRouterURL:(NSURL *)routerURL;
+- (instancetype)initWithRouterURL:(NSURL *)routerURL authToken:(NSString *)authToken;
 
 @property (nonatomic, readonly) NSURL *routerURL;
-@property (nonatomic, readonly) NSString *token;
+@property (nonatomic, readonly) NSString *authToken;
 
 //=========================================================================
 @end

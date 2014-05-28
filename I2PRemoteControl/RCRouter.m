@@ -98,6 +98,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     //Initialize States
     
     TKState *idleState = [TKState stateWithName:@"Idle"];
+    
     TKState *authenticatingState = [TKState stateWithName:STATE_AUTHENTICATING];
     [authenticatingState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
         
@@ -206,10 +207,26 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
+- (BOOL)isInvalidatingAuthTokenError:(NSError *)error
+{
+    //    -32003 – Authentication token doesn't exist.
+    //    -32004 – The provided authentication token was expired and will be removed.
+    return YES;
+}
+
+//=========================================================================
+
 - (BOOL)eventAuthenticationFailedWithError:(NSError *)error
 {
     _lastError = error;
     DDLogError(@"Authentication failed with error: %@", error);
+ 
+    //Check if authentication failed because of expired token
+    if ([self isInvalidatingAuthTokenError:error])
+    {
+        DDLogInfo(@"Invalidate existing auth token");
+        [self.sessionConfig setAuthToken:nil];
+    }
     
     BOOL success = [self fireEvent:EVENT_AUTH_FAILED];    return success;
 }
@@ -276,16 +293,14 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
-- (void)startAuthentication
+- (void)startAuthenticationWithURL:(NSURL *)url authToken:(NSString *)authToken
 {
-    NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    
-    DDLogInfo(@"Starting authentication with URL: %@", urlStr);
-    
+    DDLogInfo(@"Starting authentication with URL: %@", url);
+
     //Create proxy object
-    self.proxy = [[RCRouterProxy alloc] initWithRouterURL:url];
+    self.proxy = [[RCRouterProxy alloc] initWithRouterURL:url authToken:authToken];
     
+    //Send authentication request
     __weak id blockSelf = self;
     [self.proxy authenticate:CLIENT_API_VERSION
                     password:DEFAULT_PASSWORD
@@ -298,6 +313,18 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
                          [blockSelf didFinishAuthenticationWithServerApi:0 sessionToken:nil error:error];
                          
                      }];
+}
+
+//=========================================================================
+
+- (void)startAuthentication
+{
+    NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    
+    NSString *authToken = self.sessionConfig.authToken;
+    
+    [self startAuthenticationWithURL:url authToken:authToken];
 }
 
 //=========================================================================

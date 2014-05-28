@@ -1,10 +1,24 @@
 I2PRemoteControl
 ================
 
-Remote control application for I2P router for Mac OS X
+I2P monitor and control application for Mac OS X.
 
 ![alt tag](https://raw.github.com/miximka/I2PRemoteControl/master/Docs/ScreenshotNetwork.png)
 ![alt tag](https://raw.github.com/miximka/I2PRemoteControl/master/Docs/ScreenshotPeers.png)
+
+Features
+================
+
+1. Monitor and control your i2p router (local or remote):
+- Router uptime and version indication
+- Current bandwidth usage monitoring
+- Traffic usage monitoring (todo)
+- Provides overview to peers and tunnels
+- Restart or shutdown your router gracefully or instantly
+- Router status indication (informational notifications and warnings)
+2. Access the web console with only one click
+3. Seamless integration into Mac OS X system bar
+4. Autostart with user login
 
 Prerequisites
 ================

@@ -20,13 +20,14 @@
 @implementation RCRouterProxy
 //=========================================================================
 
-- (instancetype)initWithRouterURL:(NSURL *)routerURL
+- (instancetype)initWithRouterURL:(NSURL *)routerURL authToken:(NSString *)authToken
 {
     self = [super init];
     if (self)
     {
         RCJsonRpcClient *client = [[RCJsonRpcClient alloc] initWithEndpointURL:routerURL];
         _client = client;
+        _authToken = authToken;
     }
     return self;
 }

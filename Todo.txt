@@ -3,3 +3,4 @@
 - Add a single zero bandwidth measurement when connection to the router gets lost or restored back to let the zero bandwidth values appear on the plot for that period of time.
 - Implement Cancel Restart/Shutdown as soon as I2PControl plugin supports this
 - Show timer until restart/shutdown in control tab or in a notification view
+- Write authentication key to persistent store and keep it used until invalidation.

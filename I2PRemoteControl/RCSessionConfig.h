@@ -16,6 +16,7 @@
 
 @property (nonatomic) NSString *host;
 @property (nonatomic) NSUInteger port;
+@property (nonatomic) NSString *authToken;
 
 /**
     Console (i.e. WebUI) port 7657
