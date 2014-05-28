@@ -20,6 +20,7 @@
 #import "RCAttachedWindow.h"
 #import "RCMainWindowController.h"
 #import "RCMainViewController.h"
+#import "NSFileManager+SupportDirectory.h"
 
 //=========================================================================
 
@@ -161,7 +162,7 @@
 {
     //Update status bar icon
     RCStatusBarIconType iconType = RCIconTypeInactive;
-    if (self.routerManager.router.active)
+    if (self.routerManager.activeRouter.active)
     {
         iconType = RCIconTypeActive;
     }
@@ -205,6 +206,20 @@
 }
 
 //=========================================================================
+
+- (void)initializeApplicationSupportDir
+{
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] createDirectoryAtURLIfNotExists:[[NSFileManager defaultManager] applicationSupportDir]
+                                                              error:&error];
+    
+    if (!success)
+    {
+        DDLogError(@"Can't create application support directory: %@", error);
+    }
+}
+
+//=========================================================================
 #pragma mark NSApplicationDelegate
 //=========================================================================
 
@@ -215,6 +230,9 @@
 
     [self initializeLogging];
 
+    //Create application support directory, if it does not exists yet
+    [self initializeApplicationSupportDir];
+    
     //Add status bar item
     [self addStatusBarItem];
     
@@ -240,8 +258,8 @@
 
     [self registerForNotifications];
 
-    //Start looking for router
-    [self.routerManager restartRouter];
+    //Start last used router
+    [self.routerManager startDefaultRouter];
 }
 
 //=========================================================================
@@ -261,7 +279,7 @@
     [self updateStatusBarIcon];
 
     //Update view controller
-    [self.mainWindowController.mainViewController setRepresentedObject:self.routerManager.router];
+    [self.mainWindowController.mainViewController setRepresentedObject:self.routerManager.activeRouter];
 }
 
 //=========================================================================

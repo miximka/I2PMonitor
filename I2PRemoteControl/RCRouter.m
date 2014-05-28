@@ -8,7 +8,7 @@
 
 #import "RCRouter.h"
 #import "RCRouterProxy.h"
-#import "RCSessionConfig.h"
+#import "RCRouterConnectionSettings.h"
 #import "RCRouterEchoTask.h"
 #import "RCRouterInfoTask.h"
 #import "TKStateMachine.h"
@@ -18,6 +18,7 @@
 #import "RCBWMeasurement.h"
 #import "RCBWMeasurementBuffer.h"
 #import "RCRouterManagerTask.h"
+#import "RCRouterManager.h"
 
 //=========================================================================
 
@@ -29,11 +30,14 @@
 #define DEFAULT_PASSWORD            @"itoopie"
 
 #define STATE_ACTIVE                @"Active"
+#define STATE_VALIDATING_TOKEN      @"ValidatingToken"
 #define STATE_AUTHENTICATING        @"Authenticating"
 #define STATE_WAITING_AUTH_RETRY    @"WaitingAuthRetry"
 
 //State Machine Events
-#define EVENT_START             @"EventStart"
+#define EVENT_AUTHENTICATE      @"EventAuthenticate"
+#define EVENT_VALIDATE_TOKEN    @"EventValidateToken"
+#define EVENT_TOKEN_VALID       @"EventTokenValid"
 #define EVENT_AUTH_FAILED       @"EventAuthFailed"
 #define EVENT_AUTH_SUCCEDED     @"EventAuthSucceeded"
 #define EVENT_RETRY_AUTH        @"EventRetryAuth"
@@ -59,6 +63,10 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
+@interface RCRouterManager (Friend)
+- (void)routerDidUpdateConnectionSettings:(RCRouter *)router;
+@end
+
 @interface RCRouter ()
 @property (nonatomic) RCRouterProxy *proxy;
 @property (nonatomic) RCRouterTaskManager *taskManager;
@@ -71,20 +79,21 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 @property (nonatomic) RCRouterInfo *routerInfo;
 @property (nonatomic) RCBWMeasurementBuffer *measurementsBuffer;
 @property (nonatomic) RCRouterLifecycleStatus lifecycleStatus;
+@property (nonatomic) RCRouterManager *parentManager;
 @end
 
 //=========================================================================
 @implementation RCRouter
 //=========================================================================
 
-- (instancetype)initWithSessionConfig:(RCSessionConfig *)sessionConfig
+- (instancetype)initWithConnectionSettings:(RCRouterConnectionSettings *)connectionSettings
 {
     self = [super init];
     if (self)
     {
+        _connectionSettings = connectionSettings;
         _lifecycleStatus = kRouterLifecycleUnknownStatus;
         _measurementsBuffer = [[RCBWMeasurementBuffer alloc] initWithCapacity:MEASUREMENTS_BUFFER_CAPACITY];
-        _sessionConfig = sessionConfig;
         _authRetryCounter = 0;
     }
     return self;
@@ -98,6 +107,13 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     //Initialize States
     
     TKState *idleState = [TKState stateWithName:@"Idle"];
+    
+    TKState *validatingTokenState = [TKState stateWithName:STATE_VALIDATING_TOKEN];
+    [validatingTokenState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
+        
+        [self validateAuthToken];
+        
+    }];
     
     TKState *authenticatingState = [TKState stateWithName:STATE_AUTHENTICATING];
     [authenticatingState setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
@@ -144,6 +160,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     }];
 
     [stateMachine addStates:@[idleState,
+                              validatingTokenState,
                               authenticatingState,
                               waitingAuthRetryState,
                               activeState]];
@@ -151,13 +168,18 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     //**********************
     //Initialize Events
     
-    TKEvent *startEvent = [TKEvent eventWithName:EVENT_START transitioningFromStates:@[idleState] toState:authenticatingState];
+    TKEvent *validateTokenEvent = [TKEvent eventWithName:EVENT_VALIDATE_TOKEN transitioningFromStates:@[idleState] toState:validatingTokenState];
+    TKEvent *authenticateEvent = [TKEvent eventWithName:EVENT_AUTHENTICATE transitioningFromStates:@[idleState, validatingTokenState]
+                                                toState:authenticatingState];
+    TKEvent *tokenValidEvent = [TKEvent eventWithName:EVENT_TOKEN_VALID transitioningFromStates:@[validatingTokenState] toState:activeState];
     TKEvent *authErrorEvent = [TKEvent eventWithName:EVENT_AUTH_FAILED transitioningFromStates:@[authenticatingState] toState:waitingAuthRetryState];
     TKEvent *authSucceessEvent = [TKEvent eventWithName:EVENT_AUTH_SUCCEDED transitioningFromStates:@[authenticatingState] toState:activeState];
     TKEvent *retryAuthEvent = [TKEvent eventWithName:EVENT_RETRY_AUTH transitioningFromStates:@[waitingAuthRetryState] toState:authenticatingState];
     TKEvent *connectionErrorEvent = [TKEvent eventWithName:EVENT_CONNECTION_ERROR transitioningFromStates:@[activeState] toState:waitingAuthRetryState];
     
-    [stateMachine addEvents:@[startEvent,
+    [stateMachine addEvents:@[validateTokenEvent,
+                              tokenValidEvent,
+                              authenticateEvent,
                               authErrorEvent,
                               authSucceessEvent,
                               retryAuthEvent,
@@ -200,8 +222,36 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 - (BOOL)eventStart
 {
     DDLogInfo(@"Connect to router...");
-    BOOL success = [self fireEvent:EVENT_START];
+    BOOL success = NO;
+    
+    //Decide which event to produce
+    if (self.connectionSettings.authToken != nil)
+    {
+        //Validate token
+        success = [self eventValidateToken];
+    }
+    else
+    {
+        //Simply start authentication process
+        success = [self eventAuthenticate];
+    }
 
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventValidateToken
+{
+    BOOL success = [self fireEvent:EVENT_VALIDATE_TOKEN];
+    return success;
+}
+
+//=========================================================================
+
+- (BOOL)eventAuthenticate
+{
+    BOOL success = [self fireEvent:EVENT_AUTHENTICATE];
     return success;
 }
 
@@ -209,6 +259,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 - (BOOL)isInvalidatingAuthTokenError:(NSError *)error
 {
+    //TODO: Implement me
     //    -32003 – Authentication token doesn't exist.
     //    -32004 – The provided authentication token was expired and will be removed.
     return YES;
@@ -225,7 +276,7 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     if ([self isInvalidatingAuthTokenError:error])
     {
         DDLogInfo(@"Invalidate existing auth token");
-        [self.sessionConfig setAuthToken:nil];
+        [self.connectionSettings setAuthToken:nil];
     }
     
     BOOL success = [self fireEvent:EVENT_AUTH_FAILED];    return success;
@@ -264,6 +315,50 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
+- (BOOL)eventTokenValid
+{
+    BOOL success = [self fireEvent:EVENT_TOKEN_VALID];
+    return success;
+}
+
+//=========================================================================
+
+- (void)authTokenValidationSucceeded
+{
+    DDLogDebug(@"Authentication token is still valid");
+    [self eventTokenValid];
+}
+
+//=========================================================================
+
+- (void)authTokenValidationFailedWithError:(NSError *)error
+{
+    DDLogDebug(@"Authentication token validation failed: %@", error);
+    [self eventAuthenticate];
+}
+
+//=========================================================================
+
+- (void)validateAuthToken
+{
+    DDLogDebug(@"Validate authentication token");
+    
+    //To validate existing authentication token we simply send echo request to server and analyze the response
+    __weak RCRouter *blockSelf = self;
+    [self.proxy echoWithString:@"fnord" success:^(NSString *result) {
+        
+        //Auth token is still valid
+        [self authTokenValidationSucceeded];
+        
+    } failure:^(NSError *error) {
+
+        [blockSelf authTokenValidationFailedWithError:error];
+
+    }];
+}
+
+//=========================================================================
+
 - (void)didFinishAuthenticationWithServerApi:(long)serverAPI sessionToken:(NSString *)token error:(NSError *)error
 {
     if (error)
@@ -286,6 +381,11 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     
     //Reset retry counter
     self.authRetryCounter = 0;
+
+    self.connectionSettings.authToken = token;
+
+    //Notify parent manager
+    [self.parentManager routerDidUpdateConnectionSettings:self];
     
     //Authentication succeeded
     [self eventAuthenticationSucceeded];
@@ -293,12 +393,9 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
 
 //=========================================================================
 
-- (void)startAuthenticationWithURL:(NSURL *)url authToken:(NSString *)authToken
+- (void)startAuthentication
 {
-    DDLogInfo(@"Starting authentication with URL: %@", url);
-
-    //Create proxy object
-    self.proxy = [[RCRouterProxy alloc] initWithRouterURL:url authToken:authToken];
+    DDLogInfo(@"Starting authentication");
     
     //Send authentication request
     __weak id blockSelf = self;
@@ -313,18 +410,6 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
                          [blockSelf didFinishAuthenticationWithServerApi:0 sessionToken:nil error:error];
                          
                      }];
-}
-
-//=========================================================================
-
-- (void)startAuthentication
-{
-    NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.sessionConfig.host, self.sessionConfig.port];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    
-    NSString *authToken = self.sessionConfig.authToken;
-    
-    [self startAuthenticationWithURL:url authToken:authToken];
 }
 
 //=========================================================================
@@ -383,6 +468,17 @@ static CRRouterInfoOptions routerInfoTaskOptions = kRouterInfoStatus |
     if (self.stateMachine == nil)
     {
         [self initializeStateMachine];
+    }
+    
+    if (self.proxy == nil)
+    {
+        //Create proxy object
+        NSString *urlStr = [NSString stringWithFormat:@"https://%@:%lu", self.connectionSettings.host, self.connectionSettings.port];
+        NSURL *url = [NSURL URLWithString:urlStr];
+        NSString *authToken = self.connectionSettings.authToken;
+        
+        //Create proxy object
+        self.proxy = [[RCRouterProxy alloc] initWithRouterURL:url authToken:authToken];
     }
     
     //Trigger start event

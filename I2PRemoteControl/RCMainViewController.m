@@ -9,7 +9,6 @@
 #import "RCMainViewController.h"
 #import "RCRouter.h"
 #import "RCRouterInfo.h"
-#import "RCSessionConfig.h"
 #import "RCNetworkViewController.h"
 #import "RCPeersViewController.h"
 #import "RCTabsControl.h"
@@ -19,6 +18,7 @@
 #import "RCPreferences.h"
 #import "RCControlViewController.h"
 #import "RCLinkTextField.h"
+#import "RCRouterConnectionSettings.h"
 
 //=========================================================================
 
@@ -118,7 +118,7 @@
 {
     RCRouter *router = (RCRouter *)self.representedObject;
     
-    NSString *str = router.sessionConfig.host;
+    NSString *str = router.connectionSettings.host;
     [self.hostTextField setStringValue:str];
 }
 
@@ -592,7 +592,7 @@
     RCRouter *router = (RCRouter *)self.representedObject;
     
     //Update WebUI url
-    NSString *consoleUrlStr = [NSString stringWithFormat:@"http://%@:%lu", router.sessionConfig.host, router.sessionConfig.consolePort];
+    NSString *consoleUrlStr = [NSString stringWithFormat:@"http://%@:%lu", router.connectionSettings.host, router.connectionSettings.consolePort];
     NSURL *consoleURL = [NSURL URLWithString:consoleUrlStr];
     
     [[NSWorkspace sharedWorkspace] openURL:consoleURL];

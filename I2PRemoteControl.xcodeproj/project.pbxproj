@@ -59,13 +59,16 @@
 		819B7E5D1936012300DF166F /* RCLinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 819B7E5C1936012300DF166F /* RCLinkTextField.m */; };
 		81AA26251929FE2F00A0C1DD /* RCBWMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AA26241929FE2F00A0C1DD /* RCBWMeasurement.m */; };
 		81AA262E192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AA262D192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m */; };
+		81B1A1B019364C3200FF1587 /* RCRouterConnectionSettingsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B1A1AF19364C3200FF1587 /* RCRouterConnectionSettingsDatabase.m */; };
+		81B1A1B91936500400FF1587 /* NSFileManager+SupportDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B1A1B81936500400FF1587 /* NSFileManager+SupportDirectory.m */; };
+		81B1A1BC1936540900FF1587 /* NSMutableDictionary+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B1A1BB1936540900FF1587 /* NSMutableDictionary+Extensions.m */; };
 		81BBC38C1928A54A00752016 /* RCBorderlessPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BBC38B1928A54A00752016 /* RCBorderlessPanel.m */; };
 		81BBC3911928B68900752016 /* RCAttachedWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BBC3901928B68900752016 /* RCAttachedWindowController.m */; };
 		81BBC3941928BCDD00752016 /* RCAttachedPanelBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BBC3931928BCDD00752016 /* RCAttachedPanelBackgroundView.m */; };
 		81C5E6911935EA8200D5E8C8 /* RCValueTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C5E6901935EA8200D5E8C8 /* RCValueTextField.m */; };
 		81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E21920FB22005A82A4 /* RCRouter.m */; };
 		81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E51920FB2F005A82A4 /* RCRouterManager.m */; };
-		81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCSessionConfig.m */; };
+		81CD62EA1920FB57005A82A4 /* RCRouterConnectionSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62E91920FB57005A82A4 /* RCRouterConnectionSettings.m */; };
 		81CD62F01921093C005A82A4 /* RCRouterProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CD62EF1921093C005A82A4 /* RCRouterProxy.m */; };
 		81E99BBB1924059B00D7B1B0 /* RCMainViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */; };
 		81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81EC34811922B4040011D2D8 /* Localizable.strings */; };
@@ -183,6 +186,12 @@
 		81AA26241929FE2F00A0C1DD /* RCBWMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCBWMeasurement.m; sourceTree = "<group>"; };
 		81AA262C192A0ECE00A0C1DD /* RCBWMeasurementBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCBWMeasurementBuffer.h; sourceTree = "<group>"; };
 		81AA262D192A0ECE00A0C1DD /* RCBWMeasurementBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCBWMeasurementBuffer.m; sourceTree = "<group>"; };
+		81B1A1AE19364C3200FF1587 /* RCRouterConnectionSettingsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterConnectionSettingsDatabase.h; sourceTree = "<group>"; };
+		81B1A1AF19364C3200FF1587 /* RCRouterConnectionSettingsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterConnectionSettingsDatabase.m; sourceTree = "<group>"; };
+		81B1A1B71936500400FF1587 /* NSFileManager+SupportDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+SupportDirectory.h"; sourceTree = "<group>"; };
+		81B1A1B81936500400FF1587 /* NSFileManager+SupportDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+SupportDirectory.m"; sourceTree = "<group>"; };
+		81B1A1BA1936540900FF1587 /* NSMutableDictionary+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Extensions.h"; sourceTree = "<group>"; };
+		81B1A1BB1936540900FF1587 /* NSMutableDictionary+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Extensions.m"; sourceTree = "<group>"; };
 		81BBC38A1928A54A00752016 /* RCBorderlessPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCBorderlessPanel.h; sourceTree = "<group>"; };
 		81BBC38B1928A54A00752016 /* RCBorderlessPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCBorderlessPanel.m; sourceTree = "<group>"; };
 		81BBC38F1928B68900752016 /* RCAttachedWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCAttachedWindowController.h; sourceTree = "<group>"; };
@@ -195,8 +204,8 @@
 		81CD62E21920FB22005A82A4 /* RCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouter.m; sourceTree = "<group>"; };
 		81CD62E41920FB2F005A82A4 /* RCRouterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterManager.h; sourceTree = "<group>"; };
 		81CD62E51920FB2F005A82A4 /* RCRouterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterManager.m; sourceTree = "<group>"; };
-		81CD62E81920FB57005A82A4 /* RCSessionConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSessionConfig.h; sourceTree = "<group>"; };
-		81CD62E91920FB57005A82A4 /* RCSessionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSessionConfig.m; sourceTree = "<group>"; };
+		81CD62E81920FB57005A82A4 /* RCRouterConnectionSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterConnectionSettings.h; sourceTree = "<group>"; };
+		81CD62E91920FB57005A82A4 /* RCRouterConnectionSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterConnectionSettings.m; sourceTree = "<group>"; };
 		81CD62EB19210156005A82A4 /* RCRouterApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCRouterApi.h; sourceTree = "<group>"; };
 		81CD62EE1921093C005A82A4 /* RCRouterProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterProxy.h; sourceTree = "<group>"; };
 		81CD62EF1921093C005A82A4 /* RCRouterProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterProxy.m; sourceTree = "<group>"; };
@@ -487,15 +496,28 @@
 			name = Tabs;
 			sourceTree = "<group>";
 		};
+		81B1A1B319364FB600FF1587 /* Differ */ = {
+			isa = PBXGroup;
+			children = (
+				81B1A1B71936500400FF1587 /* NSFileManager+SupportDirectory.h */,
+				81B1A1B81936500400FF1587 /* NSFileManager+SupportDirectory.m */,
+				81B1A1BA1936540900FF1587 /* NSMutableDictionary+Extensions.h */,
+				81B1A1BB1936540900FF1587 /* NSMutableDictionary+Extensions.m */,
+			);
+			name = Differ;
+			sourceTree = "<group>";
+		};
 		81CD62E71920FB3A005A82A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				81CD62E41920FB2F005A82A4 /* RCRouterManager.h */,
 				81CD62E51920FB2F005A82A4 /* RCRouterManager.m */,
+				81B1A1AE19364C3200FF1587 /* RCRouterConnectionSettingsDatabase.h */,
+				81B1A1AF19364C3200FF1587 /* RCRouterConnectionSettingsDatabase.m */,
 				81CD62E11920FB22005A82A4 /* RCRouter.h */,
 				81CD62E21920FB22005A82A4 /* RCRouter.m */,
-				81CD62E81920FB57005A82A4 /* RCSessionConfig.h */,
-				81CD62E91920FB57005A82A4 /* RCSessionConfig.m */,
+				81CD62E81920FB57005A82A4 /* RCRouterConnectionSettings.h */,
+				81CD62E91920FB57005A82A4 /* RCRouterConnectionSettings.m */,
 				8194CC24192256FB00759F92 /* RCRouterInfo.h */,
 				8194CC25192256FB00759F92 /* RCRouterInfo.m */,
 				8194CC1C1922085300759F92 /* RCRouterTaskManager.h */,
@@ -511,6 +533,7 @@
 				815BDA3F1926277500E518E9 /* Arrow Panel */,
 				8194CC041921714F00759F92 /* Logging */,
 				8100226A1924D0CD0025273D /* Preferences */,
+				81B1A1B319364FB600FF1587 /* Differ */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -678,6 +701,7 @@
 				81BBC38C1928A54A00752016 /* RCBorderlessPanel.m in Sources */,
 				81BBC3911928B68900752016 /* RCAttachedWindowController.m in Sources */,
 				818C26C8192CDDD100D64A62 /* RCTabsControl.m in Sources */,
+				81B1A1B019364C3200FF1587 /* RCRouterConnectionSettingsDatabase.m in Sources */,
 				817A81F01933ECF60010F7CD /* RCControlButtonCell.m in Sources */,
 				8194CC1E1922085300759F92 /* RCRouterTaskManager.m in Sources */,
 				8100229519255FC60025273D /* RCLoginItemManager.m in Sources */,
@@ -685,6 +709,7 @@
 				8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */,
 				817A81F31934878E0010F7CD /* RCControlButton.m in Sources */,
 				8194CC1819217F1900759F92 /* RCTask.m in Sources */,
+				81B1A1B91936500400FF1587 /* NSFileManager+SupportDirectory.m in Sources */,
 				815BDA441926278600E518E9 /* RCArrowPanel.m in Sources */,
 				8100228C1924F77F0025273D /* RCToolbar.m in Sources */,
 				810022821924EF6F0025273D /* RCPrefsGeneralViewController.m in Sources */,
@@ -698,6 +723,7 @@
 				81CD62E61920FB2F005A82A4 /* RCRouterManager.m in Sources */,
 				8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */,
 				818C26CB192D093600D64A62 /* RCTabsControlCell.m in Sources */,
+				81B1A1BC1936540900FF1587 /* NSMutableDictionary+Extensions.m in Sources */,
 				814F92FB1926B5EE00635B1C /* RCContentView.m in Sources */,
 				817A81F61934D8290010F7CD /* RCRouterManagerTask.m in Sources */,
 				81CD62E31920FB22005A82A4 /* RCRouter.m in Sources */,
@@ -707,7 +733,7 @@
 				815AAE621928F2EA0057C123 /* RCMainWindowController.m in Sources */,
 				81AA26251929FE2F00A0C1DD /* RCBWMeasurement.m in Sources */,
 				817A81ED1933E9620010F7CD /* RCControlViewController.m in Sources */,
-				81CD62EA1920FB57005A82A4 /* RCSessionConfig.m in Sources */,
+				81CD62EA1920FB57005A82A4 /* RCRouterConnectionSettings.m in Sources */,
 				815AAE691928F88B0057C123 /* RCMainViewController.m in Sources */,
 				8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */,
 				81BBC3941928BCDD00752016 /* RCAttachedPanelBackgroundView.m in Sources */,

@@ -9,14 +9,21 @@
 #import "RCRouterManager.h"
 #import "RCPreferences.h"
 #import "RCRouter.h"
-#import "RCSessionConfig.h"
+#import "RCRouterConnectionSettings.h"
+#import "RCRouterConnectionSettingsDatabase.h"
 
 //=========================================================================
 
+#define ROUTER_SETTING_UUID     @"UUID"
+
 NSString * const RCManagerDidSetRouterNotification = @"RCManagerDidSetRouterNotification";
 
+@interface RCRouter (Friend)
+- (void)setParentManager:(RCRouterManager *)manager;
+@end
+
 @interface RCRouterManager ()
-@property (nonatomic) RCRouter *router;
+@property (nonatomic) RCRouter *activeRouter;
 @end
 
 //=========================================================================
@@ -58,35 +65,62 @@ NSString * const RCManagerDidSetRouterNotification = @"RCManagerDidSetRouterNoti
 
 //=========================================================================
 
-- (RCRouter *)initializedRouter
+- (RCRouter *)activeRouter
 {
-    RCSessionConfig *config = [[RCSessionConfig alloc] initWithHost:[RCPrefs routerHost]
-                                                               port:[RCPrefs routerPort]];
-    
-    RCRouter *router = [[RCRouter alloc] initWithSessionConfig:config];
-    return router;
+    return _activeRouter;
 }
 
 //=========================================================================
 
-- (void)restartRouter
+- (void)startRouter:(RCRouter *)router
 {
-    if (self.router != nil)
-    {
-        //Stop current router
-        [self.router terminate];
-    }
-
-    //Create new router based on currect connection settings
-    RCRouter *router = [self initializedRouter];
+    //Stop current active router
+    [self _stopActiveRouter];
     
-    //Remember router
-    [self setRouter:router];
-    
-    //Start router
+    self.activeRouter = router;
+    [router setParentManager:self];
     [router start];
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:RCManagerDidSetRouterNotification object:self];
+}
+
+//=========================================================================
+
+- (void)_stopActiveRouter
+{
+    [self.activeRouter terminate];
+    self.activeRouter = nil;
+}
+
+//=========================================================================
+
+- (void)stopActiveRouter
+{
+    [self _stopActiveRouter];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCManagerDidSetRouterNotification object:self];
+}
+
+//=========================================================================
+
+- (void)startDefaultRouter
+{
+    //Stop current router, if any
+    [self _stopActiveRouter];
+    
+    //Get connection settings from preferences
+    RCRouterConnectionSettings *settings = [[RCRouterConnectionSettingsDatabase sharedDatabase] routerSettingsForHost:[RCPrefs routerHost] andPort:[RCPrefs routerPort]];
+    
+    if (settings == nil)
+    {
+        //There are no saved connection settings yet, so create them
+        settings = [[RCRouterConnectionSettings alloc] init];
+        settings.identifier = [[NSUUID UUID] UUIDString];
+        settings.host = [RCPrefs routerHost];
+        settings.port = [RCPrefs routerPort];
+    }
+    
+    RCRouter *router = [[RCRouter alloc] initWithConnectionSettings:settings];
+    [self startRouter:router];
 }
 
 //=========================================================================
@@ -96,7 +130,18 @@ NSString * const RCManagerDidSetRouterNotification = @"RCManagerDidSetRouterNoti
 - (void)preferenceChangedForKey:(NSString *)aKey
 {
     //Host or port have been changed
-    [self restartRouter];
+    [self startDefaultRouter];
+}
+
+//=========================================================================
+#pragma mark Callback Notifications from Router
+//=========================================================================
+
+- (void)routerDidUpdateConnectionSettings:(RCRouter *)router
+{
+    //Write changed settings to database
+    [[RCRouterConnectionSettingsDatabase sharedDatabase] rememberRouterSettings:router.connectionSettings];
+    [[RCRouterConnectionSettingsDatabase sharedDatabase] writeSettings];
 }
 
 //=========================================================================

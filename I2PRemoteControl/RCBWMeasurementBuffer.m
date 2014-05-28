@@ -92,16 +92,23 @@
 
 - (void)removeFirstObject
 {
+    BOOL referenceMeasurementDeleted = _maxInboundMeasurementIndex == 0 || _maxOutboundMeasurementIndex == 0;
+    
     //Remove oldest element
     [_buffer removeObjectAtIndex:0];
 
-    if (_maxInboundMeasurementIndex == 0 || _maxOutboundMeasurementIndex == 0)
+    if (referenceMeasurementDeleted)
     {
         //Max inboud/outbound element has been removed, we have to find new max elements
         [self findMaxMeasurementIndexes:&_maxInboundMeasurementIndex outbound:&_maxOutboundMeasurementIndex];
         
         _maxInbound = [[_buffer objectAtIndex:_maxInboundMeasurementIndex] inbound];
         _maxOutbound = [[_buffer objectAtIndex:_maxOutboundMeasurementIndex] inbound];
+    }
+    else
+    {
+        _maxInboundMeasurementIndex--;
+        _maxOutboundMeasurementIndex--;
     }
 }
 

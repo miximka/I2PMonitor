@@ -120,7 +120,7 @@
 {
     [self registerForNotifications];
 
-    [self setRouter:self.routerManager.router];
+    [self setRouter:self.routerManager.activeRouter];
     [self updateConnectionStatus];
 }
 
@@ -178,7 +178,7 @@
 
 - (void)managerDidSetRouter:(NSNotification *)notification
 {
-    [self setRouter:self.routerManager.router];
+    [self setRouter:self.routerManager.activeRouter];
     [self updateConnectionStatus];
 }
 

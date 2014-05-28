@@ -1,5 +1,5 @@
 //
-//  RCSessionConfig.h
+//  RCRouterConnectionSettings.h
 //  I2PRemoteControl
 //
 //  Created by miximka on 12/05/14.
@@ -9,14 +9,17 @@
 #import <Foundation/Foundation.h>
 
 //=========================================================================
-@interface RCSessionConfig : NSObject
+@interface RCRouterConnectionSettings : NSObject
 //=========================================================================
 
-- (instancetype)initWithHost:(NSString *)host port:(NSUInteger)port;
+- (instancetype)initWithDictionary:(NSDictionary *)settings;
 
+@property (nonatomic) NSString *identifier;
 @property (nonatomic) NSString *host;
 @property (nonatomic) NSUInteger port;
 @property (nonatomic) NSString *authToken;
+
+- (NSDictionary *)dictionaryRepresentation;
 
 /**
     Console (i.e. WebUI) port 7657

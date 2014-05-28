@@ -19,8 +19,20 @@ extern NSString * const RCManagerDidSetRouterNotification;
 @interface RCRouterManager : NSObject <RCPreferencesObserver>
 //=========================================================================
 
-@property (nonatomic, readonly) RCRouter *router;
-- (void)restartRouter;
+/**
+    Returns currently active router.
+ */
+- (RCRouter *)activeRouter;
+
+/**
+    Starts router configured with connection settings from application preferences
+ */
+- (void)startDefaultRouter;
+
+/**
+    Stops currently active router
+ */
+- (void)stopActiveRouter;
 
 //=========================================================================
 @end

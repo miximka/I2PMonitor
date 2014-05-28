@@ -1,30 +1,19 @@
 //
-//  RCSessionConfig.m
+//  NSFileManager+SupportDirectory.h
 //  I2PRemoteControl
 //
-//  Created by miximka on 12/05/14.
+//  Created by miximka on 28/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
 //
 
-#import "RCSessionConfig.h"
-
-#define DEFAULT_WEBUI_CONSOLE_PORT 7657
+#import <Foundation/Foundation.h>
 
 //=========================================================================
-@implementation RCSessionConfig
+@interface NSFileManager (SupportDirectory)
 //=========================================================================
 
-- (instancetype)initWithHost:(NSString *)host port:(NSUInteger)port
-{
-    self = [super init];
-    if (self)
-    {
-        _host = host;
-        _port = port;
-        _consolePort = DEFAULT_WEBUI_CONSOLE_PORT;
-    }
-    return self;
-}
+- (NSURL *)applicationSupportDir;
+- (BOOL)createDirectoryAtURLIfNotExists:(NSURL *)dirURL error:(NSError **)error;
 
 //=========================================================================
 @end

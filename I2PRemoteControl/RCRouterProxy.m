@@ -13,7 +13,7 @@
 
 @interface RCRouterProxy ()
 @property (nonatomic) AFJSONRPCClient *client;
-@property (nonatomic) NSString *token;
+@property (nonatomic) NSString *authToken;
 @end
 
 //=========================================================================
@@ -55,7 +55,7 @@
                           long serverAPI = [[responseDict objectForKey:PARAM_KEY_API] longValue];
                           NSString *token = [responseDict objectForKey:PARAM_KEY_TOKEN];
                           
-                          blockSelf.token = token;
+                          blockSelf.authToken = token;
                           success(serverAPI, token);
                           
                       }
@@ -70,7 +70,7 @@
 
 - (void)echoWithString:(NSString *)string success:(void(^)(NSString *result))success failure:(void(^)(NSError *error))failure
 {
-    NSDictionary *params = @{PARAM_KEY_TOKEN : self.token,
+    NSDictionary *params = @{PARAM_KEY_TOKEN : self.authToken,
                              PARAM_KEY_ECHO : string};
     
     [self.client invokeMethod:METHOD_ECHO
@@ -94,7 +94,7 @@
 
 - (void)routerInfoWithOptions:(CRRouterInfoOptions)options success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure
 {
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.token forKey:PARAM_KEY_TOKEN];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.authToken forKey:PARAM_KEY_TOKEN];
     
     //Fill the optional parameters
     if (options & kRouterInfoStatus)
@@ -161,7 +161,7 @@
 
 - (void)routerManagerWithAction:(RCRouterManagerAction)action success:(void(^)(NSDictionary *routerInfoDict))success failure:(void(^)(NSError *error))failure
 {
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.token forKey:PARAM_KEY_TOKEN];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.authToken forKey:PARAM_KEY_TOKEN];
     NSString *actionKey = nil;
     
     switch (action)

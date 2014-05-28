@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RCRouterTaskManager.h"
 
-@class RCSessionConfig;
+@class RCRouterConnectionSettings;
 @class RCRouterInfo;
 @class RCBWMeasurementBuffer;
 
@@ -31,13 +31,13 @@ typedef NS_ENUM(NSInteger, RCRouterLifecycleStatus)
 @interface RCRouter : NSObject <RCRouterTaskManagerDelegate>
 //=========================================================================
 
-- (instancetype)initWithSessionConfig:(RCSessionConfig *)sessionConfig;
+- (instancetype)initWithConnectionSettings:(RCRouterConnectionSettings *)connectionSettings;
+
+@property (nonatomic, readonly) RCRouterConnectionSettings *connectionSettings;
 
 //=========================================================================
 #pragma mark Router Connection Handling
 //=========================================================================
-
-@property (nonatomic, readonly) RCSessionConfig *sessionConfig;
 
 /**
     Returns YES if session to the router is active
