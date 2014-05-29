@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46BD1360B47549FEA28EC5FA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB75EA9912A427D8F9A86D7 /* libPods.a */; };
 		810022721924E01C0025273D /* RCApplicationPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022711924E01C0025273D /* RCApplicationPreferences.m */; };
 		810022771924E09A0025273D /* RCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 810022761924E09A0025273D /* RCPreferences.m */; };
 		8100227C1924EF680025273D /* RCPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8100227B1924EF680025273D /* RCPreferencesWindowController.m */; };
@@ -25,7 +26,6 @@
 		812687C319202666002A0571 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687C219202666002A0571 /* XCTest.framework */; };
 		812687C419202666002A0571 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812687A319202666002A0571 /* Cocoa.framework */; };
 		812687CC19202666002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687CA19202666002A0571 /* InfoPlist.strings */; };
-		812687CE19202666002A0571 /* I2PRemoteControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 812687CD19202666002A0571 /* I2PRemoteControlTests.m */; };
 		812687DA19202851002A0571 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812687DC19202851002A0571 /* MainMenu.xib */; };
 		812687E11920287B002A0571 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 812687E31920287B002A0571 /* Credits.rtf */; };
 		812687E41920287F002A0571 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 812687E61920287F002A0571 /* InfoPlist.strings */; };
@@ -73,7 +73,6 @@
 		81E99BBB1924059B00D7B1B0 /* RCMainViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */; };
 		81EC347F1922B4040011D2D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81EC34811922B4040011D2D8 /* Localizable.strings */; };
 		81FFF3E21927FB4200D18156 /* RCGraphTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 81FFF3E11927FB4200D18156 /* RCGraphTextField.m */; };
-		A8D6809BEF0648D9A70F6BD2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4CED1204DC40EC8CB7F0DA /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,8 +86,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7E4CED1204DC40EC8CB7F0DA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		5F56904A54E448FC87262698 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		810022701924E01C0025273D /* RCApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCApplicationPreferences.h; sourceTree = "<group>"; };
 		810022711924E01C0025273D /* RCApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCApplicationPreferences.m; sourceTree = "<group>"; };
 		810022751924E09A0025273D /* RCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPreferences.h; sourceTree = "<group>"; };
@@ -109,22 +107,21 @@
 		811432BE1930D0F30028BF64 /* RCNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNotificationView.m; sourceTree = "<group>"; };
 		8115435F192BD92700AC1881 /* RCPeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPeersViewController.h; sourceTree = "<group>"; };
 		81154360192BD92700AC1881 /* RCPeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCPeersViewController.m; sourceTree = "<group>"; };
-		812687A019202666002A0571 /* I2PRemoteControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PRemoteControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		812687A019202666002A0571 /* I2PMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = I2PMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687A319202666002A0571 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		812687A619202666002A0571 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		812687A719202666002A0571 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		812687A819202666002A0571 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		812687AB19202666002A0571 /* I2PRemoteControl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "I2PRemoteControl-Info.plist"; sourceTree = "<group>"; };
+		812687AB19202666002A0571 /* I2PMonitor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "I2PMonitor-Info.plist"; sourceTree = "<group>"; };
 		812687AF19202666002A0571 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		812687B119202666002A0571 /* I2PRemoteControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "I2PRemoteControl-Prefix.pch"; sourceTree = "<group>"; };
+		812687B119202666002A0571 /* I2PMonitor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "I2PMonitor-Prefix.pch"; sourceTree = "<group>"; };
 		812687B519202666002A0571 /* RCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCAppDelegate.h; sourceTree = "<group>"; };
 		812687B619202666002A0571 /* RCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCAppDelegate.m; sourceTree = "<group>"; };
 		812687BB19202666002A0571 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		812687C119202666002A0571 /* I2PRemoteControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = I2PRemoteControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		812687C119202666002A0571 /* I2PMonitorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = I2PMonitorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		812687C219202666002A0571 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		812687C919202666002A0571 /* I2PRemoteControlTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "I2PRemoteControlTests-Info.plist"; sourceTree = "<group>"; };
+		812687C919202666002A0571 /* I2PMonitorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "I2PMonitorTests-Info.plist"; sourceTree = "<group>"; };
 		812687CB19202666002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		812687CD19202666002A0571 /* I2PRemoteControlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = I2PRemoteControlTests.m; sourceTree = "<group>"; };
 		812687DB19202851002A0571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		812687E21920287B002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		812687E51920287F002A0571 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -214,6 +211,7 @@
 		81EC34801922B4040011D2D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81FFF3E01927FB4200D18156 /* RCGraphTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCGraphTextField.h; sourceTree = "<group>"; };
 		81FFF3E11927FB4200D18156 /* RCGraphTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCGraphTextField.m; sourceTree = "<group>"; };
+		8DB75EA9912A427D8F9A86D7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,7 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				812687A419202666002A0571 /* Cocoa.framework in Frameworks */,
-				A8D6809BEF0648D9A70F6BD2 /* libPods.a in Frameworks */,
+				46BD1360B47549FEA28EC5FA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,19 +304,19 @@
 		8126879719202666002A0571 = {
 			isa = PBXGroup;
 			children = (
-				812687A919202666002A0571 /* I2PRemoteControl */,
-				812687C719202666002A0571 /* I2PRemoteControlTests */,
+				812687A919202666002A0571 /* I2PMonitor */,
+				812687C719202666002A0571 /* I2PMonitorTests */,
 				812687A219202666002A0571 /* Frameworks */,
 				812687A119202666002A0571 /* Products */,
-				7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */,
+				5F56904A54E448FC87262698 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
 		812687A119202666002A0571 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				812687A019202666002A0571 /* I2PRemoteControl.app */,
-				812687C119202666002A0571 /* I2PRemoteControlTests.xctest */,
+				812687A019202666002A0571 /* I2PMonitor.app */,
+				812687C119202666002A0571 /* I2PMonitorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,7 +327,7 @@
 				812687A319202666002A0571 /* Cocoa.framework */,
 				812687C219202666002A0571 /* XCTest.framework */,
 				812687A519202666002A0571 /* Other Frameworks */,
-				7E4CED1204DC40EC8CB7F0DA /* libPods.a */,
+				8DB75EA9912A427D8F9A86D7 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -344,7 +342,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		812687A919202666002A0571 /* I2PRemoteControl */ = {
+		812687A919202666002A0571 /* I2PMonitor */ = {
 			isa = PBXGroup;
 			children = (
 				812687B519202666002A0571 /* RCAppDelegate.h */,
@@ -355,33 +353,32 @@
 				812687AA19202666002A0571 /* Supporting Files */,
 				812687D719202802002A0571 /* Resources */,
 			);
-			path = I2PRemoteControl;
+			path = I2PMonitor;
 			sourceTree = "<group>";
 		};
 		812687AA19202666002A0571 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				812687AB19202666002A0571 /* I2PRemoteControl-Info.plist */,
+				812687AB19202666002A0571 /* I2PMonitor-Info.plist */,
 				812687AF19202666002A0571 /* main.m */,
-				812687B119202666002A0571 /* I2PRemoteControl-Prefix.pch */,
+				812687B119202666002A0571 /* I2PMonitor-Prefix.pch */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		812687C719202666002A0571 /* I2PRemoteControlTests */ = {
+		812687C719202666002A0571 /* I2PMonitorTests */ = {
 			isa = PBXGroup;
 			children = (
-				812687CD19202666002A0571 /* I2PRemoteControlTests.m */,
 				81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */,
 				812687C819202666002A0571 /* Supporting Files */,
 			);
-			path = I2PRemoteControlTests;
+			path = I2PMonitorTests;
 			sourceTree = "<group>";
 		};
 		812687C819202666002A0571 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				812687C919202666002A0571 /* I2PRemoteControlTests-Info.plist */,
+				812687C919202666002A0571 /* I2PMonitorTests-Info.plist */,
 				812687CA19202666002A0571 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -550,9 +547,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8126879F19202666002A0571 /* I2PRemoteControl */ = {
+		8126879F19202666002A0571 /* I2PMonitor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 812687D119202666002A0571 /* Build configuration list for PBXNativeTarget "I2PRemoteControl" */;
+			buildConfigurationList = 812687D119202666002A0571 /* Build configuration list for PBXNativeTarget "I2PMonitor" */;
 			buildPhases = (
 				0E65AECAB6C64D25B3D22EF0 /* Check Pods Manifest.lock */,
 				8126879C19202666002A0571 /* Sources */,
@@ -564,14 +561,14 @@
 			);
 			dependencies = (
 			);
-			name = I2PRemoteControl;
+			name = I2PMonitor;
 			productName = I2PRemoteControl;
-			productReference = 812687A019202666002A0571 /* I2PRemoteControl.app */;
+			productReference = 812687A019202666002A0571 /* I2PMonitor.app */;
 			productType = "com.apple.product-type.application";
 		};
-		812687C019202666002A0571 /* I2PRemoteControlTests */ = {
+		812687C019202666002A0571 /* I2PMonitorTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 812687D419202666002A0571 /* Build configuration list for PBXNativeTarget "I2PRemoteControlTests" */;
+			buildConfigurationList = 812687D419202666002A0571 /* Build configuration list for PBXNativeTarget "I2PMonitorTests" */;
 			buildPhases = (
 				812687BD19202666002A0571 /* Sources */,
 				812687BE19202666002A0571 /* Frameworks */,
@@ -582,9 +579,9 @@
 			dependencies = (
 				812687C619202666002A0571 /* PBXTargetDependency */,
 			);
-			name = I2PRemoteControlTests;
+			name = I2PMonitorTests;
 			productName = I2PRemoteControlTests;
-			productReference = 812687C119202666002A0571 /* I2PRemoteControlTests.xctest */;
+			productReference = 812687C119202666002A0571 /* I2PMonitorTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -602,7 +599,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8126879B19202666002A0571 /* Build configuration list for PBXProject "I2PRemoteControl" */;
+			buildConfigurationList = 8126879B19202666002A0571 /* Build configuration list for PBXProject "I2PMonitor" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -615,8 +612,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8126879F19202666002A0571 /* I2PRemoteControl */,
-				812687C019202666002A0571 /* I2PRemoteControlTests */,
+				8126879F19202666002A0571 /* I2PMonitor */,
+				812687C019202666002A0571 /* I2PMonitorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -744,7 +741,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				812687CE19202666002A0571 /* I2PRemoteControlTests.m in Sources */,
 				81E99BBB1924059B00D7B1B0 /* RCMainViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,7 +750,7 @@
 /* Begin PBXTargetDependency section */
 		812687C619202666002A0571 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8126879F19202666002A0571 /* I2PRemoteControl */;
+			target = 8126879F19202666002A0571 /* I2PMonitor */;
 			targetProxy = 812687C519202666002A0571 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -875,50 +871,50 @@
 		};
 		812687D219202666002A0571 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */;
+			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Prefix.pch";
-				INFOPLIST_FILE = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
+				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				PRODUCT_NAME = I2PMonitor;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		812687D319202666002A0571 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */;
+			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Prefix.pch";
-				INFOPLIST_FILE = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
+				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				PRODUCT_NAME = I2PMonitor;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		812687D519202666002A0571 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E66771DF77A44D9B85C57C5 /* Pods.xcconfig */;
+			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PRemoteControl.app/Contents/MacOS/I2PRemoteControl";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PMonitor.app/Contents/MacOS/I2PMonitor";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Prefix.pch";
+				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "I2PRemoteControlTests/I2PRemoteControlTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "I2PMonitorTests/I2PMonitorTests-Info.plist";
+				PRODUCT_NAME = I2PMonitorTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -926,17 +922,18 @@
 		};
 		812687D619202666002A0571 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PRemoteControl.app/Contents/MacOS/I2PRemoteControl";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PMonitor.app/Contents/MacOS/I2PMonitor";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "I2PRemoteControl/Supporting Files/I2PRemoteControl-Prefix.pch";
-				INFOPLIST_FILE = "I2PRemoteControlTests/I2PRemoteControlTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
+				INFOPLIST_FILE = "I2PMonitorTests/I2PMonitorTests-Info.plist";
+				PRODUCT_NAME = I2PMonitorTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -945,7 +942,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8126879B19202666002A0571 /* Build configuration list for PBXProject "I2PRemoteControl" */ = {
+		8126879B19202666002A0571 /* Build configuration list for PBXProject "I2PMonitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				812687CF19202666002A0571 /* Debug */,
@@ -954,7 +951,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		812687D119202666002A0571 /* Build configuration list for PBXNativeTarget "I2PRemoteControl" */ = {
+		812687D119202666002A0571 /* Build configuration list for PBXNativeTarget "I2PMonitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				812687D219202666002A0571 /* Debug */,
@@ -963,7 +960,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		812687D419202666002A0571 /* Build configuration list for PBXNativeTarget "I2PRemoteControlTests" */ = {
+		812687D419202666002A0571 /* Build configuration list for PBXNativeTarget "I2PMonitorTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				812687D519202666002A0571 /* Debug */,

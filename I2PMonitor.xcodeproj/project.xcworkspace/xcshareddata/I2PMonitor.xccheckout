@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E88316E8-3E63-4E07-9D07-034A0394ABAA</string>
+	<string>F7AFD72C-A3D9-442B-BF24-43724A58B6C1</string>
 	<key>IDESourceControlProjectName</key>
-	<string>I2PRemoteControl</string>
+	<string>I2PMonitor</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>6365DB02-BC3D-4284-A637-DF2BDB1DAF92</key>
-		<string>https://github.com/miximka/I2PRemoteControl.git</string>
+		<key>618B0F8F-C002-47C6-B79C-D2D81BE22B62</key>
+		<string>https://github.com/miximka/I2PMonitor.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>I2PRemoteControl.xcodeproj/project.xcworkspace</string>
+	<string>I2PMonitor.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>6365DB02-BC3D-4284-A637-DF2BDB1DAF92</key>
+		<key>618B0F8F-C002-47C6-B79C-D2D81BE22B62</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/miximka/I2PRemoteControl.git</string>
+	<string>https://github.com/miximka/I2PMonitor.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6365DB02-BC3D-4284-A637-DF2BDB1DAF92</string>
+	<string>618B0F8F-C002-47C6-B79C-D2D81BE22B62</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6365DB02-BC3D-4284-A637-DF2BDB1DAF92</string>
+			<string>618B0F8F-C002-47C6-B79C-D2D81BE22B62</string>
 			<key>IDESourceControlWCCName</key>
-			<string>I2PRemoteControl</string>
+			<string>I2PMonitor</string>
 		</dict>
 	</array>
 </dict>
