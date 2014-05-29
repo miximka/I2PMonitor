@@ -315,14 +315,20 @@
 
 - (void)routerDidUpdateRouterInfo:(NSNotification *)notification
 {
-    [self updateGUI];
+    if (self.view.window.isVisible)
+    {
+        [self updateGUI];
+    }
 }
 
 //=========================================================================
 
 - (void)routerDidUpdateBandwidth:(NSNotification *)notification
 {
-    [self updateGUI];
+    if (self.view.window.isVisible)
+    {
+        [self updateGUI];
+    }
 }
 
 //=========================================================================

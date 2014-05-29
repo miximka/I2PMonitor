@@ -45,12 +45,14 @@
 
 - (void)showWindow:(id)sender
 {
+    //Window is about to open, notify main view controller to update UI
+    [self.mainViewController windowWillShow];
+
+    //Open window
     [super showWindow:sender];
     
-    //Window is about to open, start updating UI
+    //Start periodically updating UI
     [self.mainViewController startUpdating];
-    
-    [self.window makeKeyAndOrderFront:self];
 }
 
 //=========================================================================

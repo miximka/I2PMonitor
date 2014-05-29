@@ -41,6 +41,11 @@
 @property (nonatomic, weak) id<RCMainViewControllerDelegate> delegate;
 
 /**
+    Called by window controller just before show the window
+ */
+- (void)windowWillShow;
+
+/**
     Starts periodic UI updates
  */
 - (void)startUpdating;

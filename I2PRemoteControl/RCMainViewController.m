@@ -345,6 +345,14 @@
 
 //=========================================================================
 
+- (void)windowWillShow
+{
+    [self updateGUI];
+    [self.currentController updateGUI];
+}
+
+//=========================================================================
+
 - (void)startUpdating
 {
     DDLogInfo(@"Start updating");

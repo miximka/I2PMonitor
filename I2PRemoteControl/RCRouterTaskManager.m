@@ -12,7 +12,7 @@
 
 //=========================================================================
 
-#define POLL_TIME_INTERVAL  0.5
+#define POLL_TIME_INTERVAL  1.0
 
 @interface RCRouterTaskManager ()
 @property (nonatomic) NSMutableArray *allTasks;
@@ -36,6 +36,9 @@
                                                     selector:@selector(pollTimerFired:)
                                                     userInfo:nil
                                                      repeats:YES];
+        
+        //Allow the system to save resources by firing our timer with not exact time intervals
+        [_pollTimer setTolerance:0.5];
     }
     return self;
 }
