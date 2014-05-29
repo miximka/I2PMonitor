@@ -143,7 +143,7 @@
 
 //=========================================================================
 
-- (void)showArrowPanel
+- (void)showArrow
 {
     NSWindow *statusBarItemWindow = [[self statusBarItemView] window];
     
@@ -154,6 +154,14 @@
 
     [self.arrowPanel setFrame:aRect display:YES];
     [self.arrowPanel makeKeyAndOrderFront:self];
+}
+
+//=========================================================================
+
+- (void)hideArrow
+{
+    [self.arrowPanel close];
+    self.arrowPanel = nil;
 }
 
 //=========================================================================
@@ -207,6 +215,16 @@
 
 //=========================================================================
 
+- (void)showMainWindow
+{
+    [self hideArrow];
+    
+    NSPoint point = [self statusBarItemView].window.frame.origin;
+    [self.mainWindowController showWindowAtPoint:point];
+}
+
+//=========================================================================
+
 - (void)dismissMainWindow
 {
     [[self statusBarItemView] setHighlighted:NO];
@@ -251,7 +269,7 @@
         [RCPrefs synchronize];
         
         //Show window with the pointing arrow to the login item
-        [self showArrowPanel];
+        [self showArrow];
     }
 
     //Initialize router manager
@@ -311,8 +329,7 @@
 {
     if (view.isHighlighted)
     {
-        NSPoint point = view.window.frame.origin;
-        [self.mainWindowController showWindowAtPoint:point];
+        [self showMainWindow];
     }
     else
     {
