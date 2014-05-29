@@ -15,6 +15,7 @@
 @property (assign, nonatomic) IBOutlet NSPanel *arrowPanel;
 @property (assign, nonatomic) IBOutlet NSMenu *menu;
 
+- (IBAction)openAbout:(id)sender;
 - (IBAction)openPreferences:(id)sender;
 
 //=========================================================================

@@ -689,7 +689,7 @@
                 <menuItem title="About" id="Ph1-OX-aQJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="orderFrontStandardAboutPanel:" target="-3" id="Qmp-AC-gId"/>
+                        <action selector="openAbout:" target="Voe-Tx-rLC" id="8gZ-ou-nAL"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Open Preferences..." id="0la-aa-Ovf">

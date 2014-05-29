@@ -185,6 +185,14 @@
 
 //=========================================================================
 
+- (IBAction)openAbout:(id)sender
+{
+    [NSApp activateIgnoringOtherApps:YES];
+    [NSApp orderFrontStandardAboutPanel:self];
+}
+
+//=========================================================================
+
 - (IBAction)openPreferences:(id)sender
 {
 	if (!self.prefsWindowController)
