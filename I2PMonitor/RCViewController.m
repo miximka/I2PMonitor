@@ -1,6 +1,6 @@
 //
 //  RCViewController.m
-//  I2PRemoteControl
+//  I2PMonitor
 //
 //  Created by miximka on 16/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.

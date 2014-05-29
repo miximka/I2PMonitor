@@ -1,6 +1,6 @@
 //
 //  RCRouterBasicInfoTask
-//  I2PRemoteControl
+//  I2PMonitor
 //
 //  Created by miximka on 13/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.

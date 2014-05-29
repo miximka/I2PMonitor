@@ -1,6 +1,6 @@
 //
 //  RCRouter.m
-//  I2PRemoteControl
+//  I2PMonitor
 //
 //  Created by miximka on 12/05/14.
 //  Copyright (c) 2014 miximka. All rights reserved.
