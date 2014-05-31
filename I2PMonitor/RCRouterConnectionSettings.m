@@ -38,6 +38,13 @@
 
 //=========================================================================
 
+- (instancetype)init
+{
+    return [self initWithDictionary:nil];
+}
+
+//=========================================================================
+
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *dict = [NSMutableDictionary new];
