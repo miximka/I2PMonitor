@@ -698,7 +698,14 @@
                         <action selector="openPreferences:" target="Voe-Tx-rLC" id="YrJ-as-AQB"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="Nc6-C1-opU"/>
+                <menuItem isSeparatorItem="YES" id="16y-5o-2d4"/>
+                <menuItem title="Acknowledgments" id="GS1-LP-GKt">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openAcknowledgments:" target="Voe-Tx-rLC" id="bQq-BG-nbO"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="kii-uv-GtQ"/>
                 <menuItem title="Quit I2PMonitor" id="2re-lU-vpG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

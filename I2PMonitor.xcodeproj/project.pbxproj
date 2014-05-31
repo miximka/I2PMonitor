@@ -48,6 +48,7 @@
 		817A81F61934D8290010F7CD /* RCRouterManagerTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 817A81F51934D8290010F7CD /* RCRouterManagerTask.m */; };
 		818C26C8192CDDD100D64A62 /* RCTabsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 818C26C7192CDDD100D64A62 /* RCTabsControl.m */; };
 		818C26CB192D093600D64A62 /* RCTabsControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 818C26CA192D093600D64A62 /* RCTabsControlCell.m */; };
+		818EDCFE1939E966002B16A2 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 818EDCFD1939E966002B16A2 /* Acknowledgments.rtf */; };
 		81903C671933CF21006B3E5F /* Control.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81903C661933CF21006B3E5F /* Control.xib */; };
 		8194CC011921518200759F92 /* RCJsonRpcClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC001921518200759F92 /* RCJsonRpcClient.m */; };
 		8194CC071921715B00759F92 /* RCLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8194CC061921715B00759F92 /* RCLogFormatter.m */; };
@@ -160,6 +161,7 @@
 		818C26C7192CDDD100D64A62 /* RCTabsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTabsControl.m; sourceTree = "<group>"; };
 		818C26C9192D093600D64A62 /* RCTabsControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTabsControlCell.h; sourceTree = "<group>"; };
 		818C26CA192D093600D64A62 /* RCTabsControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTabsControlCell.m; sourceTree = "<group>"; };
+		818EDCFD1939E966002B16A2 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		81903C661933CF21006B3E5F /* Control.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Control.xib; sourceTree = "<group>"; };
 		8194CBFF1921518200759F92 /* RCJsonRpcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCJsonRpcClient.h; sourceTree = "<group>"; };
 		8194CC001921518200759F92 /* RCJsonRpcClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCJsonRpcClient.m; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 				81EC34811922B4040011D2D8 /* Localizable.strings */,
 				812687BB19202666002A0571 /* Images.xcassets */,
 				812687E31920287B002A0571 /* Credits.rtf */,
+				818EDCFD1939E966002B16A2 /* Acknowledgments.rtf */,
 				812687E61920287F002A0571 /* InfoPlist.strings */,
 			);
 			path = Resources;
@@ -630,6 +633,7 @@
 				815AAE661928F8720057C123 /* MainView.xib in Resources */,
 				81581AC619263B6300289DD5 /* Network.xib in Resources */,
 				810022861924EFA50025273D /* PreferencesGeneral.xib in Resources */,
+				818EDCFE1939E966002B16A2 /* Acknowledgments.rtf in Resources */,
 				812687E11920287B002A0571 /* Credits.rtf in Resources */,
 				810022841924EF9D0025273D /* Preferences.xib in Resources */,
 				812687DA19202851002A0571 /* MainMenu.xib in Resources */,

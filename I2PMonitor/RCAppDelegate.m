@@ -201,6 +201,14 @@
 
 //=========================================================================
 
+- (IBAction)openAcknowledgments:(id)sender
+{
+    NSString *acknowledgmentsFile = [[NSBundle mainBundle] pathForResource:@"Acknowledgments" ofType:@"rtf"];
+    [[NSWorkspace sharedWorkspace] openFile:acknowledgmentsFile];
+}
+
+//=========================================================================
+
 - (IBAction)openPreferences:(id)sender
 {
 	if (!self.prefsWindowController)

@@ -16,6 +16,7 @@
 @property (assign, nonatomic) IBOutlet NSMenu *menu;
 
 - (IBAction)openAbout:(id)sender;
+- (IBAction)openAcknowledgments:(id)sender;
 - (IBAction)openPreferences:(id)sender;
 
 //=========================================================================
