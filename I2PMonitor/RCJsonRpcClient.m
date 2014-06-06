@@ -22,8 +22,8 @@
         //TODO: Disable invalid certificates per default, but let user decide whether he wants to trust such certificates if one is found (like the all browser do).
         self.securityPolicy.allowInvalidCertificates = YES;
 
-        //Increase timeout interval for slow/busy RaspberryPi. My expirience has shown sometimes up to 55 sec delay until successfuly response...
-        self.requestSerializer.timeoutInterval = 60;
+        //Increase timeout interval for slow/busy RaspberryPi or Minix. My expirience has shown sometimes up to 70 sec delay until successfuly response...
+        self.requestSerializer.timeoutInterval = 90;
         
         NSSet *acceptableContentTypes = self.responseSerializer.acceptableContentTypes;
         if (![acceptableContentTypes containsObject:@"application/json"])
