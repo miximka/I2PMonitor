@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "StatusBarIcon_Inactive.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "Icon_Inactive_32x32.png"
+      "filename" : "StatusBarIcon_Inactive@2x.png"
     }
   ],
   "info" : {
