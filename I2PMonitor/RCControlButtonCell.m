@@ -55,22 +55,6 @@
 
 - (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
 {
-//    NSSize cellSize = frame.size;//controlView.frame.size;
-//    
-//    //Center of the cell
-//    NSPoint center = NSMakePoint(cellSize.width/2, cellSize.height/2);
-//    
-//    //Calculate title bounding rect
-//    NSRect titleBoundingRect = [title boundingRectWithSize:cellSize options:NSStringDrawingUsesFontLeading];
-//
-//    //Calculate title frame
-//    NSRect titleFrame = NSMakeRect(center.x - titleBoundingRect.size.width/2, center.y + titleBoundingRect.origin.y + titleBoundingRect.size.height/2 - CUSTOM_TITLE_BOTTOM_PADDING, titleBoundingRect.size.width, titleBoundingRect.size.height);
-//
-//    //Draw title
-//    [title drawWithRect:titleFrame options:0];
-//    
-//    return titleFrame;
-    
     NSRect updatedFrame = frame;
     updatedFrame.origin.y -= CUSTOM_TITLE_BOTTOM_PADDING;
     

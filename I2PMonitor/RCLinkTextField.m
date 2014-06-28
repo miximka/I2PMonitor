@@ -12,7 +12,7 @@
 
 @interface RCLinkTextField ()
 @property (nonatomic) NSTrackingRectTag trackingRect;
-@property (nonatomic, getter = isHighlighted) BOOL highlighted;
+@property (nonatomic) BOOL privateHighlighted;
 @end
 
 //=========================================================================
@@ -66,9 +66,28 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    _highlighted = highlighted;
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+        //We are on 10.9 or earlier
+        _privateHighlighted = highlighted;
+    } else {
+        //10.10 or later
+        [super setHighlighted:highlighted];
+    }
     
     [self updateText];
+}
+
+//=========================================================================
+
+- (BOOL)isHighlighted
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+        //We are on 10.9 or earlier
+        return _privateHighlighted;
+    }
+    
+    //10.10 or later
+    return [super isHighlighted];
 }
 
 //=========================================================================

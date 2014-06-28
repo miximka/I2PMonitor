@@ -27,7 +27,6 @@ typedef NS_ENUM(NSUInteger, RCStatusBarIconType)
 
 @property (nonatomic, weak) id<RCStatusBarViewDelegate> delegate;
 @property (nonatomic) NSStatusItem *statusItem;
-@property (nonatomic, getter = isHighlighted) BOOL highlighted;
 @property (nonatomic) RCStatusBarIconType iconType;
 
 //=========================================================================

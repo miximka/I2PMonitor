@@ -882,6 +882,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
 				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = I2PMonitor;
 				WRAPPER_EXTENSION = app;
 			};
@@ -896,6 +897,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
 				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = I2PMonitor;
 				WRAPPER_EXTENSION = app;
 			};

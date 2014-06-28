@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RCPeersViewController">
@@ -22,7 +22,6 @@
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="52I-Fh-WqB">
                     <rect key="frame" x="8" y="172" width="118" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Peers" id="JPp-Cy-zi6">
                         <font key="font" size="20" name="HelveticaNeue-Thin"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,7 +30,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OEv-cu-LgN">
                     <rect key="frame" x="8" y="51" width="118" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tunnels" id="LXY-1i-fCu">
                         <font key="font" size="20" name="HelveticaNeue-Thin"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,7 +38,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfp-Ae-tAW">
                     <rect key="frame" x="8" y="150" width="56" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Active" id="gg4-d9-7HN">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,7 +46,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LkB-81-09J">
                     <rect key="frame" x="8" y="131" width="56" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Fast" id="Dy0-pT-8PI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -58,7 +54,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gh7-Y5-uBB" customClass="RCValueTextField">
                     <rect key="frame" x="138" y="150" width="101" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="0" id="YMr-GJ-bIi">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,7 +62,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="InH-6q-Clk">
                     <rect key="frame" x="10" y="29" width="71" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Participating" id="dfX-7g-n0w">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,7 +70,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7lM-rf-AwA" customClass="RCValueTextField">
                     <rect key="frame" x="140" y="29" width="101" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="0" id="xtb-hu-GSF">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -85,7 +78,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RKF-te-d7E" customClass="RCValueTextField">
                     <rect key="frame" x="138" y="131" width="101" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="0" id="yLS-D2-XPN">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -94,7 +86,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bcc-vy-xXt">
                     <rect key="frame" x="8" y="112" width="76" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="High capacity" id="njx-yS-W4J">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -103,7 +94,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KvI-KU-MuO" customClass="RCValueTextField">
                     <rect key="frame" x="138" y="112" width="101" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="0" id="Nhb-VS-5vl">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -112,7 +102,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UmK-y0-hcX">
                     <rect key="frame" x="8" y="93" width="41" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Known" id="b45-v1-m3a">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.74609375" green="0.74609375" blue="0.74609375" alpha="1" colorSpace="calibratedRGB"/>
@@ -121,7 +110,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1y-8m-1JP" customClass="RCValueTextField">
                     <rect key="frame" x="138" y="93" width="101" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="0" id="FwV-lH-JmS">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

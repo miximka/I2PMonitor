@@ -8,9 +8,8 @@
 
 #import "RCStatusBarView.h"
 
-//=========================================================================
-
 @interface RCStatusBarView ()
+@property (nonatomic) BOOL privateHighlighted;
 @end
 
 //=========================================================================
@@ -35,11 +34,28 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    if (_highlighted != highlighted)
-    {
-        _highlighted = highlighted;
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+        //We are on 10.9 or earlier
+        _privateHighlighted = highlighted;
         [self setNeedsDisplay];
+        return;
     }
+
+    //10.10 or later
+    [super setHighlighted:highlighted];
+}
+
+//=========================================================================
+
+- (BOOL)isHighlighted
+{
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+        //We are on 10.9 or earlier
+        return _privateHighlighted;
+    }
+
+    //10.10 or later
+    return [super isHighlighted];
 }
 
 //=========================================================================
@@ -90,7 +106,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	//Draw background (probably highlighted)
-	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:self.isHighlighted];
+	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:self.highlighted];
 	
 	//Draw image
 	[super drawRect:dirtyRect];

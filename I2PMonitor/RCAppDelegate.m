@@ -335,7 +335,7 @@
 
 - (void)statusBarViewDidChangeHighlighted:(RCStatusBarView *)view
 {
-    if (view.isHighlighted)
+    if (view.highlighted)
     {
         [self showMainWindow];
     }
