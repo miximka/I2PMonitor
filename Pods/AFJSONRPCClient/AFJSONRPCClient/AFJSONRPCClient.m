@@ -28,6 +28,23 @@
 
 NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
 
+static NSString * AFJSONRPCLocalizedErrorMessageForCode(NSInteger code) {
+    switch(code) {
+        case -32700:
+            return @"Parse Error";
+        case -32600:
+            return @"Invalid Request";
+        case -32601:
+            return @"Method Not Found";
+        case -32602:
+            return @"Invalid Params";
+        case -32603:
+            return @"Internal Error";
+        default:
+            return @"Server Error";
+    }
+}
+
 @interface AFJSONRPCProxy : NSProxy
 - (id)initWithClient:(AFJSONRPCClient *)client
             protocol:(Protocol *)protocol;
@@ -56,7 +73,7 @@ NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
     self.requestSerializer = [AFJSONRequestSerializer serializer];
     [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 
-    self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json-rpc", @"application/jsonrequest", nil];
+    self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"application/json-rpc", @"application/jsonrequest", nil];
 
     self.endpointURL = URL;
 
@@ -111,7 +128,7 @@ NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
     payload[@"params"] = parameters;
     payload[@"id"] = [requestId description];
 
-    return [self.requestSerializer requestWithMethod:@"POST" URLString:[self.endpointURL absoluteString] parameters:payload];
+    return [self.requestSerializer requestWithMethod:@"POST" URLString:[self.endpointURL absoluteString] parameters:payload error:nil];
 }
 
 #pragma mark - AFHTTPClient
@@ -123,6 +140,7 @@ NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
     return [super HTTPRequestOperationWithRequest:urlRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSInteger code = 0;
         NSString *message = nil;
+        id data = nil;
 
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             id result = responseObject[@"result"];
@@ -131,11 +149,21 @@ NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
             if (result && result != [NSNull null]) {
                 if (success) {
                     success(operation, result);
+                    return;
                 }
             } else if (error && error != [NSNull null]) {
-                if ([error isKindOfClass:[NSDictionary class]] && error[@"code"] && error[@"message"]) {
-                    code = [error[@"code"] integerValue];
-                    message = error[@"message"];
+                if ([error isKindOfClass:[NSDictionary class]]) {
+                    if (error[@"code"]) {
+                        code = [error[@"code"] integerValue];
+                    }
+
+                    if (error[@"message"]) {
+                        message = error[@"message"];
+                    } else if (code) {
+                        message = AFJSONRPCLocalizedErrorMessageForCode(code);
+                    }
+
+                    data = error[@"data"];
                 } else {
                     message = NSLocalizedStringFromTable(@"Unknown Error", @"AFJSONRPCClient", nil);
                 }
@@ -146,8 +174,16 @@ NSString * const AFJSONRPCErrorDomain = @"com.alamofire.networking.json-rpc";
             message = NSLocalizedStringFromTable(@"Unknown JSON-RPC Response", @"AFJSONRPCClient", nil);
         }
 
-        if (message && failure) {
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
+        if (failure) {
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            if (message) {
+                userInfo[NSLocalizedDescriptionKey] = message;
+            }
+
+            if (data) {
+                userInfo[@"data"] = data;
+            }
+
             NSError *error = [NSError errorWithDomain:AFJSONRPCErrorDomain code:code userInfo:userInfo];
 
             failure(operation, error);
