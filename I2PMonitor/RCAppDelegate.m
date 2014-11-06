@@ -24,6 +24,12 @@
 
 //=========================================================================
 
+#ifdef DEBUG
+int const ddLogLevel = LOG_LEVEL_DEBUG;
+#else
+int const ddLogLevel = LOG_LEVEL_INFO;
+#endif
+
 @interface RCAppDelegate () <RCStatusBarViewDelegate, RCMainWindowControllerDelegate>
 @property (nonatomic) NSStatusItem *statusBarItem;
 @property (nonatomic) RCRouterManager *routerManager;

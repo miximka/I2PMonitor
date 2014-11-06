@@ -138,7 +138,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [self.delegate clickableTextFieldMouseDown:self];
+    [[self delegate] clickableTextFieldMouseDown:self];
 }
 
 //=========================================================================

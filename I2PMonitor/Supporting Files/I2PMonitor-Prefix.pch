@@ -8,7 +8,9 @@
     #import <Cocoa/Cocoa.h>
 #endif
 
-#import "RCLogging.h"
+int const ddLogLevel;
+
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #define	MyLocalStr(str)				NSLocalizedString(str, @"")
 #define RCInvalidateTimer(x) {[x invalidate]; x = nil;}

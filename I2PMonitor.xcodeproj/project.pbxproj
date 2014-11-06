@@ -87,7 +87,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5F56904A54E448FC87262698 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		0F5E5B91C154C7F3E748F52D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		419F856D3D2F0B26C3F4389F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		810022701924E01C0025273D /* RCApplicationPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCApplicationPreferences.h; sourceTree = "<group>"; };
 		810022711924E01C0025273D /* RCApplicationPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCApplicationPreferences.m; sourceTree = "<group>"; };
 		810022751924E09A0025273D /* RCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCPreferences.h; sourceTree = "<group>"; };
@@ -208,7 +209,6 @@
 		81CD62EB19210156005A82A4 /* RCRouterApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCRouterApi.h; sourceTree = "<group>"; };
 		81CD62EE1921093C005A82A4 /* RCRouterProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRouterProxy.h; sourceTree = "<group>"; };
 		81CD62EF1921093C005A82A4 /* RCRouterProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRouterProxy.m; sourceTree = "<group>"; };
-		81CD62F5192118BC005A82A4 /* RCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCLogging.h; sourceTree = "<group>"; };
 		81E99BBA1924059B00D7B1B0 /* RCMainViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMainViewControllerTest.m; sourceTree = "<group>"; };
 		81EC34801922B4040011D2D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81FFF3E01927FB4200D18156 /* RCGraphTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCGraphTextField.h; sourceTree = "<group>"; };
@@ -238,6 +238,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		142B3E2D9F2A4ABC01B9BD08 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0F5E5B91C154C7F3E748F52D /* Pods.debug.xcconfig */,
+				419F856D3D2F0B26C3F4389F /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		8100226A1924D0CD0025273D /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,7 +319,7 @@
 				812687C719202666002A0571 /* I2PMonitorTests */,
 				812687A219202666002A0571 /* Frameworks */,
 				812687A119202666002A0571 /* Products */,
-				5F56904A54E448FC87262698 /* Pods.xcconfig */,
+				142B3E2D9F2A4ABC01B9BD08 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -462,7 +471,6 @@
 		8194CC041921714F00759F92 /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				81CD62F5192118BC005A82A4 /* RCLogging.h */,
 				8194CC051921715B00759F92 /* RCLogFormatter.h */,
 				8194CC061921715B00759F92 /* RCLogFormatter.m */,
 			);
@@ -679,7 +687,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -875,28 +883,33 @@
 		};
 		812687D219202666002A0571 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
+			baseConfigurationReference = 0F5E5B91C154C7F3E748F52D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
 				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = I2PMonitor;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		812687D319202666002A0571 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
+			baseConfigurationReference = 419F856D3D2F0B26C3F4389F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "I2PMonitor/Supporting Files/I2PMonitor-Prefix.pch";
 				INFOPLIST_FILE = "I2PMonitor/Supporting Files/I2PMonitor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = I2PMonitor;
 				WRAPPER_EXTENSION = app;
@@ -905,7 +918,6 @@
 		};
 		812687D519202666002A0571 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PMonitor.app/Contents/MacOS/I2PMonitor";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -928,7 +940,6 @@
 		};
 		812687D619202666002A0571 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F56904A54E448FC87262698 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/I2PMonitor.app/Contents/MacOS/I2PMonitor";
 				COMBINE_HIDPI_IMAGES = YES;
