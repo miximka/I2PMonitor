@@ -25,10 +25,10 @@ Prerequisites
 
 "I2PControl" plugin has to be installed on the i2p node you want to control.
 
-Plugin is available here: http://plugins.i2p/files/I2PControl.xpi2p
-or here: http://itoopie.i2p/files/I2PControl.xpi2p
+~~Plugin is available here: http://plugins.i2p/files/I2PControl.xpi2p or here: http://itoopie.i2p/files/I2PControl.xpi2p~~
+~~To install the plugin, open the i2p console in the browser, e.g.: “http://127.0.0.1:7657/configclients”, then enter the plugin URL in the "Plugin Installation" field on the bottom of the web page, click "Install Plugin" and wait until installation is finished.~~
 
-To install the plugin, open the i2p console in the browser, e.g.: “http://127.0.0.1:7657/configclients”, then enter the plugin URL in the "Plugin Installation" field on the bottom of the web page, click "Install Plugin" and wait until installation is finished.
+**Note: Because of the sudden shutdown of http://plugins.i2p the above links do not work any move. I have recovered the latest plugin version, you can download it [here](http://i2pmonitor.de/I2PPlugins/I2PControl/0.11-b0/I2PControl.xpi2p). Install the plugin manually in the console: <http://127.0.0.1:7657/configclients>**
 
 Troubleshooting
 ================
